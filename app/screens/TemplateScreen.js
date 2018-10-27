@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Text, View, StyleSheet } from 'react-native';
 
-// Make sure to add your new screen to /config/routes.js
+// Make sure to add your new screen to /config/navigation.js
 class TemplateScreen extends React.Component {
 
   constructor(props) {

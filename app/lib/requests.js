@@ -1,5 +1,5 @@
-import settings from '../config/settings'
-import queryString from 'query-string'
+import networkSettings from '../config/network'
+// import queryString from 'query-string'
 
 /**
  * Request function for POST, PUT, DELETE requests. (doesn't catch error. used for batch)
@@ -10,7 +10,7 @@ import queryString from 'query-string'
  * @param params - body params
  */
 function requestNoCatch(type, route, successFunc, errorFunc, params=null) {
-  let host = shouldUseAltRoute ? settings.ALT_URL : settings.URL;
+  let host = shouldUseAltRoute ? networkSettings.ALT_URL : networkSettings.URL;
   console.log("Sending " + type + " request to host: " + host + " at route: " + route);
   return fetch(`${host}${route}`, {
     method: type,
@@ -53,8 +53,9 @@ function request(type, route, successFunc, errorFunc, params=null=false) {
  * @param params - URL query params
  */
  function getRequest(route, successFunc, errorFunc, params=null=false) {
-   let host = settings.URL;
-    const url = params ? `${host}${route}/?${queryString.stringify(params)}` : `${host}${route}`;
+   let host = networkSettings.URL;
+   const url = `$host$route`
+    // const url = params ? `${host}${route}/?${queryString.stringify(params)}` : `${host}${route}`;
     console.log("Sending GET request to url: " + url);
     return fetch(url, {
       method: 'GET',
