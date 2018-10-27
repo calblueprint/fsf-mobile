@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationStack } from './app/config/routes';
+import { NavigationStack } from './app/config/navigation';
 
 export default class App extends React.Component {
   render() {
