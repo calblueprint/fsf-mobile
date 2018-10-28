@@ -14,7 +14,7 @@ const textStyles = StyleSheet.create({
   },
 
   bodySmall: {
-    color: colors.textDark,
+    color: colors.textLight,
     fontSize: 16
   },
 

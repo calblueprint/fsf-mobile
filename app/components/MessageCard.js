@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Text, TouchableHighlight, View } from 'react-native';
-import { APIRoutes } from '../../lib/routes';
+import { APIRoutes } from './../lib/routes';
 import { cardStyles } from './styles';
 import { textStyles } from '../styles/textStyles';
 // import colors from '../../styles/colors';
@@ -22,7 +22,7 @@ class MessageCard extends React.Component {
       underlayColor='transparent'>
         <View style={cardStyles.outerContainer}>
           <View style={cardStyles.topContainer}>
-            <Text style={[cardStyles.title, textStyles.titleMediumLight]}>{this.props.message.content}</Text>
+            <Text style={[cardStyles.title, textStyles.bodySmall]}>{this.props.message.content}</Text>
           </View>
         </View>
       </TouchableHighlight>

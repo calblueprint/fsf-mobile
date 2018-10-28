@@ -16,6 +16,10 @@ class HomeScreen extends React.Component {
             onPress={() => this.props.navigation.push('Login')}
             title='Login!'
             />
+            <Button
+              onPress={() => this.props.navigation.push('Messages')}
+              title='Messages'
+              />
 
       </View>
     );

@@ -40,7 +40,7 @@ function requestNoCatch(type, route, successFunc, errorFunc, params=null) {
  * @param errorFunc - error handler
  * @param params - body params
  */
-function request(type, route, successFunc, errorFunc, params=null=false) {
+function request(type, route, successFunc, errorFunc, params=null) {
   return requestNoCatch(type, route, successFunc, errorFunc, params)
     .catch(function(error) {
       errorFunc(error);
@@ -52,9 +52,9 @@ function request(type, route, successFunc, errorFunc, params=null=false) {
  * Request function for GET requests. Same params as request except doesn't take in type and:
  * @param params - URL query params
  */
- function getRequest(route, successFunc, errorFunc, params=null=false) {
+ function getRequest(route, successFunc, errorFunc, params=null) {
    let host = networkSettings.URL;
-   const url = `$host$route`
+   const url = `${host}${route}`
     // const url = params ? `${host}${route}/?${queryString.stringify(params)}` : `${host}${route}`;
     console.log("Sending GET request to url: " + url);
     return fetch(url, {
