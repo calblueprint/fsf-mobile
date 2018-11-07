@@ -1,30 +1,81 @@
 import React from 'react';
-import { createStackNavigator } from 'react-navigation';
-import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';
-import MessagesScreen from '../screens/MessagesScreen';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import NewsScreen from '../screens/news/NewsScreen';
+import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
-// This defines the screens in our app.
-// Any configuration relating to navigation as well as the "top bar" of the app lives here!
+import PetitionsScreen from '../screens/petitions/PetitionsScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
+import DonateScreen from '../screens/donate/DonateScreen';
+import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
+import LoginScreen from '../screens/auth/LoginScreen'
+import { Ionicons } from '@expo/vector-icons'
 
-export const NavigationStack = createStackNavigator({
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      headerTitle: 'Home',
-    },
+// This file defines the screens in our app and their relationships
+
+const NewsNav = createStackNavigator(
+  { NewsHome: NewsScreen, NewsDetail: NewsDetailScreen},
+  {initialRouteName: 'NewsHome'}
+)
+
+const PetitionsNav = createStackNavigator(
+  {PetitionsHome: PetitionsScreen}
+)
+
+const DonateNav = createStackNavigator(
+  {DonateHome: DonateScreen}
+)
+
+const ProfileNav = createStackNavigator(
+  {ProfileHome: ProfileScreen}
+)
+
+// TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
+const MainNav = createBottomTabNavigator(
+  { // Screens on bottom tab bar
+    News: { screen: NewsNav },
+    Petitions: { screen: PetitionsNav },
+    Donate: { screen: DonateNav },
+    Profile: { screen: ProfileNav },
   },
+  { // Options
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
 
-  Login: {
-    screen: LoginScreen,
-    navigationOptions: {
-      headerTitle: 'Login',
-    },
-  },
-  Messages: {
-    screen: MessagesScreen,
-    navigationOptions: {
-      headerTitle: 'Messages'
-    }
+        // Here's where Franco will eventually insert beautiful icons
+        let iconName = 'md-options';
+        if (routeName === 'News') {
+          iconName = 'md-volume-up';
+        } else if (routeName === 'Petitions') {
+          iconName = 'md-microphone';
+        }
+        else if (routeName === 'Donate') {
+          iconName = 'md-cash';
+        }
+        else if (routeName === 'Profile') {
+          iconName = 'md-person';
+        }
+
+        // You can return any component that you like here! By default, using Ionicons
+        return <Ionicons name={iconName} size={horizontal ? 20 : 25} color={tintColor} />;
+      },
+    }),
   }
+);
+
+export const AuthNav = createStackNavigator({
+  Login: LoginScreen
 });
+
+export const AppNav = createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: MainNav,
+    Auth: AuthNav,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+)
+
+export const NavContainer = createAppContainer(AppNav);

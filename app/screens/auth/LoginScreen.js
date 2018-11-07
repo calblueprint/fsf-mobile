@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Text, View, TextInput, StyleSheet, Alert } from 'react-native';
+import { Button, Text, View, TextInput, StyleSheet, Alert, AsyncStorage } from 'react-native';
+import BaseScreen from '../BaseScreen'
 
-
-class LoginScreen extends React.Component {
+class LoginScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
@@ -33,8 +33,19 @@ class LoginScreen extends React.Component {
   }
 
   _attemptLogin() {
+    // DEV ONLY
+    this.state.email = "fsf.org"; this.state.password = "password";
+    // REMOVE AFTER DEV ^^^
+
     if (this.state.email.includes("fsf.org") && this.state.password == "password") {
-      this.props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
+      Alert.alert(
+        'Successfully Logged In!', '',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+      this._login()
     }else {
       Alert.alert(
         'Invalid Email or Password',
@@ -46,6 +57,12 @@ class LoginScreen extends React.Component {
       )
     }
   }
+
+  _login = async() => {
+    console.log("Logging in");
+    await AsyncStorage.setItem('userToken', 'abc');
+    this.props.navigation.navigate('App');
+  };
 }
 
 const styles = StyleSheet.create({

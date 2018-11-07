@@ -1,11 +1,12 @@
 import React from 'react';
 import { Button, Text, View, StyleSheet, RefreshControl, ScrollView } from 'react-native';
-import { getRequest } from './../lib/requests';
-import APIRoutes from './../lib/routes';
-import MessageCard from './../components/MessageCard'
+import { getRequest } from './../../lib/requests';
+import APIRoutes from './../../lib/routes';
+import MessageCard from './../../components/MessageCard'
+import BaseScreen from '../BaseScreen'
 
 // Make sure to add your new screen to /config/navigation.js
-class MessagesScreen extends React.Component {
+class NewsDetailScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
@@ -34,6 +35,8 @@ class MessagesScreen extends React.Component {
     return (
       <ScrollView refreshControl={refreshControl}>
         <View style={styles.container}>
+        <Text>This is the detail screen</Text>
+
           {messages}
         </View>
       </ScrollView>
@@ -58,4 +61,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MessagesScreen;
+export default NewsDetailScreen;
