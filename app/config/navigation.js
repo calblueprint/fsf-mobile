@@ -6,6 +6,7 @@ import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import DonateScreen from '../screens/donate/DonateScreen';
+import PaymentInfoScreen from '../screens/donate/PaymentInfoScreen';
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
 import { Ionicons } from '@expo/vector-icons'
@@ -24,7 +25,10 @@ const PetitionsNav = createStackNavigator(
 )
 
 const DonateNav = createStackNavigator(
-  {DonateHome: DonateScreen}
+  {
+    DonateHome: DonateScreen,
+    PaymentInfo: PaymentInfoScreen
+  }
 )
 
 const ProfileNav = createStackNavigator(
