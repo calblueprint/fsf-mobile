@@ -53,6 +53,12 @@ class NewsDetailScreen extends BaseScreen {
 
 }
 
+function hello(a, b) {
+
+}
+
+const hello = (a, b) => { };
+
 const styles = StyleSheet.create({
   container: {
     marginRight: 40,

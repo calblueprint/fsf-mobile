@@ -13,7 +13,9 @@ import { Ionicons } from '@expo/vector-icons'
 // This file defines the screens in our app and their relationships
 
 const NewsNav = createStackNavigator(
-  { NewsHome: NewsScreen, NewsDetail: NewsDetailScreen},
+  { NewsHome: NewsScreen,
+    NewsDetail: NewsDetailScreen
+  },
   {initialRouteName: 'NewsHome'}
 )
 

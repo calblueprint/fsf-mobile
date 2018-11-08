@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://t5-iif.aivantg.fsf-mobile.exp.direct",
+  "packagerNgrokUrl": "https://packager.t5-iif.aivantg.fsf-mobile.exp.direct",
+  "ngrokPid": 52817
 }
