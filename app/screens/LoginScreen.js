@@ -101,9 +101,32 @@ class LoginScreen extends React.Component {
 
         const serviceTicket = await login(this.state.email, this.state.password, loginTicket);
 
+        const getCiviCRMApiKey = async(serviceTicket) => {
+          const resp = await fetch("http://fsfmobile0p.fsf.org:8080/login",
+            {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                st: serviceTicket,
+              }),
+            }
+          );
+
+          if (resp.status >= 400) {
+            throw new Error("Failed to get CiviCRM api key");
+          }
+
+          return await resp.json();
+        }
+
+        const apiKey = await getCiviCRMApiKey(serviceTicket);
+
         Alert.alert(
           "Login succeeded",
-          serviceTicket,
+          apiKey.id + " " + apiKey.key,
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ],
