@@ -77,7 +77,7 @@ class LoginScreen extends React.Component {
         const getLoginTicket = async() => {
           const resp = await fetch("https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount");
           if (!resp.ok) {
-            throw new Error("Server error when getting login token");
+            return Promise.reject(new Error("Server error when getting login token"));
           }
 
           const ticketRegex = /\"LT-[^\"]*\"/g;
@@ -85,7 +85,7 @@ class LoginScreen extends React.Component {
 
           if (match == null) {
             console.log(await resp.text());
-            throw new Error("Did not find a LT- match in CAS login page. Already logged in?");
+            return Promise.reject(new Error("Did not find a LT- match in CAS login page. Already logged in?"));
           } else {
             return match[0].replace(/\"/g, "");
           }
@@ -111,7 +111,7 @@ class LoginScreen extends React.Component {
             console.log(resp.status);
             console.log(loginTicket);
             console.log(formData);
-            throw new Error("Login failed or server error");
+            return Promise.reject(new Error("Login failed or server error"));
           }
 
           const ticketRegex = /ST-[^&]*&/g;
@@ -135,7 +135,7 @@ class LoginScreen extends React.Component {
 
           console.log(headers);
           console.log(body);
-          throw new Error("Did not find Service Token in response");
+          return Promise.reject(new Error("Did not find Service Token in response"));
         }
 
         const serviceTicket = await login(this.state.email, this.state.password, loginTicket);
@@ -155,7 +155,7 @@ class LoginScreen extends React.Component {
           );
 
           if (resp.status >= 400) {
-            throw new Error("Failed to get CiviCRM api key");
+            return Promise.reject(new Error("Failed to get CiviCRM api key"));
           }
 
           return await resp.json();
@@ -185,7 +185,7 @@ class LoginScreen extends React.Component {
         );
       }
       catch (error) {
-        console.error(error);
+        console.log(error);
         Alert.alert(
           "Login failed",
           "Try again",
