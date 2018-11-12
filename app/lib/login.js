@@ -37,6 +37,7 @@ async function casLogin(email, password, loginTicket) {
   formData.append('password', password);
   formData.append('lt', loginTicket);
   formData.append('service', 'https://crmserver3d.fsf.org/associate/account');
+
   const resp = await fetch('https://cas.fsf.org/login', {
     method: 'POST',
     redirect: 'error',
