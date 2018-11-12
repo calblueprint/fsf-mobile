@@ -2,40 +2,11 @@ import React from 'react';
 import {
   Button, Text, View, TextInput, StyleSheet, Alert, AsyncStorage,
 } from 'react-native';
-import { getLoginTicket, casLogin, getCiviCRMApiKey } from '../lib/login';
+import { getLoginTicket, casLogin, getCiviCRMApiKey } from '../../lib/login';
+import BaseScreen from '../BaseScreen'
+import { okAlert } from '../../lib/alerts'
 
-class LoginScreen extends React.Component {
-  static _showApiKey() {
-    const alertError = () => {
-      Alert.alert(
-        'API Key not found',
-        'You may need to login first!',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false },
-      );
-    };
-
-    const request = async () => {
-      try {
-        const key = await AsyncStorage.getItem('apikey');
-        const id = await AsyncStorage.getItem('id');
-        if (key != null) {
-          Alert.alert(
-            'Found API Key',
-            `${key} ${id}`,
-            [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-            { cancelable: false },
-          );
-        } else {
-          alertError();
-        }
-      } catch (error) {
-        alertError();
-      }
-    };
-
-    request();
-  }
+class LoginScreen extends BaseScreen {
 
   constructor(props) {
     super(props);
@@ -45,8 +16,7 @@ class LoginScreen extends React.Component {
     };
   }
 
-  _attemptLogin() {
-    const request = async () => {
+  _attemptLogin = async() => {
       try {
         const { props, state } = { props: this.props, state: this.state };
         const loginTicket = await getLoginTicket();
@@ -67,24 +37,12 @@ class LoginScreen extends React.Component {
 
         saveKey(apiKey);
 
-        Alert.alert(
-          'Login succeeded',
-          `${apiKey.id} ${apiKey.key}`,
-          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-          { cancelable: false },
-        );
+        okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
         props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
       } catch (error) {
         console.log(error);
-        Alert.alert(
-          'Login failed',
-          'Try again',
-          [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-          { cancelable: false },
-        );
+        okAlert('Login failed', 'Try again');
       }
-    };
-    request();
   }
 
   render() {
@@ -105,9 +63,34 @@ class LoginScreen extends React.Component {
           />
         </View>
         <Button onPress={() => this._attemptLogin()} title="Login" />
-        <Button onPress={() => this._showApiKey()} title="Show API Key" />
+        <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
+        <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
       </View>
     );
+  }
+
+  _devLogin = async() => {
+    console.log("Logging in");
+    await AsyncStorage.setItem('userToken', 'abc');
+    this.props.navigation.navigate('App');
+  };
+
+  static _showApiKey() {
+    const request = async () => {
+      try {
+        const key = await AsyncStorage.getItem('apikey');
+        const id = await AsyncStorage.getItem('id');
+        if (key != null) {
+          okAlert('Found API Key', `${key} ${id}`);
+        } else {
+          okAlert('API Key not found', 'You may need to login first!');
+        }
+      } catch (error) {
+        okAlert('API Key not found', 'You may need to login first!');
+      }
+    };
+
+    request();
   }
 }
 

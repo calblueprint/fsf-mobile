@@ -45,27 +45,37 @@ async function casLogin(email, password, loginTicket) {
     body: formData,
   });
 
-  if (resp.status >= 400 || resp.status < 300) {
-    // We expect a HTTP 302/303 redirect here
-    // If we get HTTP 200, fetch might have followed the redirect, and we won't
-    // get the service token here
+  if (resp.status >= 400) {
     console.log(resp.status);
     console.log(loginTicket);
     console.log(formData);
     return Promise.reject(new Error('Login failed or server error'));
   }
 
-  // look at Location header in HTTP 303 case
-  const { headers } = resp.headers;
-  if (headers.has('Location')) {
-    const url = headers.get('Location');
-    const ticketRegex = /ST-[^&]*/g;
-    const match = ticketRegex.exec(url);
+  if (resp.status == 200) {
+    // react has followed redirect here
+    // it might be a bug in react native that redirect: error is not working
+    const ticketRegex = /ST-[^&]*&/g;
+    const body = (await resp.text()).replace(/&amp;/g, '&');
+    const match = ticketRegex.exec(body);
+
     if (match != null) {
-      return match[0];
+      return match[0].substring(0, match[0].length - 1);
+    }
+  } else if (resp.status > 300) {
+    // look at Location header in HTTP 303 case
+    const { headers } = resp.headers;
+    if (headers.has('Location')) {
+      const url = headers.get('Location');
+      const ticketRegex = /ST-[^&]*/g;
+      const match = ticketRegex.exec(url);
+      if (match != null) {
+        return match[0];
+      }
     }
   }
 
+  // none of above
   console.log(headers);
   console.log(body);
   return Promise.reject(new Error('Did not find Service Token in response'));
