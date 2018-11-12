@@ -19,7 +19,7 @@ async function getLoginTicket() {
     return Promise.reject(new Error('Server error when getting login token'));
   }
 
-  const ticketRegex = /\"LT-[^\"]*\"/g;
+  const ticketRegex = /"LT-[^"]*"/g;
   const match = ticketRegex.exec(await resp.text());
 
   if (match == null) {
@@ -28,7 +28,7 @@ async function getLoginTicket() {
       new Error('Did not find a LT- match in CAS login page. Already logged in?'),
     );
   }
-  return match[0].replace(/\"/g, '');
+  return match[0].replace(/"/g, '');
 }
 
 async function casLogin(email, password, loginTicket) {
