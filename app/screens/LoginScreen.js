@@ -2,9 +2,7 @@ import React from 'react';
 import {
   Button, Text, View, TextInput, StyleSheet, Alert, AsyncStorage,
 } from 'react-native';
-import {
-  getLoginTicket, casLogin, getCiviCRMApiKey
-} from '../lib/login.js';
+import { getLoginTicket, casLogin, getCiviCRMApiKey } from '../lib/login';
 
 class LoginScreen extends React.Component {
   static _showApiKey() {
@@ -50,9 +48,10 @@ class LoginScreen extends React.Component {
   _attemptLogin() {
     const request = async () => {
       try {
+        const { props, state } = { props: this.props, state: this.state };
         const loginTicket = await getLoginTicket();
 
-        const serviceTicket = await casLogin(this.state.email, this.state.password, loginTicket);
+        const serviceTicket = await casLogin(state.email, state.password, loginTicket);
 
         const apiKey = await getCiviCRMApiKey(serviceTicket);
 
@@ -74,7 +73,7 @@ class LoginScreen extends React.Component {
           [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
           { cancelable: false },
         );
-        this.props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
+        props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
       } catch (error) {
         console.log(error);
         Alert.alert(
