@@ -45,19 +45,14 @@ async function casLogin(email, password, loginTicket) {
     body: formData,
   });
 
-  if (resp.status >= 400) {
+  if (resp.status >= 400 || resp.status < 300) {
+    // We expect a HTTP 302/303 redirect here
+    // If we get HTTP 200, fetch might have followed the redirect, and we won't
+    // get the service token here
     console.log(resp.status);
     console.log(loginTicket);
     console.log(formData);
     return Promise.reject(new Error('Login failed or server error'));
-  }
-
-  const ticketRegex = /ST-[^&]*&/g;
-  const body = (await resp.text()).replace(/&amp;/g, '&');
-  const match = ticketRegex.exec(body);
-
-  if (match != null) {
-    return match[0].substring(0, match[0].length - 1);
   }
 
   // look at Location header in HTTP 303 case
