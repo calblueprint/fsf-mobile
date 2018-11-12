@@ -2,6 +2,9 @@ import React from 'react';
 import {
   Button, Text, View, TextInput, StyleSheet, Alert, AsyncStorage,
 } from 'react-native';
+import {
+  getLoginTicket, casLogin, getCiviCRMApiKey
+} from '../lib/login.js';
 
 class LoginScreen extends React.Component {
   static _showApiKey() {
@@ -47,93 +50,9 @@ class LoginScreen extends React.Component {
   _attemptLogin() {
     const request = async () => {
       try {
-        const { state } = this.state;
-        const getLoginTicket = async () => {
-          const resp = await fetch(
-            'https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount',
-          );
-          if (!resp.ok) {
-            return Promise.reject(new Error('Server error when getting login token'));
-          }
-
-          const ticketRegex = /\"LT-[^\"]*\"/g;
-          const match = ticketRegex.exec(await resp.text());
-
-          if (match == null) {
-            console.log(await resp.text());
-            return Promise.reject(
-              new Error('Did not find a LT- match in CAS login page. Already logged in?'),
-            );
-          }
-          return match[0].replace(/\"/g, '');
-        };
-
         const loginTicket = await getLoginTicket();
 
-        const login = async (email, password, loginTicket) => {
-          const formData = new FormData();
-          formData.append('username', email);
-          formData.append('password', password);
-          formData.append('lt', loginTicket);
-          formData.append('service', 'https://crmserver3d.fsf.org/associate/account');
-          const resp = await fetch('https://cas.fsf.org/login', {
-            method: 'POST',
-            redirect: 'error',
-            credentials: 'include',
-            body: formData,
-          });
-
-          if (resp.status >= 400) {
-            console.log(resp.status);
-            console.log(loginTicket);
-            console.log(formData);
-            return Promise.reject(new Error('Login failed or server error'));
-          }
-
-          const ticketRegex = /ST-[^&]*&/g;
-          const body = (await resp.text()).replace(/&amp;/g, '&');
-          const match = ticketRegex.exec(body);
-
-          if (match != null) {
-            return match[0].substring(0, match[0].length - 1);
-          }
-
-          // look at Location header in HTTP 303 case
-          const { headers } = resp.headers;
-          if (headers.has('Location')) {
-            const url = headers.get('Location');
-            const ticketRegex = /ST-[^&]*/g;
-            const match = ticketRegex.exec(url);
-            if (match != null) {
-              return match[0];
-            }
-          }
-
-          console.log(headers);
-          console.log(body);
-          return Promise.reject(new Error('Did not find Service Token in response'));
-        };
-
-        const serviceTicket = await login(state.email, state.password, loginTicket);
-
-        const getCiviCRMApiKey = async (serviceTicket) => {
-          const resp = await fetch('http://fsfmobile0p.fsf.org:8080/login', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              st: serviceTicket,
-            }),
-          });
-
-          if (resp.status >= 400) {
-            return Promise.reject(new Error('Failed to get CiviCRM api key'));
-          }
-
-          return resp.json();
-        };
+        const serviceTicket = await casLogin(this.state.email, this.state.password, loginTicket);
 
         const apiKey = await getCiviCRMApiKey(serviceTicket);
 
@@ -155,6 +74,7 @@ class LoginScreen extends React.Component {
           [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
           { cancelable: false },
         );
+        this.props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
       } catch (error) {
         console.log(error);
         Alert.alert(
@@ -166,22 +86,7 @@ class LoginScreen extends React.Component {
       }
     };
     request();
-
-    /* if (this.state.email.includes("fsf.org") && this.state.password == "password") {
-      this.props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
-    }else {
-      Alert.alert(
-        'Invalid Email or Password',
-        'Try again',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: false }
-      )
-    } */
   }
-
-  _getLoginTicket() {}
 
   render() {
     return (
