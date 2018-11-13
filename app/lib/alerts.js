@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 
-function okAlert = (title, message) => {
+function okAlert(title, message){
   Alert.alert(
     title, message,
     [

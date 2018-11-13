@@ -13,14 +13,17 @@ function requestNoCatch(type, route, successFunc, errorFunc, params = null) {
   console.log(
     "Sending " + type + " request to host: " + host + " at route: " + route
   );
-  return fetch(`${host}${route}`, {
+  var requestData = {
     method: type,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(params)
-  }).then(function(response) {
+  };
+  if (type != "GET") {
+    requestData.body = JSON.stringify(params);
+  }
+  return fetch(`${host}${route}`, requestData).then(function(response) {
     if (response.ok) {
       return response.json().then(function(object) {
         return successFunc(object);
