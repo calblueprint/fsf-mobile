@@ -5,8 +5,10 @@ import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
-import DonateScreen from '../screens/donate/DonateScreen';
-import PaymentInfoScreen from '../screens/donate/PaymentInfoScreen';
+import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
+import DonatePayemntScreen from '../screens/donate/DonatePaymentScreen';
+import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
+import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
 import { Ionicons } from '@expo/vector-icons'
@@ -24,12 +26,12 @@ const PetitionsNav = createStackNavigator(
   {PetitionsHome: PetitionsScreen}
 )
 
-const DonateNav = createStackNavigator(
-  {
-    DonateHome: DonateScreen,
-    PaymentInfo: PaymentInfoScreen
-  }
-)
+const DonateNav = createStackNavigator({
+  DonateHome: DonateHomeScreen,
+  DonateBilling: DonateBillingScreen,
+  DonatePayment: DonatePaymentScreen,
+  DonateSuccess: DonateSuccessScreen
+});
 
 const ProfileNav = createStackNavigator(
   {ProfileHome: ProfileScreen}

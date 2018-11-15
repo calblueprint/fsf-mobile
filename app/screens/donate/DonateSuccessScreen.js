@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen'
 
-class PaymentInfoScreen extends BaseScreen {
+class DonateSuccessScreen extends BaseScreen {
   constructor(props) {
     super(props);
   }
@@ -12,13 +12,13 @@ class PaymentInfoScreen extends BaseScreen {
       <View style={{flex: 1, alignItems: 'center'}}>
         <Text>TrustCommerce Blurb!</Text>
           
-          <Button
-            onPress={() => this._switchTab(this, 'Login')}
-            title='Donation!'
-            />
+        <Button
+          onPress={() => this._switchTab(this, 'PaymentInfo')}
+          title='start'
+        />
 
       </View>
     );
   }
 }
-export default PaymentInfoScreen;
+export default DonateSuccessScreen;
