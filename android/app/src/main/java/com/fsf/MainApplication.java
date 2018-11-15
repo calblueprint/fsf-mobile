@@ -3,14 +3,21 @@ package com.fsf;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import io.realm.react.RealmReactPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
+import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -24,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RealmReactPackage(),
             new RNGestureHandlerPackage()
       );
     }
@@ -43,5 +51,18 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+
+    // Notification Job Scheduling
+
+    // Clear out all existing schedule work
+    WorkManager workManager = WorkManager.getInstance();
+    workManager.cancelAllWorkByTag("Notification");
+
+    // Schedule a new task to happen every 15 minutes
+    PeriodicWorkRequest notificationJob = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15,
+            TimeUnit.MINUTES).addTag("Notification").build();
+    workManager.enqueue(notificationJob);
   }
+
+
 }
