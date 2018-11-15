@@ -7,37 +7,32 @@ class DonatePaymentScreen extends BaseScreen {
     super(props);
   }
 
-  static formInfos = [
-    {
-      id: 1,
-      label: "name on card",
-      function: "placeholder"
-    },
-    {
-      id: 2,
-      label: "credit card number",
-      function: "placeholder"
-    },
-    {
-      id: 3,
-      label: "expiration date",
-      function: "placeholder"
-    },
-    {
-      id: 4,
-      label: "security code",
-      function: "placeholder"
-    }
-  ];
-
-  static formInputs = DonatePaymentScreen.formInfos.map( formInfo => (
-    <View>
-      <FormLabel key={formInfo.id}> {formInfo.text} </FormLabel>
-      <FormInput onChangeText={formInfo.function} />
-    </View>
-  ));
-
   render() {
+    const formInfos = [
+      {
+        id: 1,
+        label: "name on card",
+      },
+      {
+        id: 2,
+        label: "credit card number",
+      },
+      {
+        id: 3,
+        label: "expiration date",
+      },
+      {
+        id: 4,
+        label: "security code",
+      }
+    ];
+    
+    let formInputs = formInfos.map(formInfo => (
+      <View>
+        <FormLabel key={formInfo.id}> {formInfo.text} </FormLabel>
+        <FormInput onChange={formInfo.function} />
+      </View>
+    ));
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text>TrustCommerce Blurb!</Text>

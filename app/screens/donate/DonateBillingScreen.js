@@ -8,42 +8,41 @@ class DonateBillingScreen extends BaseScreen {
     super(props);
   }
 
-  static formInfos = [
-    {
-      id: 1,
-      label: "address",
-      function: "placeholder"
-    },
-    {
-      id: 2,
-      label: "city",
-      function: "placeholder"
-    },
-    {
-      id: 3,
-      label: "country",
-      function: "placeholder"
-    },
-    {
-      id: 4,
-      label: "state/province",
-      function: "placeholder"
-    },
-    {
-      id: 5,
-      label: "postal code",
-      function: "placeholder"
-    },
-  ];
+  // static handleChange = () => {
 
-  static formInputs = DonateBillingScreen.formInfos.map( formInfo => (
-    <View>
-      <FormLabel key={formInfo.id}> {formInfo.text} </FormLabel>
-      <FormInput onChangeText={formInfo.function} />
-    </View>
-  ));
+  // }
 
   render() {
+    const formInfos = [
+      {
+        id: 1,
+        label: "address",
+      },
+      {
+        id: 2,
+        label: "city",
+      },
+      {
+        id: 3,
+        label: "country",
+      },
+      {
+        id: 4,
+        label: "state/province",
+      },
+      {
+        id: 5,
+        label: "postal code",
+      },
+    ];
+
+    let formInputs = formInfos.map(formInfo => (
+      <View>
+        <FormLabel key={formInfo.id}> {formInfo.text} </FormLabel>
+        <FormInput onChange={formInfo.function} />
+      </View>
+    ));
+
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text>Billing Info</Text>
