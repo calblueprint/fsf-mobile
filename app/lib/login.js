@@ -13,6 +13,11 @@
 
 import { AsyncStorage } from "react-native"
 
+/**
+ * getLoginTicket talks to CAS and returns a string
+ *
+ * @return a Promise that resolves to a string
+ */
 async function getLoginTicket() {
   const resp = await fetch(
     'https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount',
@@ -33,6 +38,15 @@ async function getLoginTicket() {
   return match[0].replace(/"/g, '');
 }
 
+/**
+ * casLogin returns the service token based on the login info
+ *
+ * @param email: a string as username used for CAS
+ * @param password: a string as password of this user
+ * @param loginTicket: a string as a fresh login ticket
+ *
+ * @return a Promise that resolves to a service token string
+ */
 async function casLogin(email, password, loginTicket) {
   const formData = new FormData();
   formData.append('username', email);
@@ -81,6 +95,13 @@ async function casLogin(email, password, loginTicket) {
   return Promise.reject(new Error('Did not find Service Token in response'));
 }
 
+/**
+ * Talk to the persistent login backend to get the CiviCRM api key for the user
+ *
+ * @param serviceTicket: string
+ *
+ * @return a Promise that resolves to a string API key
+ */
 async function getCiviCRMApiKey(serviceTicket) {
   const resp = await fetch('http://fsfmobile0p.fsf.org:8080/login', {
     method: 'POST',
@@ -100,6 +121,9 @@ async function getCiviCRMApiKey(serviceTicket) {
   return resp.json();
 }
 
+/**
+ * @return a Promise that resolves to a string as the stored api key
+ */
 async function getStoredApiKey() {
   try {
     const key = await AsyncStorage.getItem('apikey');
@@ -113,6 +137,9 @@ async function getStoredApiKey() {
   }
 };
 
+/**
+ * @return a Promise that resolves to a string as the stored user id
+ */
 async function getStoredId() {
   try {
     const id = await AsyncStorage.getItem('id');
@@ -126,6 +153,9 @@ async function getStoredId() {
   }
 };
 
+/**
+ * @param key: a string of api key to store
+ */
 async function storeApiKey(key) {
   try {
     await AsyncStorage.setItem('apikey', key);
@@ -135,6 +165,9 @@ async function storeApiKey(key) {
   }
 }
 
+/**
+ * @param id: a string of user id to store
+ */
 async function storeId(id) {
   try {
     await AsyncStorage.setItem('id', id);
