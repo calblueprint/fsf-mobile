@@ -6,7 +6,7 @@ import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
-import DonatePayemntScreen from '../screens/donate/DonatePaymentScreen';
+import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
 import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';

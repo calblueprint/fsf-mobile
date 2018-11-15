@@ -29,7 +29,7 @@ class DonateCreditCardScreen extends BaseScreen {
         />
 
         <Button
-          onPress={() => this._switchTab(this, "DonatePaymentMethod")}
+          onPress={() => this._switchTab(this, "DonateBilling")}
           title="start"
         />
       </View>
