@@ -1,8 +1,11 @@
 import React from 'react';
 import {
-  Button, Text, View, TextInput, StyleSheet, Alert, AsyncStorage,
+  Button, Text, View, TextInput, StyleSheet, Alert
 } from 'react-native';
-import { getLoginTicket, casLogin, getCiviCRMApiKey } from '../../lib/login';
+import {
+  getLoginTicket, casLogin, getCiviCRMApiKey,
+  storeApiKey, storeId, getStoredApiKey, getStoredId
+} from '../../lib/login';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
@@ -25,17 +28,8 @@ class LoginScreen extends BaseScreen {
 
         const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-        const saveKey = async (apiKey) => {
-          try {
-            await AsyncStorage.setItem('apikey', apiKey.key);
-            await AsyncStorage.setItem('id', apiKey.id);
-          } catch (error) {
-            console.log('fail to save API KEY!!!');
-            console.log(error);
-          }
-        };
-
-        saveKey(apiKey);
+        storeApiKey(apiKey.key)
+        storeId(apiKey.id)
 
         okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
         props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
@@ -71,20 +65,15 @@ class LoginScreen extends BaseScreen {
 
   _devLogin = async() => {
     console.log("Logging in");
-    await AsyncStorage.setItem('userToken', 'abc');
     this.props.navigation.navigate('App');
   };
 
   static _showApiKey() {
     const request = async () => {
       try {
-        const key = await AsyncStorage.getItem('apikey');
-        const id = await AsyncStorage.getItem('id');
-        if (key != null) {
-          okAlert('Found API Key', `${key} ${id}`);
-        } else {
-          okAlert('API Key not found', 'You may need to login first!');
-        }
+        const key = await getStoredApiKey();
+        const id = await getStoredId();
+        okAlert('Found API Key', `${key} ${id}`);
       } catch (error) {
         okAlert('API Key not found', 'You may need to login first!');
       }

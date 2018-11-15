@@ -11,6 +11,8 @@
  *
  */
 
+import { AsyncStorage } from "react-native"
+
 async function getLoginTicket() {
   const resp = await fetch(
     'https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount',
@@ -76,8 +78,6 @@ async function casLogin(email, password, loginTicket) {
   }
 
   // none of above
-  console.log(headers);
-  console.log(body);
   return Promise.reject(new Error('Did not find Service Token in response'));
 }
 
@@ -100,4 +100,51 @@ async function getCiviCRMApiKey(serviceTicket) {
   return resp.json();
 }
 
-export { getLoginTicket, casLogin, getCiviCRMApiKey };
+async function getStoredApiKey() {
+  try {
+    const key = await AsyncStorage.getItem('apikey');
+    if (key != null) {
+      return key
+    } else {
+      return Promise.reject(new Error("API Key not found"));
+    }
+  } catch (error) {
+    return Promise.reject(new Error("API Key not found"));
+  }
+};
+
+async function getStoredId() {
+  try {
+    const id = await AsyncStorage.getItem('id');
+    if (id != null) {
+      return id
+    } else {
+      return Promise.reject(new Error("User Id not found"));
+    }
+  } catch (error) {
+    return Promise.reject(new Error("User Id not found"));
+  }
+};
+
+async function storeApiKey(key) {
+  try {
+    await AsyncStorage.setItem('apikey', key);
+  } catch (error) {
+    console.log("Unexpected: fail to save to async storage")
+    console.log(error);
+  }
+}
+
+async function storeId(id) {
+  try {
+    await AsyncStorage.setItem('id', key);
+  } catch (error) {
+    console.log("Unexpected: fail to save to async storage")
+    console.log(error);
+  }
+}
+
+export {
+  getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
+  storeId, getStoredApiKey, getStoredId
+};
