@@ -32,7 +32,7 @@ class LoginScreen extends BaseScreen {
         storeId(apiKey.id)
 
         okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
-        props.navigation.goBack(); // Assumes that LoginScreen was displayed as modal.
+        this.props.navigation.navigate('App');
       } catch (error) {
         console.log(error);
         okAlert('Login failed', 'Try again');

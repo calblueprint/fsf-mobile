@@ -137,7 +137,7 @@ async function storeApiKey(key) {
 
 async function storeId(id) {
   try {
-    await AsyncStorage.setItem('id', key);
+    await AsyncStorage.setItem('id', id);
   } catch (error) {
     console.log("Unexpected: fail to save to async storage")
     console.log(error);
