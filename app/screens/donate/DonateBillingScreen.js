@@ -6,40 +6,59 @@ import BaseScreen from '../BaseScreen'
 class DonateBillingScreen extends BaseScreen {
   constructor(props) {
     super(props);
+    this.state = {
+      address: "",
+      city: "",
+      country: "",
+      stateProvince: "",
+      postalCode: 0
+    };
   }
 
-  // static handleChange = () => {
+  //todo make this part of lib?
+  _handleChange = (name, value) => {
+    //TODO: add validations here, use switch statement on name
+    this.setState({ [name]: value });
 
-  // }
+    //sanity check
+    console.log(this.state.address);
+  };
+
+  //todo pass state info on in onPress
 
   render() {
     const formInfos = [
       {
         id: 1,
         label: "address",
+        func: input => this._handleChange("address", input)
       },
       {
         id: 2,
         label: "city",
+        func: input => this._handleChange("city", input)
       },
       {
         id: 3,
         label: "country",
+        func: input => this._handleChange("country", input)
       },
       {
         id: 4,
         label: "state/province",
+        func: input => this._handleChange("stateProvince", input)
       },
       {
         id: 5,
         label: "postal code",
-      },
+        func: input => this._handleChange("postalCode", input)
+      }
     ];
 
     let formInputs = formInfos.map(formInfo => (
-      <View>
-        <FormLabel key={formInfo.id}> {formInfo.text} </FormLabel>
-        <FormInput onChange={formInfo.function} />
+      <View key={formInfo.id}>
+        <FormLabel> {formInfo.text} </FormLabel>
+        <FormInput onChangeText={formInfo.func} />
       </View>
     ));
 
