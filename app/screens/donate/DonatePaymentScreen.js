@@ -1,6 +1,16 @@
 import React from 'react';
 import { FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 import { Button, Text, View} from 'react-native';
+import {
+  getStoredApiKey,
+  getStoredId
+} from "../../lib/login";
+import {
+  TCGetBillingID, 
+  CiviStoreBillingID, 
+  CiviStoreLastFour, 
+  CiviCreateContribution
+ } from "../../lib/donate";
 import BaseScreen from '../BaseScreen'
 
 class DonatePaymentScreen extends BaseScreen {
@@ -8,8 +18,8 @@ class DonatePaymentScreen extends BaseScreen {
     super(props);
     this.state = {
       cardholder: "",
-      ccn: 0,
-      expiration: "",
+      cc: 0,
+      exp: "",
       securityCode: ""
     };
   }
@@ -26,23 +36,31 @@ class DonatePaymentScreen extends BaseScreen {
     // console.log(this.state);
   };
 
-  //this freezes as long as there's input on this page, wtf
   _onPress = () => {
     //TODO figure out propTypes checking with this
     let mergedNavProps = {
       ...this.state,
       ...this.props.navigation.state.params
     };
-    console.log(mergedNavProps);
+    
+    /*
+    call to TC BE
+    - requires a POST request with json payload with the following format (adjust this.state)
+    *
+    * {
+        "name": "John Smith",
+        "cc": "4111111111111111",
+        "exp": "0404",
+        "zip": "90000"
+    }
+    - change 'cardholder' to 'name' and give 'zip' instead of 'security code'
+    
+     save BillingID in CiviCRM
+     save last four digits (rip - future: need to save a mapping between BillingID and ccn too) - in CiviCRM
+    */
     this._switchTab(this, "DonateSuccess", mergedNavProps);
   };
 
-  /* todo:
-     pass state info on in onPress
-     call to TC BE
-     save BillingID in CiviCRM
-     save last four digits (rip need to save a mapping between that and ccn too) - in CiviCRM?
-   */
 
   render() {
     const formInfos = [
@@ -54,12 +72,12 @@ class DonatePaymentScreen extends BaseScreen {
       {
         id: 2,
         label: "credit card number",
-        func: input => this._handleChange("ccn", input)
+        func: input => this._handleChange("cc", input)
       },
       {
         id: 3,
         label: "expiration date",
-        func: input => this._handleChange("expiration", input)
+        func: input => this._handleChange("exp", input)
       },
       {
         id: 4,
