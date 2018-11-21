@@ -11,5 +11,7 @@ class BaseScreen extends React.Component {
       screen.props.navigation.navigate(route)
     }
   }
+  // Any code useful across all screens should live here!
+
 }
 export default BaseScreen;

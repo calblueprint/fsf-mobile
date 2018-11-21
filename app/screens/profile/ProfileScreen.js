@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
 import BaseScreen from '../BaseScreen'
+import { okAlert } from '../../lib/alerts'
 
 class ProfileScreen extends BaseScreen {
 
@@ -17,14 +18,7 @@ class ProfileScreen extends BaseScreen {
   }
 
   _signOutAsync = async () => {
-    Alert.alert(
-      'Logged Out',
-      '',
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ],
-      { cancelable: false }
-    )
+    okAlert('Logged Out', '')
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
   }

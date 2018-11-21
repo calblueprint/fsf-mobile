@@ -1,5 +1,10 @@
 import React from 'react';
-import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import { 
+  createAppContainer, 
+  createBottomTabNavigator, 
+  createStackNavigator, 
+  createSwitchNavigator 
+} from 'react-navigation'
 import NewsScreen from '../screens/news/NewsScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
@@ -51,23 +56,27 @@ const MainNav = createBottomTabNavigator(
         const { routeName } = navigation.state;
 
         // Here's where Franco will eventually insert beautiful icons
-        let iconName = 'md-options';
-        if (routeName === 'News') {
-          iconName = 'md-volume-up';
-        } else if (routeName === 'Petitions') {
-          iconName = 'md-microphone';
-        }
-        else if (routeName === 'Donate') {
-          iconName = 'md-cash';
-        }
-        else if (routeName === 'Profile') {
-          iconName = 'md-person';
+        let iconName = "md-options";
+        if (routeName === "News") {
+          iconName = "md-volume-up";
+        } else if (routeName === "Petitions") {
+          iconName = "md-microphone";
+        } else if (routeName === "Donate") {
+          iconName = "md-cash";
+        } else if (routeName === "Profile") {
+          iconName = "md-person";
         }
 
         // You can return any component that you like here! By default, using Ionicons
-        return <Ionicons name={iconName} size={horizontal ? 20 : 25} color={tintColor} />;
-      },
-    }),
+        return (
+          <Ionicons
+            name={iconName}
+            size={horizontal ? 20 : 25}
+            color={tintColor}
+          />
+        );
+      }
+    })
   }
 );
 
@@ -79,11 +88,11 @@ export const AppNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
-    Auth: AuthNav,
+    Auth: AuthNav
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: "AuthLoading"
   }
-)
+);
 
 export const NavContainer = createAppContainer(AppNav);

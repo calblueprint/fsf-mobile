@@ -5,7 +5,7 @@ import { Platform } from 'react-native'
  */
 if (process.env.NODE_ENV === 'production') {
   console.log('In Production Environment');
-  URL = 'https://fsfmobile.fsf.org.com'
+  URL = 'https://fsfmobile.fsf.org'
 } else {
   console.log('In Staging (Dev) Environment');
   URL = Platform.select({

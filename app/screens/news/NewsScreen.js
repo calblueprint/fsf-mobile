@@ -21,11 +21,10 @@ class NewsScreen extends BaseScreen {
   }
 
   render() {
-    console.log("Rendering MessagesScreen");
-
     var messages = this.state.messages.map((message) => (
       <MessageCard message={message} key={message.id}/>
     ))
+
     var refreshControl = (
       <RefreshControl
         refreshing={this.state.refreshing}

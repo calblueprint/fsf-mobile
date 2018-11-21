@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 import BaseScreen from '../BaseScreen'
 
-
+// This screen determines whether the user is logged in or not
 class AuthLoadingScreen extends BaseScreen {
   constructor(props) {
     super(props);
