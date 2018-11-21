@@ -3,11 +3,15 @@ import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen'
 import { TextInput } from 'react-native-gesture-handler';
 
-class DonateCreditCardScreen extends BaseScreen {
+class DonateHomeScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = { amount: 20 };
   }
+
+  static navigationOptions = {
+    headerVisible: false,
+  };
 
   _changeAmount = textAmount => {
     let newAmount = parseInt(textAmount.slice(1));
@@ -15,6 +19,7 @@ class DonateCreditCardScreen extends BaseScreen {
   };
 
   render() {
+
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text>Support the Free Software Foundation</Text>
@@ -29,11 +34,11 @@ class DonateCreditCardScreen extends BaseScreen {
         />
 
         <Button
-          onPress={() => this._switchTab(this, "DonateBilling")}
+          onPress={() => this._switchTab(this, "DonateBilling", this.state)}
           title="start"
         />
       </View>
     );
   }
 }
-export default DonateCreditCardScreen;
+export default DonateHomeScreen;

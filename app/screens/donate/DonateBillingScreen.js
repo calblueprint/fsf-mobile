@@ -6,25 +6,40 @@ import BaseScreen from '../BaseScreen'
 class DonateBillingScreen extends BaseScreen {
   constructor(props) {
     super(props);
+    // const { navigation } = this.props;
+    // const amount = navigation.getParam("amount", "no-amount");
+    // console.log(this.state.amount);
     this.state = {
       address: "",
       city: "",
       country: "",
       stateProvince: "",
-      postalCode: 0
+      postalCode: 0,
+      // amount: amount
     };
   }
 
-  //todo make this part of lib?
+  static navigationOptions = {
+    title: "Billing Info"
+  };
+
+  //TODO: make this part of lib?
   _handleChange = (name, value) => {
     //TODO: add validations here, use switch statement on name
     this.setState({ [name]: value });
 
     //sanity check
-    console.log(this.state.address);
+    // console.log(this.state);
   };
 
-  //todo pass state info on in onPress
+  _onPress = () => {
+    //TODO figure out propTypes checking with this 
+    let mergedNavProps = { 
+      ...this.state, 
+      ...this.props.navigation.state.params };
+    console.log(mergedNavProps);
+    this._switchTab(this, "DonatePayment", mergedNavProps)
+  }
 
   render() {
     const formInfos = [
@@ -57,17 +72,16 @@ class DonateBillingScreen extends BaseScreen {
 
     let formInputs = formInfos.map(formInfo => (
       <View key={formInfo.id}>
-        <FormLabel> {formInfo.text} </FormLabel>
+        <FormLabel> {formInfo.label} </FormLabel>
         <FormInput onChangeText={formInfo.func} />
       </View>
     ));
 
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Text>Billing Info</Text>
         {formInputs}
         <Button
-          onPress={() => this._switchTab(this, "DonatePayment")}
+          onPress={this._onPress}
           title="start"
         />
       </View>
