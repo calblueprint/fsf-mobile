@@ -3,6 +3,8 @@ package com.fsf;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.github.wumke.RNLocalNotifications.RNLocalNotificationsPackage;
+import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNLocalNotificationsPackage(),
+            new RNBackgroundFetchPackage(),
             new RNGestureHandlerPackage()
       );
     }
