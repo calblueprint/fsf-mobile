@@ -138,8 +138,7 @@ android {
 
 dependencies {
     def work_version = "1.0.0-alpha11"
-    implementation project(':realm')
-    implementation project(':react-native-gesture-handler')
+    compile project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
