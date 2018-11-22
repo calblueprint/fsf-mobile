@@ -10,7 +10,7 @@ android/.idea
 
 # Java class files
 *.class
-
+android/.idea
 # Generated files
 bin/
 gen/
@@ -334,3 +334,5 @@ typings/
 /*.gcno
 
 # End of https://www.gitignore.io/api/reactnative,intellij,android,osx,xcode
+
+.expo/
