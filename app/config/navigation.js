@@ -47,7 +47,7 @@ const MainNav = createBottomTabNavigator(
         // Here's where Franco will eventually insert beautiful icons
         let iconName = 'md-options';
         if (routeName === 'News') {
-          iconName = 'md-volume-up';
+          iconName = 'md-options';
         } else if (routeName === 'Petitions') {
           iconName = 'md-microphone';
         }

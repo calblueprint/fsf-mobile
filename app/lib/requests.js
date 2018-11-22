@@ -12,14 +12,18 @@ import networkSettings from '../config/network'
  function requestNoCatch(type, route, successFunc, errorFunc, params=null) {
    let host = networkSettings.URL
    console.log("Sending " + type + " request to host: " + host + " at route: " + route);
-   return fetch(`${host}${route}`, {
+   request = {
      method: type,
      headers: {
        'Accept': 'application/json',
        'Content-Type': 'application/json',
-     },
-     body: JSON.stringify(params)})
-     .then(function(response) {
+     }
+   }
+   if (type != "GET") {
+     console.log("Setting Body")
+     request.body = JSON.stringify(params)
+   }
+   return fetch(`${host}${route}`, request).then(function(response) {
        if (response.ok) {
          return response.json().then(function(object) {
            return successFunc(object);
@@ -29,7 +33,7 @@ import networkSettings from '../config/network'
            return errorFunc(error);
          })
        }
-     });
+   };
  }
 
 /**
