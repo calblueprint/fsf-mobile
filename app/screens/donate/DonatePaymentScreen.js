@@ -6,21 +6,19 @@ import {
   getStoredId
 } from "../../lib/login";
 import {
-  TCGetBillingID, 
-  CiviStoreBillingID, 
-  CiviStoreLastFour, 
-  CiviCreateContribution
- } from "../../lib/donate";
+  TCGetBillingID, CiviStoreBillingID, CiviStoreLastFour, CiviCreateContribution
+ } from '../../lib/donate';
 import BaseScreen from '../BaseScreen'
+import { okAlert } from '../../lib/alerts'
 
 class DonatePaymentScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
-      cardholder: "",
+      cardholder: '',
       cc: 0,
-      exp: "",
-      securityCode: ""
+      exp: '',
+      securityCode: '',
     };
   }
 
@@ -36,29 +34,56 @@ class DonatePaymentScreen extends BaseScreen {
     // console.log(this.state);
   };
 
-  _onPress = () => {
-    //TODO figure out propTypes checking with this
-    let mergedNavProps = {
-      ...this.state,
-      ...this.props.navigation.state.params
-    };
-    
-    /*
-    call to TC BE
-    - requires a POST request with json payload with the following format (adjust this.state)
-    *
-    * {
+  _donate = async () => {
+    try {
+      //TODO figure out propTypes checking with this
+      let mergedNavProps = {
+        ...this.state,
+        ...this.props.navigation.state.params
+      };
+      
+      /*
+      call to TC BE
+      - requires a POST request with json payload with the following format (adjust this.state)
+      *
+      * {
+          "name": "John Smith",
+          "cc": "4111111111111111",
+          "exp": "0404",
+          "zip": "90000"
+      }
+      
+
+      save BillingID in CiviCRM
+      save last four digits (rip - future: need to save a mapping between BillingID and ccn too) - in CiviCRM
+      */
+
+      // change 'cardholder' to 'name', add 'zip' prop, del 'security code'
+      let tcInfo = JSON.parse(JSON.stringify(this.state));
+      tcInfo['zip'] = mergedNavProps['postalCode'];
+      tcInfo['name'] = tcInfo['cardholder'];
+      ({ cardholder, securityCode, ...tcInfo } = tcInfo);
+
+      //sanity check
+      console.log(tcInfo);
+
+      // DEV only
+      tcInfo = {
         "name": "John Smith",
         "cc": "4111111111111111",
         "exp": "0404",
         "zip": "90000"
+      };
+
+      // remove after dev
+      const resp = await TCGetBillingID(tcInfo);
+      CiviStoreBillingID(null, resp.billingid);
+
+      this._switchTab(this, "DonateSuccess", mergedNavProps);
+    } catch(error) {
+      console.log(error);
+      okAlert('Donate failed', 'Try again');
     }
-    - change 'cardholder' to 'name' and give 'zip' instead of 'security code'
-    
-     save BillingID in CiviCRM
-     save last four digits (rip - future: need to save a mapping between BillingID and ccn too) - in CiviCRM
-    */
-    this._switchTab(this, "DonateSuccess", mergedNavProps);
   };
 
 
@@ -96,7 +121,7 @@ class DonatePaymentScreen extends BaseScreen {
       <View style={{ flex: 1, alignItems: "center" }}>
         {formInputs}
         <Button
-          onPress={this._onPress}
+          onPress={() => this._donate()}
           title="donate"
         />
       </View>

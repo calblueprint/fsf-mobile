@@ -14,12 +14,12 @@
  */
 
  // tony's way of doing requests
-const resp = await fetch('https://cas.fsf.org/login', {
-  method: 'POST',
-  redirect: 'error',
-  credentials: 'include',
-  body: formData,
-});
+// const resp = await fetch('https://cas.fsf.org/login', {
+//   method: 'POST',
+//   redirect: 'error',
+//   credentials: 'include',
+//   body: formData,
+// });
 
 
 /**
@@ -35,16 +35,14 @@ const resp = await fetch('https://cas.fsf.org/login', {
  *
  * @return a Promise that resolves to a six-digit alphanumeric BillingID
  */
-async function getBillingID(ccInfo) {
+async function TCGetBillingID(paymentInfo) {
   const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/register", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-
-    
-    body: ccInfo
+    body: JSON.stringify(paymentInfo)
   });
 
   if (resp.status >= 400) {
@@ -55,7 +53,7 @@ async function getBillingID(ccInfo) {
 }
 
 async function CiviStoreBillingID(contactID, billingID) {
-
+    console.log(billingID);
 }
 
 async function CiviStoreLastFour(contactID, digits) {
@@ -65,3 +63,10 @@ async function CiviStoreLastFour(contactID, digits) {
 async function CiviCreateContribution(contactID, entity, params) {
 
 }
+
+export {
+  TCGetBillingID,
+  CiviStoreBillingID,
+  CiviStoreLastFour,
+  CiviCreateContribution
+};
