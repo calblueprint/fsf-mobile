@@ -10,7 +10,7 @@
 
 # Java class files
 *.class
-
+android/.idea
 # Generated files
 bin/
 gen/
