@@ -1,63 +1,48 @@
-import React from 'react';
-import { Button, Text, View, StyleSheet, RefreshControl, ScrollView } from 'react-native';
-import { getRequest } from './../../lib/requests';
-import APIRoutes from './../../lib/routes';
-import MessageCard from './../../components/MessageCard'
-import BaseScreen from '../BaseScreen'
+import React from "react";
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  RefreshControl,
+  ScrollView
+} from "react-native";
+import { getRequest } from "./../../lib/requests";
+import BaseScreen from "../BaseScreen";
+import MessageCard from "./../../components/MessageCard";
+import NewsList from "../../components/newsfeed/NewsList";
+import NewsData from "./../../components/newsfeed/newsData.js";
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsScreen extends BaseScreen {
-
   constructor(props) {
     super(props);
     this.state = {
       messages: [],
-      refreshing: true,
-    }
+      refreshing: true
+    };
   }
-
-  componentDidMount() {
-    this._fetchMessages();
-  }
-
   render() {
-    var messages = this.state.messages.map((message) => (
-      <MessageCard message={message} key={message.id}/>
-    ))
-
-    var refreshControl = (
-      <RefreshControl
-        refreshing={this.state.refreshing}
-        onRefresh={() => this._fetchMessages(true)}
-      />
-    )
-
     return (
-      <ScrollView refreshControl={refreshControl}>
+      <ScrollView>
         <View style={styles.container}>
-        <Text>This is the News Screen</Text>
-        <Button title="Detail" onPress={() => this.props.navigation.navigate('NewsDetail')}></Button>
-          {messages}
+          <Text>FSF NEWS </Text>
+          <Button
+            title="Detail"
+            onPress={() => this.props.navigation.navigate("NewsDetail")}
+          />
         </View>
+        <NewsList newsItems={NewsData} />
       </ScrollView>
-    )
+    );
   }
-
-  _fetchMessages(refresh=false){
-    this.setState({refreshing: refresh})
-    getRequest('/messages',
-              (data) => this.setState({messages: data, refreshing: false}),
-              (error) => console.log(error))
-  }
-
-
 }
 
 const styles = StyleSheet.create({
   container: {
     marginRight: 40,
     marginLeft: 40,
-    alignSelf: 'stretch'
+    alignSelf: "stretch"
   }
 });
 
