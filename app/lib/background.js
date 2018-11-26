@@ -1,6 +1,8 @@
 import BackgroundFetch from "react-native-background-fetch";
 import { AsyncStorage } from "react-native"
 import { notify } from "./notifications"
+import { getRequest } from "./requests"
+import DeviceInfo from 'react-native-device-info';
 
 
 function status() {
@@ -31,9 +33,27 @@ function initializeBackgroundFetch() {
 }
 
 function _backgroundTask(){
+  var deviceInfo = `BG FETCH. Device Name: ${DeviceInfo.getDeviceName()}, Device Type: ${DeviceInfo.getModel()}, Device ID: ${DeviceInfo.getUniqueID()}, API Level: ${DeviceInfo.getAPILevel()}`
+  let req = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'device_id': deviceInfo
+    })
+  };
+  fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
+    console.log("Background task request Response: ")
+    console.log(response)
+  });
+
   getRequest('/messages',
     (newMessages) => {
-      processMessages(newMessages)
+      console.log("Receieving Data")
+      console.log("Processing Messages")
+      _processMessages(newMessages)
     },
     (error) => {
       console.log(error);
@@ -47,11 +67,14 @@ function _processMessages(newMessages) {
     // Get old messages
     oldMessageHash = AsyncStorage.getItem('messages')
     newMessageHash = {}
+    console.log("Old Message Hash")
+    console.log(oldMessageHash)
 
     // For every message that comes in, add it to the hash
     // And notify if we haven't seen it
     let newMessageCount = 0
-    for (message in newMessages) {
+    for (messageIndex in newMessages) {
+      message = newMessages[messageIndex]
       newMessageHash[message.id] = message
       if (!(message.id in oldMessageHash)) {
         newMessageCount += 1
@@ -60,6 +83,7 @@ function _processMessages(newMessages) {
     }
     console.log("Notified about " + newMessageCount + " new messages");
     // Update Stored Messages
+    console.log(newMessageHash)
     AsyncStorage.setItem('messages', newMessageHash);
 
     // Finish

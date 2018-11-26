@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'production') {
   URL = Platform.select({
     // You'll need to change this to your computer's IP/ngrok if using mobile simulator
     ios: "http://localhost:3000",
-    android: "http://10.0.2.2:3000"
+    android: "http://fsf-rails-notif-staging.herokuapp.com"
   });
 }
 

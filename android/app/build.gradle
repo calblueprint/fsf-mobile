@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     implementation project(':react-native-local-notifications')
     implementation project(':react-native-background-fetch')
     def work_version = "1.0.0-alpha11"

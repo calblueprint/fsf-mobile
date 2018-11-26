@@ -33,7 +33,7 @@ import networkSettings from '../config/network'
            return errorFunc(error);
          })
        }
-   };
+   });
  }
 
 /**
@@ -56,8 +56,31 @@ function request(type, route, successFunc, errorFunc, params=null) {
  * Request function for GET requests. Same params as request except doesn't take in type and:
  * @param params - URL query params
  */
- function getRequest(route, successFunc, errorFunc, params=null) {
-   return request('GET', route, successFunc, errorFunc, params)
+ function getRequest(route, successFunc, errorFunc, params=null, shouldUseAltRoute=false) {
+   let host = networkSettings.URL;
+   console.log("Sending GET request to host: " + host + " at route: " + route);
+  const url = params ? `${host}${route}/?${queryString.stringify(params)}` : `${host}${route}`;
+  console.log("Sending GET request to url: " + url);
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }})
+    .then(function(response) {
+      if (response.ok) {
+        return response.json().then(function(object) {
+          return successFunc(object);
+        })
+      } else {
+        return response.json().then(function(error) {
+          return errorFunc(error);
+        })
+      }
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
 }
 
 /**
