@@ -12,6 +12,7 @@
     "react-native": "0.57.5",
     "react-native-background-fetch": "^2.4.4",
     "react-native-device-info": "^0.24.3",
+    "react-native-fsf-local-notifications": "file:../FSFLocalNotifications",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
     "react-native-local-notifications": "^1.1.0",

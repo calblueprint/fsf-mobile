@@ -21,6 +21,7 @@ function status() {
 function initializeBackgroundFetch() {
   BackgroundFetch.configure({
     minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+    forceReload: true,
     stopOnTerminate: false,  // <-- Fetching should continue when app terminates
     startOnBoot: true      // <-- Fetching should restart when phone reboots
   }, () => {
@@ -33,6 +34,22 @@ function initializeBackgroundFetch() {
 }
 
 function _backgroundTask(){
+  _pingDebugServer();
+  getRequest('/messages',
+    (newMessages) => {
+      console.log("Receieving Data");
+      console.log("Processing Messages");
+      _processMessages(newMessages)
+    },
+    (error) => {
+      console.log("Request for messages failed")
+      console.log(error);
+      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
+    }
+  )
+}
+
+function _pingDebugServer() {
   var deviceInfo = `BG FETCH. Device Name: ${DeviceInfo.getDeviceName()}, Device Type: ${DeviceInfo.getModel()}, Device ID: ${DeviceInfo.getUniqueID()}, API Level: ${DeviceInfo.getAPILevel()}`
   let req = {
     method: 'POST',
@@ -45,27 +62,18 @@ function _backgroundTask(){
     })
   };
   fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
-    console.log("Background task request Response: ")
-    console.log(response)
+    console.log("Background task request Response status: " + response.status)
   });
-
-  getRequest('/messages',
-    (newMessages) => {
-      console.log("Receieving Data")
-      console.log("Processing Messages")
-      _processMessages(newMessages)
-    },
-    (error) => {
-      console.log(error);
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
-    }
-  )
 }
 
-function _processMessages(newMessages) {
+async function _processMessages(newMessages) {
   try {
     // Get old messages
-    oldMessageHash = AsyncStorage.getItem('messages')
+    oldMessageHash = await AsyncStorage.getItem('messages')
+    if (oldMessageHash == null) {
+      oldMessageHash = "{}"
+    }
+    oldMessageHash = JSON.parse(oldMessageHash)
     newMessageHash = {}
     console.log("Old Message Hash")
     console.log(oldMessageHash)
@@ -78,13 +86,13 @@ function _processMessages(newMessages) {
       newMessageHash[message.id] = message
       if (!(message.id in oldMessageHash)) {
         newMessageCount += 1
-        notify(message.id, message.title + " " + message.content)
+        notify(message.title, message.content, message.id)
       }
     }
     console.log("Notified about " + newMessageCount + " new messages");
     // Update Stored Messages
-    console.log(newMessageHash)
-    AsyncStorage.setItem('messages', newMessageHash);
+    await AsyncStorage.setItem('messages', JSON.stringify(newMessageHash));
+    console.log("Finished saving data in async storage");
 
     // Finish
     if (newMessageCount > 0) {
@@ -95,7 +103,7 @@ function _processMessages(newMessages) {
 
   } catch (error) {
     console.log("Error saving Message Data.\nData:")
-    console.log(data)
+    console.log(newMessages)
     console.log("\n\nError:")
     console.log(error)
     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);

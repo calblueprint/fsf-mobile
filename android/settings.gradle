@@ -1,4 +1,6 @@
 rootProject.name = 'FSF'
+include ':react-native-fsf-local-notifications'
+project(':react-native-fsf-local-notifications').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fsf-local-notifications/android')
 include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
 include ':react-native-local-notifications'

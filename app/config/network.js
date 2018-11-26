@@ -15,6 +15,8 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+URL = "http://fsf-rails-notif-staging.herokuapp.com";
+
 export const networkSettings = {
   env: process.env.NODE_ENV,
   URL,
