@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.fsflocalnotifications.FSFLocalNotificationPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.github.wumke.RNLocalNotifications.RNLocalNotificationsPackage;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
 
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -31,7 +30,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new FSFLocalNotificationPackage(),
             new RNDeviceInfo(),
-            new RNLocalNotificationsPackage(),
             new RNBackgroundFetchPackage(),
             new RNGestureHandlerPackage()
       );

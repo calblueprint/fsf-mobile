@@ -4811,8 +4811,10 @@ react-native-device-info@^0.24.3:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.24.3.tgz#f15eff8d09fe418eaf5e7c89ddaabbc5ed718fd7"
   integrity sha512-usW00Wk6DoXH1eRSMt07j0uYvuka3SIEnJ9girlddAacyqwfa1QMVTN4eYmtaBzuMd/avhis8iHZQ3cLaR9CMA==
 
-"react-native-fsf-local-notifications@file:../FSFLocalNotifications":
+react-native-fsf-local-notifications@^1.0.0:
   version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-fsf-local-notifications/-/react-native-fsf-local-notifications-1.0.0.tgz#540c2baf2dbc23b2b52112eb7f6ae66dd1745bf9"
+  integrity sha512-vivPUYcT2jw0DPyeBzxzsThIdFml54WyXHFB47nyirqIGLeWTSXJZqyaXMQx3O19RKXcCBZUkz1icvTeNPLAVw==
 
 react-native-gesture-handler@^1.0.9:
   version "1.0.9"
@@ -4827,11 +4829,6 @@ react-native-ionicons@^4.4.6:
   version "4.4.6"
   resolved "https://registry.yarnpkg.com/react-native-ionicons/-/react-native-ionicons-4.4.6.tgz#e98d7edb74dadd49c49adab5b0a393a687197e0c"
   integrity sha512-UcZhenuo0W1MSgH8dr8FBFvAkHEkarQWWG4saNOYJAWfXqqYfKfk9WIcYfrMHDI1sfCpa7+AmW1V6spUnOmewg==
-
-react-native-local-notifications@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-local-notifications/-/react-native-local-notifications-1.1.0.tgz#78f6f049e4a5b93f1551478591327d800a90cc3d"
-  integrity sha512-zFfwnIzVZcH9JJoHzFbvAOz0PzpBcPa7/qilQxUe1DpfaQLwQs0M4H+fckcMuD9GW6n+zYYC6lYTHKrWq56Idg==
 
 react-native-safe-area-view@^0.11.0:
   version "0.11.0"

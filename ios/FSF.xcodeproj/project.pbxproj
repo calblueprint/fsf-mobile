@@ -42,7 +42,6 @@
 		FCF9BC028E3B4D18887E4FC3 /* libRNBackgroundFetch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 565CD1EDE8C147BD957D1C91 /* libRNBackgroundFetch.a */; };
 		1614154095194BF1B9AA2418 /* TSBackgroundFetch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D33AEC732D1445669315C5D7 /* TSBackgroundFetch.framework */; };
 		5918001302D64BAB864E358E /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ECD0DB10F546EF8144DE7F /* RNBackgroundFetch+AppDelegate.m */; };
-		1F870D8F3F464B0D8F612452 /* libRNLocalNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D27FC628F26A479D91590CC0 /* libRNLocalNotifications.a */; };
 		939D5ACDCC3D454CA87F6D30 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1BC73425F1453B8EB67B01 /* libRNDeviceInfo.a */; };
 		0ACF73D41BBD47D09F166DF4 /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18E4D403C76F41108D2CC09F /* libRNDeviceInfo-tvOS.a */; };
 		ED8525108FFC4CD39A7ED5E5 /* libRNFsfLocalNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 66AFDC51A1544F6B96BBC2DE /* libRNFsfLocalNotifications.a */; };
@@ -358,8 +357,6 @@
 		565CD1EDE8C147BD957D1C91 /* libRNBackgroundFetch.a */ = {isa = PBXFileReference; name = "libRNBackgroundFetch.a"; path = "libRNBackgroundFetch.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		D33AEC732D1445669315C5D7 /* TSBackgroundFetch.framework */ = {isa = PBXFileReference; name = "TSBackgroundFetch.framework"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/TSBackgroundFetch.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		B0ECD0DB10F546EF8144DE7F /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		9612C6E59AFF4279976F0235 /* RNLocalNotifications.xcodeproj */ = {isa = PBXFileReference; name = "RNLocalNotifications.xcodeproj"; path = "../node_modules/react-native-local-notifications/ios/RNLocalNotifications.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		D27FC628F26A479D91590CC0 /* libRNLocalNotifications.a */ = {isa = PBXFileReference; name = "libRNLocalNotifications.a"; path = "libRNLocalNotifications.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		AD5FB83B4E644047B1589725 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; name = "RNDeviceInfo.xcodeproj"; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		2E1BC73425F1453B8EB67B01 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo.a"; path = "libRNDeviceInfo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		18E4D403C76F41108D2CC09F /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; name = "libRNDeviceInfo-tvOS.a"; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
@@ -395,7 +392,6 @@
 				A9B5A36F258F4EA194087973 /* libRNGestureHandler.a in Frameworks */,
 				FCF9BC028E3B4D18887E4FC3 /* libRNBackgroundFetch.a in Frameworks */,
 				1614154095194BF1B9AA2418 /* TSBackgroundFetch.framework in Frameworks */,
-				1F870D8F3F464B0D8F612452 /* libRNLocalNotifications.a in Frameworks */,
 				939D5ACDCC3D454CA87F6D30 /* libRNDeviceInfo.a in Frameworks */,
 				ED8525108FFC4CD39A7ED5E5 /* libRNFsfLocalNotifications.a in Frameworks */,
 			);
@@ -589,7 +585,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				0D298DB3F2754C18B3A1F0CF /* RNGestureHandler.xcodeproj */,
 				BD4A248F79F04FAA8C582537 /* RNBackgroundFetch.xcodeproj */,
-				9612C6E59AFF4279976F0235 /* RNLocalNotifications.xcodeproj */,
 				AD5FB83B4E644047B1589725 /* RNDeviceInfo.xcodeproj */,
 				EE520E7502D24205BB139DA3 /* RNFsfLocalNotifications.xcodeproj */,
 			);
@@ -1238,7 +1233,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FSF.app/FSF";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1270,7 +1264,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FSF.app/FSF";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1367,7 +1360,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1407,7 +1399,6 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1446,7 +1437,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1485,7 +1475,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
