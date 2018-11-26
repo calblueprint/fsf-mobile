@@ -6,8 +6,12 @@ import {
   getStoredId
 } from "../../lib/login";
 import {
-  TCGetBillingID, CiviStoreBillingID, CiviStoreLastFour, CiviCreateContribution
- } from '../../lib/donate';
+  TCGetBillingID,
+  storeBillingID,
+  storeLastFour,
+  getSavedBillingID,
+  getSavedLastFour
+} from "../../lib/donate";
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
@@ -29,9 +33,6 @@ class DonatePaymentScreen extends BaseScreen {
   _handleChange = (name, value) => {
     //TODO: add validations here, use switch statement on name
     this.setState({ [name]: value });
-
-    //sanity check
-    // console.log(this.state);
   };
 
   _donate = async () => {
@@ -41,43 +42,28 @@ class DonatePaymentScreen extends BaseScreen {
         ...this.state,
         ...this.props.navigation.state.params
       };
-      
-      /*
-      call to TC BE
-      - requires a POST request with json payload with the following format (adjust this.state)
-      *
-      * {
-          "name": "John Smith",
-          "cc": "4111111111111111",
-          "exp": "0404",
-          "zip": "90000"
-      }
-      
-
-      save BillingID in CiviCRM
-      save last four digits (rip - future: need to save a mapping between BillingID and ccn too) - in CiviCRM
-      */
-
-      // change 'cardholder' to 'name', add 'zip' prop, del 'security code'
+    
       let tcInfo = JSON.parse(JSON.stringify(this.state));
       tcInfo['zip'] = mergedNavProps['postalCode'];
       tcInfo['name'] = tcInfo['cardholder'];
       ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
-      //sanity check
-      console.log(tcInfo);
-
       // DEV only
-      tcInfo = {
-        "name": "John Smith",
-        "cc": "4111111111111111",
-        "exp": "0404",
-        "zip": "90000"
-      };
+      // tcInfo = {
+      //   "name": "John Smith",
+      //   "cc": "4111111111111111",
+      //   "exp": "0404",
+      //   "zip": "90000"
+      // };
 
       // remove after dev
+
+
+      // this has to go first
       const resp = await TCGetBillingID(tcInfo);
-      CiviStoreBillingID(null, resp.billingid);
+      storeBillingID(resp.billingid);
+      let lastFour = tcInfo['cc'].toString().slice(8, 12)
+      storeLastFour(lastFour);
 
       this._switchTab(this, "DonateSuccess", mergedNavProps);
     } catch(error) {

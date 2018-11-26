@@ -5,22 +5,29 @@
  * 
  * async function TCGetBillingID(paymentInfo)
  * 
+ * async function storeBillingID(billingID)
+ * 
+ * async function storeLastFour(digits)
+ * 
+ * async function getSavedBillingID()
+ * 
+ * async function getSavedLastFour()
+ * 
+ *  ---- the last four should be replaced with the following for CiviCRM integration next semester ----
+ * 
  * async function CiviStoreBillingID(contactID, billingID)
  * 
  * async function CiviStoreLastFour(contactID, digits)
+ * 
+ * async function CiviGetBillingID(contactID)
+ * 
+ * async function CiviGetLastFour(contactID)
  * 
  * async function CiviCreateContribution(contactID, entity, params)
  * 
  */
 
- // tony's way of doing requests
-// const resp = await fetch('https://cas.fsf.org/login', {
-//   method: 'POST',
-//   redirect: 'error',
-//   credentials: 'include',
-//   body: formData,
-// });
-
+import { AsyncStorage } from "react-native"
 
 /**
  * Get BillingID for this CCN from Go backend
@@ -52,21 +59,128 @@ async function TCGetBillingID(paymentInfo) {
   return resp.json();
 }
 
-async function CiviStoreBillingID(contactID, billingID) {
-    console.log(billingID);
+/** TEMP SOLUTION (may move to Rails BE, or store to CiviCRM)
+ *  - store billingID and last four digits of related CCN to AsyncStorage
+ */
+
+/**
+ * @param billingID: six-digit alphanumeric BillingID
+ */
+async function storeBillingID(billingID) {
+  try {
+    await AsyncStorage.setItem('billingID', billingID);
+  } catch (error) {
+    console.log("Unexpected error: Failure to save Billing ID to AsyncStorage")
+    console.log(error);
+  }
 }
 
+/**
+ * @param digits: last four digits of CCN
+ */
+async function storeLastFour(digits) {
+  try {
+    await AsyncStorage.setItem('lastFour', digits);
+  } catch (error) {
+    console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
+    console.log(error);
+  }
+}
+
+/**
+ * @return a Promise that resolves to the stored six-digit alphanumeric BillingID, or null
+ */
+async function getSavedBillingID() {
+  try {
+    const billingID = await AsyncStorage.getItem('billingID');
+    return billingID;
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * @return a Promise that resolves to the stored last four digits of CCN tied to BillingID, or null
+ */
+async function getSavedLastFour() {
+  try {
+    const lastFour = await AsyncStorage.getItem('lastFour');
+    return lastFour;
+  } catch (error) {
+    return Promise.reject(new Error("CC digits not found"));
+  }
+};
+
+/**
+* 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP
+*
+* Note: the billing_id is saved as a custom field, custom_324 in crmserver3d.org; 
+* This is because I literally created the custom field to save it.
+* Not sure if there's a better way, or if FSF will have to customize these
+* CiviCRM calls here to create on the correctly numbered custom field.
+*
+*/
+async function CiviStoreBillingID(contactID, billingID) {
+  console.log(billingID);
+}
+
+
+/* 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP */
 async function CiviStoreLastFour(contactID, digits) {
 
 }
 
+/**
+ * 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP
+ * 
+ * Passing query params with "fetch" is not a nice built-in
+ * https://github.com/github/fetch/issues/256 will help
+ *
+ */
+async function CiviGetBillingID(contactID) {
+  let civiJSON = {
+    "sequential": 1,
+    "return": "custom_324",
+    "id": contactID
+  };
+
+  let civiInfo = {
+    entity: "Contact",
+    action: "get",
+    api_key: 1234,
+    site_key: "secret", //cannot legally commit this
+    json: JSON.stringify(civiJSON)
+  };
+
+  console.log(contactID);
+  // doesn't work, see comment above function
+  const resp = await fetch("https://crmserver3d.fsf.org/sites/all/modules/civicrm/extern/rest.php", {
+    method: "GET",
+    params: JSON.stringify(civiInfo)
+  });
+
+  console.log(resp.json());
+}
+
+/* 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP */
+async function CiviGetLastFour(contactID) {
+  console.log(contactID);
+}
+
+/* 11/28 [TABLED] Needed to maintain synchronization and updates to CiviCRM */
 async function CiviCreateContribution(contactID, entity, params) {
 
 }
 
 export {
   TCGetBillingID,
-  CiviStoreBillingID,
-  CiviStoreLastFour,
-  CiviCreateContribution
+  // CiviStoreBillingID,
+  // CiviStoreLastFour,
+  // CiviGetBillingID,
+  // CiviGetLastFour,
+  // CiviCreateContribution,
+  storeBillingID,
+  storeLastFour,
+  getSavedBillingID,
+  getSavedLastFour
 };

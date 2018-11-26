@@ -6,16 +6,12 @@ import BaseScreen from '../BaseScreen'
 class DonateBillingScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    // const { navigation } = this.props;
-    // const amount = navigation.getParam("amount", "no-amount");
-    // console.log(this.state.amount);
     this.state = {
       address: "",
       city: "",
       country: "",
       stateProvince: "",
       postalCode: 0,
-      // amount: amount
     };
   }
 
@@ -27,9 +23,6 @@ class DonateBillingScreen extends BaseScreen {
   _handleChange = (name, value) => {
     //TODO: add validations here, use switch statement on name
     this.setState({ [name]: value });
-
-    //sanity check
-    // console.log(this.state);
   };
 
   _onPress = () => {

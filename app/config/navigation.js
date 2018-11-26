@@ -13,6 +13,7 @@ import ProfileScreen from '../screens/profile/ProfileScreen';
 import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
 import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
 import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
+import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
@@ -33,6 +34,7 @@ const PetitionsNav = createStackNavigator(
 
 const DonateNav = createStackNavigator({
   DonateHome: DonateHomeScreen,
+  DonateRepeatable: DonateRepeatableScreen,
   DonateBilling: DonateBillingScreen,
   DonatePayment: DonatePaymentScreen,
   DonateSuccess: DonateSuccessScreen

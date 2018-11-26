@@ -5,9 +5,6 @@ import BaseScreen from '../BaseScreen'
 class DonateSuccessScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    
-    //TODO delete this
-    console.log(this.props.navigation.state.params);
   }
 
   static navigationOptions = {
