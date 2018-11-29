@@ -8,31 +8,54 @@ import {
   ScrollView
 } from "react-native";
 import { getRequest } from "./../../lib/requests";
-import BaseScreen from "../BaseScreen";
+import APIRoutes from "./../../lib/routes";
 import MessageCard from "./../../components/MessageCard";
-import NewsList from "../../components/newsfeed/NewsList";
-import NewsData from "./../../components/newsfeed/newsData.js";
+import BaseScreen from "../BaseScreen";
+import ArticleList from "../../components/newsfeed/ArticleList";
+import { getArticles } from "./../../lib/newsfeedAPI";
+import articleData from "../../components/newsfeed/articleData";
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
+      articles: [],
       refreshing: true
     };
+    this._fetchArticles.bind(this);
   }
+
+  _fetchArticles(refresh = false) {
+    this.setState({ refreshing: refresh });
+    getArticles().then(
+      data => this.setState({ articles: data, refreshing: false }),
+      error => console.log(error)
+    );
+  }
+
+  componentDidMount() {
+    this._fetchArticles();
+  }
+
   render() {
+    const refreshControl = (
+      <RefreshControl
+        refreshing={this.state.refreshing}
+        onRefresh={() => this._fetchArticles(true)}
+      />
+    );
+
     return (
-      <ScrollView>
+      <ScrollView refreshControl={refreshControl}>
         <View style={styles.container}>
-          <Text>FSF NEWS </Text>
+          <Text>This is the News Screen</Text>
           <Button
             title="Detail"
             onPress={() => this.props.navigation.navigate("NewsDetail")}
           />
+          <ArticleList newsArticles={articleData} />
         </View>
-        <NewsList newsItems={NewsData} />
       </ScrollView>
     );
   }

@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, View } from "react-native";
-import NewsfeedItem from "./NewsItem";
+import Article from "./Article";
 
-const NewsList = props => {
-  console.log(props);
-  const newsfeedOutput = props.newsItems.map((newsItem, i) => (
-    <NewsfeedItem
+const ArticleList = props => {
+  const newsfeedOutput = props.newsArticles.map((newsArticle, i) => (
+    <Article
       key={i}
-      headline={newsItem.headline}
-      lead={newsItem.lead}
-      date={newsItem.date}
+      headline={newsArticle.headline}
+      lead={newsArticle.lead}
+      date={newsArticle.date}
     />
   ));
   return <View style={styles.listContainer}>{newsfeedOutput}</View>;
@@ -20,4 +19,4 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-export default NewsList;
+export default ArticleList;

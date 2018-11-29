@@ -1,12 +1,11 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 
-const NewsItem = props => (
+const Article = props => (
   <View style={styles.container}>
-    <Text>{props.category}</Text>
     <Text>{props.headline}</Text>
     <Text>{props.lead}</Text>
-    <Text>{props.date}</Text>
+    <Text>{props.pub_date}</Text>
     <Button title="READ MORE" onPress={null} />
   </View>
 );
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
     width: "100"
   }
 });
-export default NewsItem;
+export default Article;
