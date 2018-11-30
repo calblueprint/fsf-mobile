@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import android.support.v4.content.ContextCompat;
-
 import com.facebook.react.HeadlessJsTaskService;
 
 public class WidgetProvider extends AppWidgetProvider {
@@ -21,7 +19,7 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onEnabled(Context context) {
         Log.d("WIDGET_PROVIDER", "En onEnabled");
         Intent serviceIntent = new Intent(context, BackgroundTask.class);
-        ContextCompat.startForegroundService(context, serviceIntent);
+        context.startService(serviceIntent);
         HeadlessJsTaskService.acquireWakeLockNow(context);
     }
 
@@ -34,13 +32,13 @@ public class WidgetProvider extends AppWidgetProvider {
         }
 
         Intent silentStartIntent = new Intent(context, BackgroundTask.class);
-        ContextCompat.startForegroundService(context, silentStartIntent);
+        context.startService(silentStartIntent);
 
         /*
         * Proxy bundle extras towards the service
         * */
         Intent serviceIntent = new Intent(context, BackgroundTask.class);
         serviceIntent.putExtras(incomingIntent);
-        ContextCompat.startForegroundService(context, serviceIntent);
+        context.startService(serviceIntent);
     }
 }

@@ -9,4 +9,4 @@ import widgetTask from './widgetTask';
 
 AppRegistry.registerComponent(appName, () => App);
 
-AppRegistry.registerHeadlessTask('widgetTask', () => widgetTask);
+AppRegistry.registerHeadlessTask('WidgetTask', () => widgetTask);
