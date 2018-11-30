@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.content.ComponentName;
-
-import java.util.Random;
+import android.net.Uri;
 
 import com.facebook.react.HeadlessJsTaskService;
 
@@ -65,14 +63,11 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.charm_button1);
 
-        Intent configIntent = new Intent(context, MainActivity.class);
+        Intent configIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fsf://fsf/donate/"));
 
         PendingIntent configPendingIntent = PendingIntent.getActivity(context, 0, configIntent, 0);
 
         remoteViews.setOnClickPendingIntent(R.id.charm_button1, configPendingIntent);
-
-        // Set next screen to donations
-        NavigationBridge.setJumpToDonations();
 
         appWidgetManager.updateAppWidget(appWidgetIds, remoteViews);
     }

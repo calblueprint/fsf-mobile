@@ -17,26 +17,7 @@ class AuthLoadingScreen extends BaseScreen {
 
     // This will switch to the landing screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    if (!userToken) {
-      this.props.navigation.navigate('Auth')
-      return
-    }
-
-    var landing
-    landing = await NavigationBridge.getLandingScreen()
-    /*try {
-      landing = await NavigationBridge.getLandingScreen()
-    } catch (err) {
-      landing = "main"
-    }*/
-
-    if (landing == "main") {
-      this.props.navigation.navigate('App')
-    } else if (landing == "donations") {
-      this.props.navigation.navigate('Donate')
-    } else {
-      this.props.navigation.navigate('App')
-    }
+    this.props.navigation.navigate(userToken ? 'App' : 'Auth')
   };
 
   // Render any loading content that you like here
