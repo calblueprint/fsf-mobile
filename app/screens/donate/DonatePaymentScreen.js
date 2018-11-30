@@ -7,13 +7,14 @@ import {
 } from "../../lib/login";
 import {
   TCGetBillingID,
+  TCSinglePayment,
   storeBillingID,
   storeLastFour,
   getSavedBillingID,
   getSavedLastFour
 } from "../../lib/donate";
-import BaseScreen from '../BaseScreen'
-import { okAlert } from '../../lib/alerts'
+import BaseScreen from '../BaseScreen';
+import { okAlert } from '../../lib/alerts';
 
 class DonatePaymentScreen extends BaseScreen {
   constructor(props) {
@@ -45,6 +46,7 @@ class DonatePaymentScreen extends BaseScreen {
     
       let tcInfo = JSON.parse(JSON.stringify(this.state));
       tcInfo['zip'] = mergedNavProps['postalCode'];
+      tcInfo['amount'] = mergedNavProps['amount'].toString() + "00";
       tcInfo['name'] = tcInfo['cardholder'];
       ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
@@ -55,17 +57,23 @@ class DonatePaymentScreen extends BaseScreen {
       //   "exp": "0404",
       //   "zip": "90000"
       // };
-
       // remove after dev
 
+      console.log(tcInfo);
 
-      // this has to go first
-      const resp = await TCGetBillingID(tcInfo);
-      storeBillingID(resp.billingid);
-      let lastFour = tcInfo['cc'].toString().slice(8, 12)
-      storeLastFour(lastFour);
+      const transResp = await TCSinglePayment(tcInfo);
+      console.log(transResp);
 
-      this._switchTab(this, "DonateSuccess", mergedNavProps);
+      if (transResp.status != "approved") {
+        okAlert("Error: Transaction not approved", "Try again");
+      } else {
+        const resp = await TCGetBillingID(tcInfo);
+        storeBillingID(resp.billingid);
+        let lastFour = tcInfo['cc'].toString().slice(8, 12)
+        storeLastFour(lastFour);
+
+        this._switchTab(this, "DonateSuccess", mergedNavProps);
+      }
     } catch(error) {
       console.log(error);
       okAlert('Donate failed', 'Try again');

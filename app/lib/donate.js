@@ -1,9 +1,15 @@
+import { AsyncStorage } from "react-native";
+
 /**
  * This file provides async functions for TC API calls and CiviCRM updates
  *
  * It contains the following functions:
  * 
  * async function TCGetBillingID(paymentInfo)
+ * 
+ * async function TCSinglePayment(paymentInfo)
+ * 
+ * async function TCRepeatablePayment(paymentInfo)
  * 
  * async function storeBillingID(billingID)
  * 
@@ -27,20 +33,21 @@
  * 
  */
 
-import { AsyncStorage } from "react-native"
-
 /**
  * Get BillingID for this CCN from Go backend
  *
  * @param ccInfo in the following format:
-    {
-      "name": "John Smith",
-      "cc": "4111111111111111",
-      "exp": "0404",
-      "zip": "90000"
+ * {
+    "name": "John Smith",
+    "cc": "4111111111111111",
+    "exp": "0404",
+    "zip": "90000"
     }
  *
- * @return a Promise that resolves to a six-digit alphanumeric BillingID
+ * @return a Promise that resolves to a JSON object containing a six-digit alphanumeric BillingID
+ * {
+      "billingid": "Q4BLAU"
+    }
  */
 async function TCGetBillingID(paymentInfo) {
   const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/register", {
@@ -54,6 +61,76 @@ async function TCGetBillingID(paymentInfo) {
 
   if (resp.status >= 400) {
     return Promise.reject(new Error('Failed to complete TC request and get billing ID'));
+  }
+
+  return resp.json();
+}
+
+/**
+ * API Call for a single payment to Go backend 
+ *
+ * note: "amount" should be a string, pad with "00" for cents
+ * @param paymentInfo in the following format:
+ * {
+    "name": "John Smith",
+    "cc": "4111111111111111",
+    "exp": "0404",
+    "amount": "2000"
+    }
+ * 
+ * @return a Promise that resolves to JSON object containing transaction info
+ *  {
+      "transid": "a transaction id from TrustCommerce",
+      "status": "status of transaction { approved, declined, baddata, error }"
+      "authcode": "auth code for the transaction"
+    }
+ */
+async function TCSinglePayment(paymentInfo) {
+  const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/pay", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(paymentInfo)
+  });
+
+  if (resp.status >= 400) {
+    return Promise.reject(new Error('Failed to complete call to TC for repeatable donation'));
+  }
+
+  return resp.json();
+}
+
+/**
+ * API Call for a repeatable payment to Go backend 
+ *
+ * note: "amount" should be a string, pad with "00" for cents
+ * @param paymentInfo in the following format:
+ * {
+    "billingid": "Q4BLAU",
+    "amount": "2000"
+    }
+ *
+ * @return a Promise that resolves to JSON object containing transaction info
+ *  {
+    "transid": "a transaction id from TrustCommerce",
+    "status": "status of transaction { approved, declined, baddata, error }"
+    "authcode": "auth code for the transaction"
+  }
+ */
+async function TCRepeatablePayment(paymentInfo) {
+  const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/repeat_pay", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(paymentInfo)
+  });
+
+  if (resp.status >= 400) {
+    return Promise.reject(new Error('Failed to complete call to TC for repeatable donation'));
   }
 
   return resp.json();
@@ -175,6 +252,8 @@ async function CiviCreateContribution(contactID, entity, params) {
 
 export {
   TCGetBillingID,
+  TCSinglePayment,
+  TCRepeatablePayment,
   // CiviStoreBillingID,
   // CiviStoreLastFour,
   // CiviGetBillingID,

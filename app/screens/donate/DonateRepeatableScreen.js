@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen'
-import { TextInput } from 'react-native-gesture-handler';
+import { okAlert } from "../../lib/alerts";
 import {
+  TCRepeatablePayment,
   getSavedBillingID,
   getSavedLastFour
 } from "../../lib/donate";
 
-class DonateHomeScreen extends BaseScreen {
+
+class DonateRepeatableScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,13 +54,23 @@ class DonateHomeScreen extends BaseScreen {
   _donate = async () => {
     try {
       //TODO figure out propTypes checking with this
+      console.log(this.props.navigation.state.params)
       let amount = this.props.navigation.getParam("amount", "no-amount");
-      let navProps = {
-        amount: amount
+      let tcInfo = {
+        billingid: this.state.billingID,
+        amount: amount.toString() + "00"
       };
 
-      // pass billingID to TC repeatable donations endpoint
-      this._switchTab(this, "DonateSuccess", navProps);
+      console.log(tcInfo);
+      const resp = await TCRepeatablePayment(tcInfo);
+      console.log(resp);
+
+      if (resp.status != "approved") {
+        okAlert('Error: Repeatable transaction not approved', 'Try again');
+      }
+      else {
+        this._switchTab(this, "DonateSuccess", tcInfo);
+      }
     } catch (error) {
       console.log(error);
       okAlert("Donate with saved payment info failed", "Try again");
@@ -91,4 +103,4 @@ class DonateHomeScreen extends BaseScreen {
     
   }
 }
-export default DonateHomeScreen;
+export default DonateRepeatableScreen;
