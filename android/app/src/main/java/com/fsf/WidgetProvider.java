@@ -1,0 +1,46 @@
+package com.fsf;
+
+import android.appwidget.AppWidgetProvider;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import android.support.v4.content.ContextCompat;
+
+import com.facebook.react.HeadlessJsTaskService;
+
+public class WidgetProvider extends AppWidgetProvider {
+    private static final String WIDGET_TASK = "com.fsf.WIDGET_TASK";
+
+    /*
+    * When enabled on screen, let the BackgroundTaskBridge
+    * manipulate it from javascript
+    */
+
+    @Override
+    public void onEnabled(Context context) {
+        Log.d("WIDGET_PROVIDER", "En onEnabled");
+        Intent serviceIntent = new Intent(context, BackgroundTask.class);
+        ContextCompat.startForegroundService(context, serviceIntent);
+        HeadlessJsTaskService.acquireWakeLockNow(context);
+    }
+
+    @Override
+    public void onReceive(final Context context, final Intent incomingIntent) {
+        super.onReceive(context, incomingIntent);
+
+        if (!incomingIntent.getAction().startsWith("com.fsf.CHARM")) {
+            return;
+        }
+
+        Intent silentStartIntent = new Intent(context, BackgroundTask.class);
+        ContextCompat.startForegroundService(context, silentStartIntent);
+
+        /*
+        * Proxy bundle extras towards the service
+        * */
+        Intent serviceIntent = new Intent(context, BackgroundTask.class);
+        serviceIntent.putExtras(incomingIntent);
+        ContextCompat.startForegroundService(context, serviceIntent);
+    }
+}
