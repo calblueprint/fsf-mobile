@@ -12,7 +12,9 @@ class DonateHomeScreen extends BaseScreen {
     super(props);
     this.state = {
       billingID: "",
-      lastFour: ""
+      lastFour: "",
+      loading: true,
+      asyncError: false
     };
   }
 
@@ -27,11 +29,17 @@ class DonateHomeScreen extends BaseScreen {
     console.log(billingID);
     console.log(lastFour);
 
-    if (billingID) {
+    if (billingID != null) {
       this._setStateAsync({
         billingID: billingID,
-        lastFour: lastFour
+        lastFour: lastFour,
+        loading: false
       });
+    } else {
+      this._setStateAsync({
+        loading: false,
+        asyncError: true
+      })
     }
   }
 
@@ -58,13 +66,29 @@ class DonateHomeScreen extends BaseScreen {
   };
 
   render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center" }}>
-        <Text>Your saved payment information</Text>
-        <Text>Card info: XXXX XXXX XXXX {this.state.lastFour}</Text>
-        <Button onPress={() => this._donate()} title="donate" />
+    if (this.state.loading) {
+      return (
+        <View>
+          <Text> Loading, please wait... </Text>
+        </View>
+      );
+    } else if (this.state.asyncError) {
+      return (
+      <View>
+          <Text style={{color: 'red', fontSize: 45 }}> asyncError! </Text>
+          <Text> You should never reach this page, so if you do... rip </Text>
       </View>
-    );
+      );
+    } else { 
+      return (
+        <View style={{ flex: 1, alignItems: "center" }}>
+          <Text>Your saved payment information</Text>
+          <Text>Card info: XXXX XXXX XXXX {this.state.lastFour}</Text>
+          <Button onPress={() => this._donate()} title="donate" />
+        </View>
+      );
+    }
+    
   }
 }
 export default DonateHomeScreen;

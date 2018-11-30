@@ -67,6 +67,7 @@ async function TCGetBillingID(paymentInfo) {
  * @param billingID: six-digit alphanumeric BillingID
  */
 async function storeBillingID(billingID) {
+  console.log(billingID);
   try {
     await AsyncStorage.setItem('billingID', billingID);
   } catch (error) {
@@ -153,7 +154,7 @@ async function CiviGetBillingID(contactID) {
   };
 
   console.log(contactID);
-  // doesn't work, see comment above function
+  // doesn't work rn lol, see comment above function
   const resp = await fetch("https://crmserver3d.fsf.org/sites/all/modules/civicrm/extern/rest.php", {
     method: "GET",
     params: JSON.stringify(civiInfo)

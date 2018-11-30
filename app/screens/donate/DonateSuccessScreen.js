@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Text, View} from 'react-native';
+import { StackActions, NavigationActions } from "react-navigation";
 import BaseScreen from '../BaseScreen'
 
 class DonateSuccessScreen extends BaseScreen {
@@ -11,6 +12,17 @@ class DonateSuccessScreen extends BaseScreen {
     headerVisible: false
   };
 
+  _toHome = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'DonateHome' }),
+      ],
+    });
+    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.navigate("NewsHome");
+  };
+
   render() {
     const { navigation } = this.props;
     let name = "Kevin"; // TODO generalize later
@@ -20,7 +32,7 @@ class DonateSuccessScreen extends BaseScreen {
         <Text>Thank you {name} for your generous donation of ${amount}! </Text>
 
         <Button
-          onPress={() => this.props.navigation.navigate('NewsHome')}
+          onPress={this._toHome}
           title="close"
         />
       </View>
