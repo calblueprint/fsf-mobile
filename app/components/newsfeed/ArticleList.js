@@ -1,22 +1,38 @@
 import React, { Component } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  FlatList
+} from "react-native";
+import apiNewsData from "./apiNewsData";
 import Article from "./Article";
 
-const ArticleList = props => {
-  const newsfeedOutput = props.newsArticles.map((newsArticle, i) => (
-    <Article
-      key={i}
-      headline={newsArticle.headline}
-      lead={newsArticle.lead}
-      date={newsArticle.date}
-    />
-  ));
-  return <View style={styles.listContainer}>{newsfeedOutput}</View>;
-};
+class ArticleList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: apiNewsData
+    };
+  }
+
+  render() {
+    return (
+      <FlatList
+        style={styles.listContainer}
+        data={this.state.data}
+        renderItem={info => (
+          <Article onP={() => this.props.navigation} news={info.item.value} />
+        )}
+      />
+    );
+  }
+}
 const styles = StyleSheet.create({
   listContainer: {
-    flex: 1,
-    alignItems: "center"
+    width: "100%"
   }
 });
 export default ArticleList;

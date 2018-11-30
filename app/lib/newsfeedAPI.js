@@ -16,7 +16,7 @@ async function getArticles() {
   try {
     let response = await fetch("https://static.fsf.org/fsforg/rss/news.xml");
     let responseText = await response.text();
-    console.log(responseText);
+    //console.log(responseText);
   } catch (error) {
     console.error(error);
   }

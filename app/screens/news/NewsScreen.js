@@ -14,6 +14,7 @@ import BaseScreen from "../BaseScreen";
 import ArticleList from "../../components/newsfeed/ArticleList";
 import { getArticles } from "./../../lib/newsfeedAPI";
 import articleData from "../../components/newsfeed/articleData";
+import { apiNewsData } from "../../components/newsfeed/apiNewsData";
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsScreen extends BaseScreen {
@@ -47,16 +48,20 @@ class NewsScreen extends BaseScreen {
     );
 
     return (
-      <ScrollView refreshControl={refreshControl}>
-        <View style={styles.container}>
-          <Text>This is the News Screen</Text>
-          <Button
-            title="Detail"
-            onPress={() => this.props.navigation.navigate("NewsDetail")}
-          />
-          <ArticleList newsArticles={articleData} />
-        </View>
-      </ScrollView>
+      // <ScrollView refreshControl={refreshControl}>
+      //   <View style={styles.container}>
+      //     <Text>This is the News Screen</Text>
+      //     <Button
+      //       title="Detail"
+      //       onPress={() => this.props.navigation.navigate("NewsDetail")}
+      //     />
+      //     <ArticleList newsArticles={articleData} />
+      //   </View>
+      // </ScrollView>
+      <View style={styles.container}>
+        <Text>This is the news screen</Text>
+        <ArticleList />
+      </View>
     );
   }
 }

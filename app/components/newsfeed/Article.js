@@ -3,9 +3,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 
 const Article = props => (
   <View style={styles.container}>
-    <Text>{props.headline}</Text>
-    <Text>{props.lead}</Text>
-    <Text>{props.pub_date}</Text>
+    <Text>{props.news.title}</Text>
     <Button title="READ MORE" onPress={null} />
   </View>
 );
