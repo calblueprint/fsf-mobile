@@ -12,13 +12,16 @@ class DonateScreen extends BaseScreen {
       <View style={{flex: 1, alignItems: 'center'}}>
           <Text>Hi FSF!</Text>
           <Button onPress={() => testNotify("Test Notification")} title="Test Notify"/>
-          <Button onPress={() => this.testFetch()} title="Test Fetch"/>
+          <Button onPress={() => this.testFetch()} title="Register Device For Background Debugging"/>
       </View>
     );
   }
 
   testFetch() {
-    var deviceInfo = `TEST FETCH. Device Name: ${DeviceInfo.getDeviceName()}, Device Type: ${DeviceInfo.getModel()}, Device ID: ${DeviceInfo.getUniqueID()}, API Level: ${DeviceInfo.getAPILevel()}`
+    let version = DeviceInfo.getAPILevel();
+    let type = DeviceInfo.getModel();
+    let uuid = DeviceInfo.getUniqueID();
+    let appVersion = 0.2
     let req = {
       method: 'POST',
       headers: {
@@ -26,10 +29,13 @@ class DonateScreen extends BaseScreen {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        'device_id': deviceInfo
+        'uuid': uuid,
+        'type': type,
+        'version': version,
+        'app_version': appVersion
       })
     };
-    fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
+    fetch('http://fsf-notif-test.herokuapp.com/register', req).then(function (response) {
       console.log("Background task request Response: ")
       console.log(response)
     });
