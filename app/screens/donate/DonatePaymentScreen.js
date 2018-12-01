@@ -5,7 +5,8 @@ import {
   TCGetBillingID,
   TCSinglePayment,
   storeBillingID,
-  storeLastFour
+  storeLastFour,
+  storeCardholder
 } from "../../lib/donate";
 import BaseScreen from '../BaseScreen';
 import { okAlert } from '../../lib/alerts';
@@ -39,7 +40,7 @@ class DonatePaymentScreen extends BaseScreen {
           tcInfo["zip"] = mergedNavProps["postalCode"];
           tcInfo["amount"] = mergedNavProps["amount"].toString() + "00";
           // tcInfo['name'] = tcInfo['cardholder'];
-          tcInfo['name'] = "John Smith"; //DEMO PURPOSES ONLY
+          tcInfo['name'] = "John Smith"; //DEMO PURPOSES ONLY, uncomment above for prod
           ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
           // DEV only
@@ -63,6 +64,7 @@ class DonatePaymentScreen extends BaseScreen {
             storeBillingID(resp.billingid);
             let lastFour = tcInfo["cc"].toString().slice(8, 12);
             storeLastFour(lastFour);
+            storeCardholder(this.state.cardholder)
 
             okAlert("Success! Transaction ID: " + transResp.transid);
             this._switchTab(this, "DonateSuccess", mergedNavProps);

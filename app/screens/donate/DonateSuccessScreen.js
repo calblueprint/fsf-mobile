@@ -25,8 +25,8 @@ class DonateSuccessScreen extends BaseScreen {
 
   render() {
     const { navigation } = this.props;
-    let name = "Kevin"; // TODO generalize later
     const amount = navigation.getParam("amount", "no-amount");
+    const name = navigation.getParam("cardholder", "no-name");
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
         <Text

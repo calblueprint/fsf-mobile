@@ -15,9 +15,13 @@ import { AsyncStorage } from "react-native";
  * 
  * async function storeLastFour(digits)
  * 
+ * async function storeCardholder(name)
+ * 
  * async function getSavedBillingID()
  * 
  * async function getSavedLastFour()
+ * 
+ * async function getCardholder()
  * 
  *  ---- the last four should be replaced with the following for CiviCRM integration next semester ----
  * 
@@ -166,6 +170,18 @@ async function storeLastFour(digits) {
 }
 
 /**
+ * @param name: cardholder name associated with saved card
+ */
+async function storeCardholder(name) {
+  try {
+    await AsyncStorage.setItem('cardholder', name);
+  } catch (error) {
+    console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
+    console.log(error);
+  }
+}
+
+/**
  * @return a Promise that resolves to the stored six-digit alphanumeric BillingID, or null
  */
 async function getSavedBillingID() {
@@ -178,7 +194,7 @@ async function getSavedBillingID() {
 };
 
 /**
- * @return a Promise that resolves to the stored last four digits of CCN tied to BillingID, or null
+ * @return a Promise that resolves to the stored last four digits of CCN tied to BillingID
  */
 async function getSavedLastFour() {
   try {
@@ -186,6 +202,18 @@ async function getSavedLastFour() {
     return lastFour;
   } catch (error) {
     return Promise.reject(new Error("CC digits not found"));
+  }
+};
+
+/**
+ * @return a Promise that resolves to the cardholder name associated with saved card
+ */
+async function getCardholder() {
+  try {
+    const name = await AsyncStorage.getItem('cardholder');
+    return name;
+  } catch (error) {
+    return Promise.reject(new Error("No cardholder name saved"));
   }
 };
 
@@ -261,6 +289,8 @@ export {
   // CiviCreateContribution,
   storeBillingID,
   storeLastFour,
+  storeCardholder,
   getSavedBillingID,
-  getSavedLastFour
+  getSavedLastFour,
+  getCardholder,
 };

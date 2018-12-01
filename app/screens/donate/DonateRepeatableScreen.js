@@ -5,7 +5,8 @@ import { okAlert } from "../../lib/alerts";
 import {
   TCRepeatablePayment,
   getSavedBillingID,
-  getSavedLastFour
+  getSavedLastFour,
+  getCardholder
 } from "../../lib/donate";
 
 
@@ -15,6 +16,7 @@ class DonateRepeatableScreen extends BaseScreen {
     this.state = {
       billingID: "",
       lastFour: "",
+      cardholder: "",
       loading: true,
       asyncError: false
     };
@@ -28,13 +30,16 @@ class DonateRepeatableScreen extends BaseScreen {
   async componentDidMount() {
     let billingID = await getSavedBillingID();
     let lastFour = await getSavedLastFour();
+    let name = await getCardholder();
     console.log(billingID);
     console.log(lastFour);
+    console.log(name);
 
     if (billingID != null) {
       this._setStateAsync({
         billingID: billingID,
         lastFour: lastFour,
+        cardholder: name,
         loading: false
       });
     } else {
@@ -70,7 +75,7 @@ class DonateRepeatableScreen extends BaseScreen {
       }
       else {
         okAlert("Success! Transaction ID: " + resp.transid)
-        this._switchTab(this, "DonateSuccess", tcInfo);
+        this._switchTab(this, "DonateSuccess", {amount: amount, cardholder: this.state.cardholder});
       }
     } catch (error) {
       console.log(error);
