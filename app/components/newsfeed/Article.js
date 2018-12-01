@@ -1,24 +1,23 @@
-import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import React from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 const Article = props => (
   <View style={styles.container}>
     <Text>{props.news.title}</Text>
-    <Button title="READ MORE" onPress={props._onPress(props.news)} />
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    width: '100%',
     marginBottom: 10,
     marginTop: 10,
     padding: 10,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     flex: 1
   },
   category: {
-    width: "100"
+    width: '100'
   }
 });
 export default Article;

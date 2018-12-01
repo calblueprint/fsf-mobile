@@ -12,8 +12,11 @@ module.exports = {
     },
     sourceType: 'module'
   },
+  parser: 'babel-eslint',
   plugins: ['react', 'react-native', 'prettier'],
   rules: {
+    'no-underscore-dangel': 'warn',
+    'no-use-before-define': ['error', { variables: false }],
     'no-const-assign': 'warn',
     'no-this-before-super': 'warn',
     'no-undef': 'warn',
@@ -24,11 +27,5 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'prettier/prettier': ['error']
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'airbnb',
-    'prettier',
-    'prettier/react'
-  ]
+  extends: ['airbnb', 'prettier', 'prettier/react']
 };

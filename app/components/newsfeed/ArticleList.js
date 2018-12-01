@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Image,
   FlatList
-} from "react-native";
-import apiNewsData from "./apiNewsData";
-import Article from "./Article";
+} from 'react-native';
+import apiNewsData from './apiNewsData';
+import Article from './Article';
 
 class ArticleList extends Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class ArticleList extends Component {
 }
 const styles = StyleSheet.create({
   listContainer: {
-    width: "100%"
+    width: '100%'
   }
 });
 export default ArticleList;
