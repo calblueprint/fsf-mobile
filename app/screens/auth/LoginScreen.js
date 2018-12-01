@@ -19,24 +19,24 @@ class LoginScreen extends BaseScreen {
     };
   }
 
-  _attemptLogin = async() => {
-      try {
-        const { props, state } = { props: this.props, state: this.state };
-        const loginTicket = await getLoginTicket();
+  _attemptLogin = async () => {
+    try {
+      const { props, state } = { props: this.props, state: this.state };
+      const loginTicket = await getLoginTicket();
 
-        const serviceTicket = await casLogin(state.email, state.password, loginTicket);
+      const serviceTicket = await casLogin(state.email, state.password, loginTicket);
 
-        const apiKey = await getCiviCRMApiKey(serviceTicket);
+      const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-        storeApiKey(apiKey.key)
-        storeId(apiKey.id)
+      storeApiKey(apiKey.key)
+      storeId(apiKey.id)
 
-        okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
-        this.props.navigation.navigate('App');
-      } catch (error) {
-        console.log(error);
-        okAlert('Login failed', 'Try again');
-      }
+      okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
+      this.props.navigation.navigate('App');
+    } catch (error) {
+      console.log(error);
+      okAlert('Login failed', 'Try again');
+    }
   }
 
   render() {
@@ -63,7 +63,7 @@ class LoginScreen extends BaseScreen {
     );
   }
 
-  _devLogin = async() => {
+  _devLogin = async () => {
     console.log("Logging in");
     this.props.navigation.navigate('App');
   };

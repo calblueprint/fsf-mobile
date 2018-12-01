@@ -3,6 +3,7 @@ package com.fsf;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.fsflocalnotifications.FSFLocalNotificationPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.transistorsoft.rnbackgroundfetch.RNBackgroundFetchPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new FSFLocalNotificationPackage(),
             new RNDeviceInfo(),
             new RNBackgroundFetchPackage(),

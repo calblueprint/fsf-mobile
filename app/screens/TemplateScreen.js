@@ -4,21 +4,21 @@ import BaseScreen from '../BaseScreen'
 
 // Make sure to add your new screen to /config/navigation.js
 class TemplateScreen extends BaseScreen {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     return (
       <View style={styles.container}>
-          <Text>Woo! Yay for new screens!</Text>
-          <Button
-            onPress={() => this._myFunction("Hello!")}
-            title='Press Me!'
-            />
+        <Text>Woo! Yay for new screens!</Text>
+        <Button onPress={() => this._myFunction("Hello!")} title="Press Me!" />
       </View>
     );
   }
 
   _myFunction(a) {
-    console.log(a)
+    console.log(a);
   }
 }
 

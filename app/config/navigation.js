@@ -1,15 +1,25 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createStackNavigator,
+  createSwitchNavigator
+} from 'react-navigation'
 import NewsScreen from '../screens/news/NewsScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
-import DonateScreen from '../screens/donate/DonateScreen';
+
+import Icon from 'react-native-ionicons'
+import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
+import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
+import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
+import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
+import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
-import Icon from 'react-native-ionicons'
 
 // This file defines the screens in our app and their relationships
 
@@ -27,14 +37,16 @@ const PetitionsNav = createStackNavigator(
   {PetitionsHome: PetitionsScreen}
 )
 
-const DonateNav = createStackNavigator(
-  {
-    DonateHome: {
-      screen: DonateScreen,
-      path: 'donate' // Deep link
-    }
-  }
-)
+const DonateNav = createStackNavigator({
+  DonateHome: {
+    screen: DonateHomeScreen,
+    path: 'donate' // Deep link
+  },
+  DonateRepeatable: DonateRepeatableScreen,
+  DonateBilling: DonateBillingScreen,
+  DonatePayment: DonatePaymentScreen,
+  DonateSuccess: DonateSuccessScreen
+});
 
 const ProfileNav = createStackNavigator(
   {ProfileHome: ProfileScreen}
