@@ -7,24 +7,33 @@ import {
   RefreshControl,
   ScrollView
 } from "react-native";
-import { getRequest } from "./../../lib/requests";
 import APIRoutes from "./../../lib/routes";
 import MessageCard from "./../../components/MessageCard";
 import BaseScreen from "../BaseScreen";
 import ArticleList from "../../components/newsfeed/ArticleList";
+import Article from "../../components/newsfeed/Article";
 import { getArticles } from "./../../lib/newsfeedAPI";
-import articleData from "../../components/newsfeed/articleData";
-import { apiNewsData } from "../../components/newsfeed/apiNewsData";
+import  apiNewsData  from "../../components/newsfeed/apiNewsData";
 
 // Make sure to add your new screen to /config/navigation.js
+// #NewsScreen
+// #NewsList
+// NewsDetail props so 
+// onPress={() => this.props.navigation.setParams({ name: 'Lucy' })}
 class NewsScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
-      articles: [],
+      articles: apiNewsData,
       refreshing: true
     };
     this._fetchArticles.bind(this);
+    this._newsDetailScreen.bind(this);
+  }
+
+  _newsDetailScreen(article_params) {
+     this.props.navigation.setParams({ newsArticle: article_params });
+     this.props.navigation.navigate("NewsDetail");
   }
 
   _fetchArticles(refresh = false) {
@@ -40,12 +49,12 @@ class NewsScreen extends BaseScreen {
   }
 
   render() {
-    const refreshControl = (
-      <RefreshControl
-        refreshing={this.state.refreshing}
-        onRefresh={() => this._fetchArticles(true)}
-      />
-    );
+    // const refreshControl = (
+    //   <RefreshControl
+    //     refreshing={this.state.refreshing}
+    //     onRefresh={() => this._fetchArticles(true)}
+    //   />
+    // );
 
     return (
       // <ScrollView refreshControl={refreshControl}>
@@ -60,17 +69,24 @@ class NewsScreen extends BaseScreen {
       // </ScrollView>
       <View style={styles.container}>
         <Text>This is the news screen</Text>
-        <ArticleList />
-      </View>
+      <FlatList
+        style={styles.listContainer}
+        data={this.state.articles}
+        renderItem={info => (
+          <Article _onPress={() => this._newsDetailScreen} news={info.item.value} />
+        )}
+      />
+
     );
   }
-}
-
 const styles = StyleSheet.create({
   container: {
     marginRight: 40,
     marginLeft: 40,
     alignSelf: "stretch"
+  },
+  listContainer: {
+    width: "100%"
   }
 });
 

@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 const Article = props => (
   <View style={styles.container}>
     <Text>{props.news.title}</Text>
-    <Button title="READ MORE" onPress={null} />
+    <Button title="READ MORE" onPress={props._onPress(props.news)} />
   </View>
 );
 
