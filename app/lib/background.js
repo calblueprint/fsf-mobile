@@ -60,36 +60,25 @@ function _pingDebugServer(numUpdates) {
 
 async function _processMessages(newMessages) {
   try {
-    // Get old messages
+    // Find current latest
     latestID = await AsyncStorage.getItem('latestMessageID')
+    shouldNotify = JSON.parse(await AsyncStorage.getItem('notificationsOn'));
     if (latestID == null) { // First ever fetch!
-
+      shouldNotify = false
+      latestID = '0'
     }
+    latestID = JSON.parse(latestID)
 
     let newMessageCount = 0
-    for (messageIndex in newMessages) {
+    let newLatestID = -1
+    for (messageIndex in newMessages) { // Notify for all with higher ID than latest. Find new max
       message = newMessages[messageIndex];
+      newLatestID = newLatestID > message.id ? newLatestID : message.id
       if (message.id > latestID) {
-        newMessageCount += 1
-        notify(message.title, message.content, message.id)
-      }
-    }
-    oldMessageHash = await AsyncStorage.getItem('messages')
-    if (oldMessageHash == null) { // First ever fetch
-      oldMessageHash = "{}"
-    }
-    oldMessageHash = JSON.parse(oldMessageHash)
-    newMessageHash = {}
-
-    // For every message that comes in, add it to the hash
-    // And notify if we haven't seen it
-    let newMessageCount = 0
-    for (messageIndex in newMessages) {
-      message = newMessages[messageIndex]
-      newMessageHash[message.id] = message
-      if (!(message.id in oldMessageHash)) {
-        newMessageCount += 1
-        notify(message.title, message.content, message.id)
+        if (shouldNotify) {
+          newMessageCount += 1
+          notify(message.title, message.content, message.link, message.id)
+        }
       }
     }
 
@@ -97,7 +86,7 @@ async function _processMessages(newMessages) {
     _pingDebugServer(newMessageCount);
 
     // Update Stored Messages
-    await AsyncStorage.setItem('messages', JSON.stringify(newMessageHash));
+    await AsyncStorage.setItem('latestMessageID', JSON.stringify(newLatestID));
     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
 
   } catch (error) {
@@ -110,4 +99,4 @@ async function _processMessages(newMessages) {
 
 }
 
-export { initializeBackgroundFetch, status}
+export { initializeBackgroundFetch }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import NewsScreen from '../screens/news/NewsScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
@@ -14,7 +15,10 @@ import Icon from 'react-native-ionicons'
 
 const NewsNav = createStackNavigator(
   { NewsHome: NewsScreen,
-    NewsDetail: NewsDetailScreen
+    NewsDetail: {
+      screen: NewsDetailScreen,
+      path: 'news/:id', // Allows for deep linking
+    }
   },
   {initialRouteName: 'NewsHome'}
 )
@@ -24,7 +28,12 @@ const PetitionsNav = createStackNavigator(
 )
 
 const DonateNav = createStackNavigator(
-  {DonateHome: DonateScreen}
+  {
+    DonateHome: {
+      screen: DonateScreen,
+      path: 'donate' // Deep link
+    }
+  }
 )
 
 const ProfileNav = createStackNavigator(
@@ -34,9 +43,9 @@ const ProfileNav = createStackNavigator(
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
   { // Screens on bottom tab bar
-    News: { screen: NewsNav },
-    Petitions: { screen: PetitionsNav },
-    Donate: { screen: DonateNav },
+    News: { screen: NewsNav, path: '' },
+    Petitions: { screen: PetitionsNav, path: '' },
+    Donate: { screen: DonateNav, path: '' },
     Profile: { screen: ProfileNav },
   },
   { // Options
@@ -72,12 +81,17 @@ export const AuthNav = createStackNavigator({
 export const AppNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: MainNav,
+    App: {
+      screen: MainNav,
+      path: '',
+    },
     Auth: AuthNav,
   },
   {
     initialRouteName: 'AuthLoading',
   }
 )
+
+export const prefix = Platform.OS == 'android' ? 'fsf://fsf/' : 'fsf://';
 
 export const NavContainer = createAppContainer(AppNav);

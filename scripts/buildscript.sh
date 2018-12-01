@@ -4,4 +4,4 @@ cd android
 ./gradlew assembleDebug
 cd app/build/outputs/apk/debug
 adb install -r app-debug.apk
-
+echo "cd app/build/outputs/apk/debug"

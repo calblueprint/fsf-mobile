@@ -21,7 +21,7 @@ class DonateScreen extends BaseScreen {
     let version = DeviceInfo.getAPILevel();
     let type = DeviceInfo.getModel();
     let uuid = DeviceInfo.getUniqueID();
-    let appVersion = 0.2
+    let appVersion = 0.3
     let req = {
       method: 'POST',
       headers: {

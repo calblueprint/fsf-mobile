@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
+
   },
   "dependencies": {
     "moment": "^2.22.2",
@@ -12,7 +14,7 @@
     "react-native": "0.57.5",
     "react-native-background-fetch": "^2.4.4",
     "react-native-device-info": "^0.24.3",
-    "react-native-fsf-local-notifications": "^1.0.0",
+    "react-native-fsf-local-notifications": "^1.1.0",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
     "react-navigation": "^3.0.0-alpha"

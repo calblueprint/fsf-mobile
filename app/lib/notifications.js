@@ -5,12 +5,12 @@ function initializeNotifications() {
   FSFLocalNotifications.initializeNotifications()
 }
 
-function notify(title, content, id) {
-  FSFLocalNotifications.publishNotification(title, content, id);
+function notify(title, content, link, id) {
+  FSFLocalNotifications.publishNotification(title, content, link, id);
 }
 
 function testNotify(content) {
-  FSFLocalNotifications.publishNotification("Test Notification", content, -1);
+  FSFLocalNotifications.publishNotification("Donate Now!", content, 'fsf://fsf/donate', -1);
 }
 
 export { initializeNotifications, notify, testNotify }

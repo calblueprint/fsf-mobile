@@ -43,7 +43,7 @@ class LoginScreen extends BaseScreen {
     return (
       <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
         <View style={styles.container}>
-          <Text>Email</Text>
+          <Text>Email WOO 1.0</Text>
           <TextInput
             style={styles.textInput}
             autoCapitalize="none"
