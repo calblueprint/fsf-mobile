@@ -89,7 +89,7 @@ async function _processMessages(newMessages) {
     }
 
     // Debugging Only
-    // _pingDebugServer(newMessageCount);
+     _pingDebugServer(newMessageCount);
 
     // Update Stored Messages
     await AsyncStorage.setItem('latestMessageID', JSON.stringify(newLatestID));

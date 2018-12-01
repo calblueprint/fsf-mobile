@@ -33,6 +33,9 @@ class ProfileScreen extends BaseScreen {
 
   _toggleNotifications = async () => {
     status = await AsyncStorage.getItem('notificationsOn')
+    if (status == null) {
+      status = true
+    }
     status = !JSON.parse(status) // Flip the value of status
     if(status) {
       ToastAndroid.show("Turned Notifications On", ToastAndroid.SHORT);
