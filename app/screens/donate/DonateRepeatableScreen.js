@@ -69,6 +69,7 @@ class DonateRepeatableScreen extends BaseScreen {
         okAlert('Error: Repeatable transaction not approved', 'Try again');
       }
       else {
+        okAlert("Success! Transaction ID: " + resp.transid)
         this._switchTab(this, "DonateSuccess", tcInfo);
       }
     } catch (error) {
@@ -92,13 +93,17 @@ class DonateRepeatableScreen extends BaseScreen {
       </View>
       );
     } else { 
-      return (
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <Text>Your saved payment information</Text>
-          <Text>Card info: XXXX XXXX XXXX {this.state.lastFour}</Text>
+      return <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{ fontWeight: "bold", fontSize: 20, color: "#64696B" }}
+          >
+            your saved payment information
+          </Text>
+          <Text style={{ fontSize: 16, color: "darkgray" }}>
+            card info: XXXX XXXX XXXX {this.state.lastFour}
+          </Text>
           <Button onPress={() => this._donate()} title="donate" />
-        </View>
-      );
+        </View>;
     }
     
   }

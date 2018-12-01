@@ -29,7 +29,11 @@ class DonateSuccessScreen extends BaseScreen {
     const amount = navigation.getParam("amount", "no-amount");
     return (
       <View style={{ flex: 1, alignItems: "center" }}>
-        <Text>Thank you {name} for your generous donation of ${amount}! </Text>
+        <Text
+          style={{ fontWeight: "bold", fontSize: 20, color: "#64696B" }}
+        >
+          Thank you {name} for your generous donation of ${amount}!
+        </Text>
 
         <Button
           onPress={this._toHome}

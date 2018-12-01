@@ -2,16 +2,10 @@ import React from 'react';
 import { FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 import { Button, Text, View} from 'react-native';
 import {
-  getStoredApiKey,
-  getStoredId
-} from "../../lib/login";
-import {
   TCGetBillingID,
   TCSinglePayment,
   storeBillingID,
-  storeLastFour,
-  getSavedBillingID,
-  getSavedLastFour
+  storeLastFour
 } from "../../lib/donate";
 import BaseScreen from '../BaseScreen';
 import { okAlert } from '../../lib/alerts';
@@ -38,43 +32,42 @@ class DonatePaymentScreen extends BaseScreen {
 
   _donate = async () => {
     try {
-      //TODO figure out propTypes checking with this
-      let mergedNavProps = {
-        ...this.state,
-        ...this.props.navigation.state.params
-      };
-    
-      let tcInfo = JSON.parse(JSON.stringify(this.state));
-      tcInfo['zip'] = mergedNavProps['postalCode'];
-      tcInfo['amount'] = mergedNavProps['amount'].toString() + "00";
-      tcInfo['name'] = tcInfo['cardholder'];
-      ({ cardholder, securityCode, ...tcInfo } = tcInfo);
+          //TODO figure out propTypes checking with this
+          let mergedNavProps = { ...this.state, ...this.props.navigation.state.params };
 
-      // DEV only
-      // tcInfo = {
-      //   "name": "John Smith",
-      //   "cc": "4111111111111111",
-      //   "exp": "0404",
-      //   "zip": "90000"
-      // };
-      // remove after dev
+          let tcInfo = JSON.parse(JSON.stringify(this.state));
+          tcInfo["zip"] = mergedNavProps["postalCode"];
+          tcInfo["amount"] = mergedNavProps["amount"].toString() + "00";
+          // tcInfo['name'] = tcInfo['cardholder'];
+          tcInfo['name'] = "John Smith"; //DEMO PURPOSES ONLY
+          ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
-      console.log(tcInfo);
+          // DEV only
+          // tcInfo = {
+          //   "name": "John Smith",
+          //   "cc": "4111111111111111",
+          //   "exp": "0404",
+          //   "zip": "90000"
+          // };
+          // remove after dev
 
-      const transResp = await TCSinglePayment(tcInfo);
-      console.log(transResp);
+          console.log(tcInfo);
 
-      if (transResp.status != "approved") {
-        okAlert("Error: Transaction not approved", "Try again");
-      } else {
-        const resp = await TCGetBillingID(tcInfo);
-        storeBillingID(resp.billingid);
-        let lastFour = tcInfo['cc'].toString().slice(8, 12)
-        storeLastFour(lastFour);
+          const transResp = await TCSinglePayment(tcInfo);
+          console.log(transResp);
 
-        this._switchTab(this, "DonateSuccess", mergedNavProps);
-      }
-    } catch(error) {
+          if (transResp.status != "approved") {
+            okAlert("Error: Transaction not approved", "Try again");
+          } else {
+            const resp = await TCGetBillingID(tcInfo);
+            storeBillingID(resp.billingid);
+            let lastFour = tcInfo["cc"].toString().slice(8, 12);
+            storeLastFour(lastFour);
+
+            okAlert("Success! Transaction ID: " + transResp.transid);
+            this._switchTab(this, "DonateSuccess", mergedNavProps);
+          }
+        } catch(error) {
       console.log(error);
       okAlert('Donate failed', 'Try again');
     }
@@ -111,15 +104,10 @@ class DonatePaymentScreen extends BaseScreen {
         <FormInput onChangeText={formInfo.func} />
       </View>
     ));
-    return (
-      <View style={{ flex: 1, alignItems: "center" }}>
+    return <View style={{ flex: 1, alignItems: "center" }}>
         {formInputs}
-        <Button
-          onPress={() => this._donate()}
-          title="donate"
-        />
-      </View>
-    );
+        <Button onPress={() => this._donate()} title="donate" />
+      </View>;
   }
 }
 export default DonatePaymentScreen;

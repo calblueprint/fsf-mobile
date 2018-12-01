@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { Button, Text, View} from 'react-native';
-import BaseScreen from '../BaseScreen'
+import BaseScreen from '../BaseScreen';
 
 class DonateBillingScreen extends BaseScreen {
   constructor(props) {
@@ -70,15 +70,10 @@ class DonateBillingScreen extends BaseScreen {
       </View>
     ));
 
-    return (
-      <View style={{ flex: 1, alignItems: "center" }}>
+    return <View style={{ flex: 1, alignItems: "center" }}>
         {formInputs}
-        <Button
-          onPress={this._onPress}
-          title="start"
-        />
-      </View>
-    );
+        <Button onPress={this._onPress} title="continue" />
+      </View>;
   }
 }
 export default DonateBillingScreen;
