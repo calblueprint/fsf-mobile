@@ -40,6 +40,8 @@ function _backgroundTask(initialPull){
   )
 }
 
+
+// Sends status update to debug server. 
 function _pingDebugServer(numUpdates) {
   let uuid = DeviceInfo.getUniqueID();
   let req = {
@@ -83,7 +85,7 @@ async function _processMessages(newMessages) {
     }
 
     // Debugging Only
-    _pingDebugServer(newMessageCount);
+    // _pingDebugServer(newMessageCount);
 
     // Update Stored Messages
     await AsyncStorage.setItem('latestMessageID', JSON.stringify(newLatestID));
