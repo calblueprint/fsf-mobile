@@ -11,7 +11,7 @@
         android:id="@+id/charm_button1"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/act"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/goodmorning" />
 
@@ -19,11 +19,11 @@
         android:id="@+id/charm_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FCFCFC"
-        android:gravity="center"
-        android:text="default"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
+        android:text="Support FSF"
         android:textAlignment="center"
+        android:textColor="@android:color/background_dark"
         android:textSize="12sp" />
 </LinearLayout>
