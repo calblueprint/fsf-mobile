@@ -7,7 +7,7 @@ class DonateScreen extends BaseScreen {
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
-          <Text>Hi FSF!</Text>
+          <Text>This is the donate screen! Please give us money :')</Text>
       </View>
     );
   }

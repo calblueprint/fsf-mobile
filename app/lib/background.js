@@ -41,7 +41,7 @@ function _backgroundTask(initialPull){
 }
 
 
-// Sends status update to debug server. 
+// Sends status update to debug server.
 function _pingDebugServer(numUpdates) {
   let uuid = DeviceInfo.getUniqueID();
   let req = {
@@ -64,7 +64,11 @@ async function _processMessages(newMessages) {
   try {
     // Find current latest
     latestID = await AsyncStorage.getItem('latestMessageID')
-    shouldNotify = JSON.parse(await AsyncStorage.getItem('notificationsOn'));
+    shouldNotify = await AsyncStorage.getItem('notificationsOn')
+    if (shouldNotify == null) { // By default, notifications should be on
+      shouldNotify = true
+      await AsyncStorage.setItem('notificationsOn', 'true')
+    }
     if (latestID == null) { // First ever fetch!
       shouldNotify = false
       latestID = '0'

@@ -15,6 +15,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Temporary for production branch
 URL = "http://fsf-rails-notif-staging.herokuapp.com";
 
 export const networkSettings = {
