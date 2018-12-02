@@ -5,14 +5,13 @@ import { TextInput } from 'react-native-gesture-handler';
 import {
   getSavedBillingID
 } from "../../lib/donate";
-import StepperComponent from './StepperComponent';
 import { okAlert } from "../../lib/alerts";
 
 class DonateHomeScreen extends BaseScreen {
   constructor(props) {
     super(props);
     //loading might not be necessary, it's just slow enough to be annoying lmao
-    this.state = { 
+    this.state = {
       amount: 20,
       savedCC: false,
       loading: true
@@ -50,7 +49,7 @@ class DonateHomeScreen extends BaseScreen {
     this.setState({ amount: newAmount });
   };
 
-  _goToNext = (repeatable) => 
+  _goToNext = (repeatable) =>
   {
     if (repeatable) {
       console.log(repeatable);
@@ -66,17 +65,17 @@ class DonateHomeScreen extends BaseScreen {
       '$25',
       '$50'
     ];
-  
+
     let amountOptions2 = [
       '$100',
       '$250',
       '$500'
     ];
 
-    let amountOptButtons1 = amountOptions1.map((amt, i) => 
+    let amountOptButtons1 = amountOptions1.map((amt, i) =>
     < Button key={i} onPress={() => this._changeAmount(amt)} title={amt} />);
-    
-    let amountOptButtons2 = amountOptions2.map((amt, i) => 
+
+    let amountOptButtons2 = amountOptions2.map((amt, i) =>
     < Button key={i+3} onPress={() => this._changeAmount(amt)} title={amt} />);
 
     if (this.state.loading) {
@@ -99,7 +98,7 @@ class DonateHomeScreen extends BaseScreen {
               donation today?
             </Text>
           </View>
-          
+
           <View style={{ alignItems: "center" }}>
             <TextInput style={{ fontSize: 45, color: "#64696B" }} onChangeText={amt => this._changeAmount(amt)} value={"$" + this.state.amount.toString()} />
             <View
@@ -125,7 +124,7 @@ class DonateHomeScreen extends BaseScreen {
             </View> : <Button onPress={() => this._goToNext(false)} title="start" />}
         </View>;
     }
-    
+
   }
 }
 export default DonateHomeScreen;

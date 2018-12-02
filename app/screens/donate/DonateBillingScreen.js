@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen';
 
@@ -26,9 +25,9 @@ class DonateBillingScreen extends BaseScreen {
   };
 
   _onPress = () => {
-    //TODO figure out propTypes checking with this 
-    let mergedNavProps = { 
-      ...this.state, 
+    //TODO figure out propTypes checking with this
+    let mergedNavProps = {
+      ...this.state,
       ...this.props.navigation.state.params };
     console.log(mergedNavProps);
     this._switchTab(this, "DonatePayment", mergedNavProps)
@@ -65,8 +64,7 @@ class DonateBillingScreen extends BaseScreen {
 
     let formInputs = formInfos.map(formInfo => (
       <View key={formInfo.id}>
-        <FormLabel> {formInfo.label} </FormLabel>
-        <FormInput onChangeText={formInfo.func} />
+        <Text>Woo</Text>
       </View>
     ));
 

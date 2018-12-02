@@ -13,11 +13,9 @@
     "react-native": "0.57.5",
     "react-native-background-fetch": "^2.4.4",
     "react-native-device-info": "^0.24.3",
-    "react-native-elements": "^1.0.0-beta7",
     "react-native-fsf-local-notifications": "^1.1.0",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
-    "react-native-js-stepper": "^0.2.1",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.0-alpha"
   },

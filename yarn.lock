@@ -3924,11 +3924,6 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash.merge@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
-  integrity sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ==
-
 lodash.pad@^4.1.0:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/lodash.pad/-/lodash.pad-4.5.1.tgz#4330949a833a7c8da22cc20f6a26c4d59debba70"
@@ -3953,11 +3948,6 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
   integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
-
-lodash.times@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/lodash.times/-/lodash.times-4.3.2.tgz#3e1f2565c431754d54ab57f2ed1741939285ca1d"
-  integrity sha1-Ph8lZcQxdU1Uq1fy7RdBk5KFyh0=
 
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.11"
@@ -4744,11 +4734,6 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-opencollective-postinstall@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.1.tgz#798e83e168f7b91949061c2683f762af747f17cc"
-  integrity sha512-saQQ9hjLwu/oS0492eyYotoh+bra1819cfAT5rjY/e4REWwuc8IgZ844Oo44SiftWcJuBiqp0SA0BFVbmLX0IQ==
-
 opn@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/opn/-/opn-3.0.3.tgz#b6d99e7399f78d65c3baaffef1fb288e9b85243a"
@@ -5098,7 +5083,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
@@ -5213,16 +5198,6 @@ react-native-device-info@^0.24.3:
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.24.3.tgz#f15eff8d09fe418eaf5e7c89ddaabbc5ed718fd7"
   integrity sha512-usW00Wk6DoXH1eRSMt07j0uYvuka3SIEnJ9girlddAacyqwfa1QMVTN4eYmtaBzuMd/avhis8iHZQ3cLaR9CMA==
 
-react-native-elements@^1.0.0-beta7:
-  version "1.0.0-beta7"
-  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.0.0-beta7.tgz#d732affc905079033a8b53343587f7c1dbc59834"
-  integrity sha512-w89YVfF7own1V3RgHDj6EAofk3mYdL9Z28OolxphFce2mv2k/peFEII7x0S6LyQ7rcT3QaxWDlyP7AS4d8duGg==
-  dependencies:
-    lodash.merge "^4.6.1"
-    lodash.times "^4.3.2"
-    opencollective-postinstall "^2.0.0"
-    prop-types "^15.5.8"
-
 react-native-fsf-local-notifications@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-fsf-local-notifications/-/react-native-fsf-local-notifications-1.1.0.tgz#f7a84c403aa8b4ae5d4f2c3342c5d421040c77b0"
@@ -5242,20 +5217,6 @@ react-native-ionicons@^4.4.6:
   resolved "https://registry.yarnpkg.com/react-native-ionicons/-/react-native-ionicons-4.4.6.tgz#e98d7edb74dadd49c49adab5b0a393a687197e0c"
   integrity sha512-UcZhenuo0W1MSgH8dr8FBFvAkHEkarQWWG4saNOYJAWfXqqYfKfk9WIcYfrMHDI1sfCpa7+AmW1V6spUnOmewg==
 
-react-native-js-stepper@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-js-stepper/-/react-native-js-stepper-0.2.1.tgz#aefd8fcfc8209f168fe6d6d86d9525d8c0f90ced"
-  integrity sha512-OtpAMfExUeIKdJAQMT/Yymxgh/uqO/gcztJa6k2ciHGZq33nXtzGarSfPnU0XEDIhUrHLonCXczjfPZUaDuaHg==
-  dependencies:
-    prop-types "^15.6.0"
-    react-native-platform-touchable "^1.1.1"
-    react-native-vector-icons "^4.5.0"
-
-react-native-platform-touchable@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-platform-touchable/-/react-native-platform-touchable-1.1.1.tgz#fde4acc65eea585d28b164d0c3716a42129a68e4"
-  integrity sha1-/eSsxl7qWF0osWTQw3FqQhKaaOQ=
-
 react-native-safe-area-view@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.11.0.tgz#4f3dda43c2bace37965e7c6aef5fc83d4f19d174"
@@ -5274,15 +5235,6 @@ react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   integrity sha512-KxHODfaxFnUTpp3jZvLnunLyadcO0xBrNuAaiwhVAbpW2RQvxeNiDrvJAzrNeqHTLDrZhuHgcKGyqoTen1sHNQ==
   dependencies:
     prop-types "^15.6.1"
-
-react-native-vector-icons@^4.5.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-4.6.0.tgz#e4014311ffa6de397d914ffc31b7097a874cc8d5"
-  integrity sha512-rpfhfPiXCK2PX1nrNhdxSMrEGB/Gw/SvKoPM0G2wAkSoqynnes19K0VYI+Up7DqR1rFIpE4hP2erpT1tNx2tfg==
-  dependencies:
-    lodash "^4.0.0"
-    prop-types "^15.5.10"
-    yargs "^8.0.2"
 
 react-native-vector-icons@^6.1.0:
   version "6.1.0"
