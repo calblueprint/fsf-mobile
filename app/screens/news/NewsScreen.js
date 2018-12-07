@@ -7,12 +7,10 @@ import {
   RefreshControl,
   FlatList
 } from 'react-native';
-import { getRequest } from './../../lib/requests';
-import APIRoutes from './../../lib/routes';
-import MessageCard from './../../components/MessageCard';
+import { getRequest } from '../../lib/requests';
 import BaseScreen from '../BaseScreen';
-import apiNewsData from '../../components/newsfeed/apiNewsData';
 import NewsCard from '../../components/newsfeed/NewsCard';
+
 // Make sure to add your new screen to /config/navigation.js
 class NewsScreen extends BaseScreen {
   constructor(props) {
@@ -25,9 +23,7 @@ class NewsScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    console.log(apiNewsData);
-    console.log('you are welcome good person');
-    this._fetchArticles();
+    this._fetchArticles(true);
   }
 
   render() {
@@ -39,45 +35,58 @@ class NewsScreen extends BaseScreen {
     );
 
     return (
-      <FlatList
-        refreshControl={refreshControl}
-        style={styles.listContainer}
-        data={this.state.articles}
-        renderItem={info => (
-          <NewsCard style={styles.container} articleParams={info.item.value}>
-            <Text style={styles.title}>{info.item.value.title}</Text>
-            <Text style={styles.lead}>
-              {info.item.value.content.substring(20, 50)}
-            </Text>
-            <Text style={styles.date}>
-              {Date(info.item.value.pub_date).substring(4, 10)}
-            </Text>
-            <Button
-              title="READ MORE"
-              onPress={() =>
-                this.props.navigation.navigate('NewsDetail', {
-                  articleParams: JSON.stringify(info.item.value)
-                })
-              }
-            />
-          </NewsCard>
-        )}
-      />
+      <View style={styles.container}>
+        <FlatList
+          refreshControl={refreshControl}
+          style={styles.listContainer}
+          data={this.state.articles}
+          renderItem={info => (
+            <NewsCard>
+              <Text style={styles.title}>{info.item.value.title}</Text>
+              <Text style={styles.lead}>
+                {info.item.value.content.substring(20, 50)}
+              </Text>
+              <Text style={styles.date}>
+                {Date(info.item.value.pub_date).substring(4, 10)}
+              </Text>
+              <Button
+                title="READ MORE"
+                onPress={() =>
+                  this.props.navigation.navigate('NewsDetail', {
+                    articleParams: JSON.stringify(info.item.value)
+                  })
+                }
+              />
+            </NewsCard>
+          )}
+        />
+      </View>
     );
   }
 
-  _fetchArticles(refresh = false) {
-    this.setState({ refreshing: false });
-    this.setState({ articles: apiNewsData });
+  async _fetchArticles(refresh = false) {
+    this.setState({ refreshing: refresh });
+    await getRequest(
+      '/api/v1/articles',
+      res => {
+        const articleList = res.data.map((article, i) => ({
+          key: article.id.toString(),
+          value: article
+        }));
+        this.setState({ articles: articleList, refreshing: false });
+      },
+      error => console.log(error)
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 40,
-    marginLeft: 40,
-    alignSelf: 'center',
-    borderRadius: 10
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginRight: 20
   },
   listContainer: {
     width: '100%'

@@ -15,7 +15,7 @@ module.exports = {
   parser: 'babel-eslint',
   plugins: ['react', 'react-native', 'prettier'],
   rules: {
-    'no-underscore-dangel': 'warn',
+    'no-underscore-dangle': ['error', { allowAfterThis: true }],
     'no-use-before-define': ['error', { variables: false }],
     'no-const-assign': 'warn',
     'no-this-before-super': 'warn',
@@ -27,5 +27,5 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'prettier/prettier': ['error']
   },
-  extends: ['airbnb', 'prettier', 'prettier/react']
+  extends: ['eslint:recommended', 'airbnb', 'prettier', 'prettier/react']
 };

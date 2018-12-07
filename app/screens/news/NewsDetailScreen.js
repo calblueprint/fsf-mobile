@@ -35,24 +35,32 @@ class NewsDetailScreen extends BaseScreen {
       imagesInitialDimensions: { width: 300, height: 200 }
     };
     return (
-      <ScrollView style={{ flex: 1, paddingLeft: 20, paddingRight: 20 }}>
-        <Text style={styles.title}>{articleParamsOb.titie}</Text>
-        <Text>{articleParamsOb.pub_date}</Text>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.article}>
+            <Text style={styles.title}>{articleParamsOb.titie}</Text>
+            <Text style={styles.date}>{articleParamsOb.pub_date}</Text>
 
-        <HTML html={articleParamsOb.content} {...additionalProps} />
-      </ScrollView>
+            <HTML html={articleParamsOb.content} {...additionalProps} />
+          </View>
+          <Text style={styles.title}>{articleParamsOb.titie}</Text>
+          <Text>{articleParamsOb.pub_date}</Text>
+
+          <HTML html={articleParamsOb.content} {...additionalProps} />
+        </ScrollView>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    marginRight: 40,
-    marginLeft: 40,
-    alignSelf: 'center',
-    borderRadius: 10
-  },
-  listContainer: {
+    flex: 1,
     width: '100%'
+  },
+  article: {
+    width: '100%',
+    paddingLeft: 20,
+    paddingRight: 20
   },
   title: {
     textAlign: 'left',
