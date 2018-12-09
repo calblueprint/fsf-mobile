@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  Button,
   Text,
   View,
   StyleSheet,
-  RefreshControl,
   ScrollView,
   Dimensions,
   Linking
@@ -32,21 +30,21 @@ class NewsDetailScreen extends BaseScreen {
       baseFontStyle: {
         fontSize: 18
       },
-      imagesInitialDimensions: { width: 300, height: 200 }
+      imagesInitialDimensions: {
+        width: Dimensions.get('window').width - 50,
+        height: 200
+      }
     };
     return (
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.article}>
-            <Text style={styles.title}>{articleParamsOb.titie}</Text>
-            <Text style={styles.date}>{articleParamsOb.pub_date}</Text>
-
+            <Text style={styles.title}>{articleParamsOb.title}</Text>
+            <Text style={styles.date}>
+              {articleParamsOb.pub_date.substring(0, 10)}
+            </Text>
             <HTML html={articleParamsOb.content} {...additionalProps} />
           </View>
-          <Text style={styles.title}>{articleParamsOb.titie}</Text>
-          <Text>{articleParamsOb.pub_date}</Text>
-
-          <HTML html={articleParamsOb.content} {...additionalProps} />
         </ScrollView>
       </View>
     );
@@ -63,6 +61,7 @@ const styles = StyleSheet.create({
     paddingRight: 20
   },
   title: {
+    marginTop: 10,
     textAlign: 'left',
     fontSize: 24,
     fontWeight: 'bold'

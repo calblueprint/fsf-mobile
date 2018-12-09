@@ -1,19 +1,20 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const cardStyles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: '#000',
     margin: 8,
-    borderRadius: 8
+    borderRadius: 8,
+    elevation: 6
   },
   topContainer: {
     flex: 1,
     height: 100,
-    backgroundColor: "transparent"
+    backgroundColor: 'transparent'
   },
   bottomContainer: {
-    alignSelf: "flex-end",
+    alignSelf: 'flex-end',
     height: 48
   },
   title: {
