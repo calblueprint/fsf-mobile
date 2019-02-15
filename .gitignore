@@ -336,3 +336,6 @@ typings/
 # End of https://www.gitignore.io/api/reactnative,intellij,android,osx,xcode
 
 .expo/
+
+# Android SDK
+.idea
