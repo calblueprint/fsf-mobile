@@ -1,20 +1,18 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavContainer } from './app/config/navigation';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NavContainer } from "./app/config/navigation";
 
 export default class App extends React.Component {
   render() {
-    return (
-      <NavContainer />
-    );
+    return <NavContainer />;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });

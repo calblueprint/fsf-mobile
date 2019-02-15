@@ -1,63 +1,94 @@
 import React from 'react';
-import { Button, Text, View, StyleSheet, RefreshControl, ScrollView } from 'react-native';
-import { getRequest } from './../../lib/requests';
-import APIRoutes from './../../lib/routes';
-import MessageCard from './../../components/MessageCard'
-import BaseScreen from '../BaseScreen'
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  RefreshControl,
+  FlatList,
+  SectionList
+} from 'react-native';
+import { getRequest } from '../../lib/requests';
+import BaseScreen from '../BaseScreen';
+import NewsCard from '../../components/newsfeed/NewsCard';
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsScreen extends BaseScreen {
-
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
-      refreshing: true,
-    }
+      articles: [],
+      refreshing: true
+    };
+    this._fetchArticles = this._fetchArticles.bind(this);
   }
 
   componentDidMount() {
-    this._fetchMessages();
+    this._fetchArticles(true);
   }
 
   render() {
-    var messages = this.state.messages.map((message) => (
-      <MessageCard message={message} key={message.id}/>
-    ))
-
-    var refreshControl = (
+    const refreshControl = (
       <RefreshControl
         refreshing={this.state.refreshing}
-        onRefresh={() => this._fetchMessages(true)}
+        onRefresh={() => this._fetchArticles(true)}
       />
-    )
+    );
 
     return (
-      <ScrollView refreshControl={refreshControl}>
-        <View style={styles.container}>
-        <Text>This is the News Screen</Text>
-        <Button title="Detail" onPress={() => this.props.navigation.navigate('NewsDetail')}></Button>
-          {messages}
-        </View>
-      </ScrollView>
-    )
+      <View style={styles.container}>
+        <SectionList
+          refreshControl={refreshControl}
+          style={styles.listContainer}
+          extraData={this.state}
+          renderItem={info => (
+            <NewsCard
+              onPressNav={() =>
+                this.props.navigation.navigate('NewsDetail', {
+                  articleParams: JSON.stringify(info.item.value)
+                })
+              }
+              articleParams={info.item.value}
+            />
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text style={styles.category}>{title}</Text>
+          )}
+          sections={[{ title: 'Recent News', data: this.state.articles }]}
+          keyExtractor={item => item.key}
+        />
+      </View>
+    );
   }
 
-  _fetchMessages(refresh=false){
-    this.setState({refreshing: refresh})
-    getRequest('/messages',
-              (data) => this.setState({messages: data, refreshing: false}),
-              (error) => console.log(error))
+  async _fetchArticles(refresh = false) {
+    this.setState({ refreshing: true });
+    await getRequest(
+      '/api/v1/articles',
+      res => {
+        const articleList = res.data.map(article => ({
+          key: article.id.toString(),
+          value: article
+        }));
+        this.setState({ articles: articleList, refreshing: false });
+      },
+      error => console.log(error)
+    );
   }
-
-
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 40,
-    marginLeft: 40,
-    alignSelf: 'stretch'
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center'
+  },
+  listContainer: {
+    width: '100%'
+  },
+  category: {
+    fontSize: 48,
+    alignSelf: 'center'
   }
 });
 
