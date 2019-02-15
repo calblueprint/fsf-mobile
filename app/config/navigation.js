@@ -1,47 +1,58 @@
-import React from "react";
-import {
-  createAppContainer,
-  createBottomTabNavigator,
-  createStackNavigator,
-  createSwitchNavigator
-} from "react-navigation";
-import NewsScreen from "../screens/news/NewsScreen";
-import NewsDetailScreen from "../screens/news/NewsDetailScreen";
+import React from 'react';
+import { 
+  createAppContainer, 
+  createBottomTabNavigator, 
+  createStackNavigator, 
+  createSwitchNavigator 
+} from 'react-navigation'
+import NewsScreen from '../screens/news/NewsScreen';
+import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
-import PetitionsScreen from "../screens/petitions/PetitionsScreen";
-import ProfileScreen from "../screens/profile/ProfileScreen";
-import DonateScreen from "../screens/donate/DonateScreen";
-import AuthLoadingScreen from "../screens/auth/AuthLoadingScreen";
-import LoginScreen from "../screens/auth/LoginScreen";
-import { Ionicons } from "@expo/vector-icons";
+import PetitionsScreen from '../screens/petitions/PetitionsScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
+import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
+import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
+import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
+import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
+import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
+import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
+import LoginScreen from '../screens/auth/LoginScreen'
+import { Ionicons } from '@expo/vector-icons'
 
 // This file defines the screens in our app and their relationships
 
 const NewsNav = createStackNavigator(
-  {
-    NewsHome: NewsScreen,
+  { NewsHome: NewsScreen,
     NewsDetail: NewsDetailScreen
   },
-  { initialRouteName: "NewsHome" }
-);
+  {initialRouteName: 'NewsHome'}
+)
 
-const PetitionsNav = createStackNavigator({ PetitionsHome: PetitionsScreen });
+const PetitionsNav = createStackNavigator(
+  {PetitionsHome: PetitionsScreen}
+)
 
-const DonateNav = createStackNavigator({ DonateHome: DonateScreen });
+const DonateNav = createStackNavigator({
+  DonateHome: DonateHomeScreen,
+  DonateRepeatable: DonateRepeatableScreen,
+  DonateBilling: DonateBillingScreen,
+  DonatePayment: DonatePaymentScreen,
+  DonateSuccess: DonateSuccessScreen
+});
 
-const ProfileNav = createStackNavigator({ ProfileHome: ProfileScreen });
+const ProfileNav = createStackNavigator(
+  {ProfileHome: ProfileScreen}
+)
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
-  {
-    // Screens on bottom tab bar
+  { // Screens on bottom tab bar
     News: { screen: NewsNav },
     Petitions: { screen: PetitionsNav },
     Donate: { screen: DonateNav },
-    Profile: { screen: ProfileNav }
+    Profile: { screen: ProfileNav },
   },
-  {
-    // Options
+  { // Options
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
