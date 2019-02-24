@@ -7,7 +7,6 @@ import {
   Text,
   TextInput,
   View,
-  WebView,
 } from 'react-native';
 import {
   casLogin,
@@ -21,7 +20,9 @@ import {
 import BaseScreen from '../BaseScreen'
 import {
   okAlert
-} from '../../lib/alerts'
+} from '../../lib/alerts';
+
+import { WebBrowser } from 'expo';
 
 class LoginScreen extends BaseScreen {
 
@@ -30,7 +31,7 @@ class LoginScreen extends BaseScreen {
     this.state = {
       email: '',
       password: '',
-      showRegister: false,
+      result: null,
     };
   }
 
@@ -68,7 +69,6 @@ class LoginScreen extends BaseScreen {
   }
 
   render() {
-    console.log(this.state)
     return (
       <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
         { this.state.showRegister && this.renderRegister() }
@@ -87,9 +87,7 @@ class LoginScreen extends BaseScreen {
           />
         </View>
         <Button onPress={() => this._attemptLogin()} title="Login" />
-        <Button onPress={() => this.setState({
-          showRegister: true
-        })} title="Join FSF" />
+        <Button onPress={this._handleRegister} title="Join FSF" />
         <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
         <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
       </View>
@@ -97,8 +95,12 @@ class LoginScreen extends BaseScreen {
   }
 
   _devLogin = async () => {
-    console.log("Logging in");
     this.props.navigation.navigate('App');
+  };
+
+  _handleRegister = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    this.setState({ result });
   };
 
   static _showApiKey() {
