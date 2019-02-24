@@ -55,19 +55,6 @@ class LoginScreen extends BaseScreen {
     }
   }
 
-  renderRegister() {
-    return (
-      <View>
-        <WebView
-          source={{ uri: 'https://my.fsf.org/join' }}
-          style={styles.webView}
-          startInLoadingState
-          scalesPageToFit={true}
-        />
-      </View>
-    );
-  }
-
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
