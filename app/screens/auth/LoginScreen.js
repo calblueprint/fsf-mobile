@@ -1,13 +1,26 @@
 import React from 'react';
 import {
-  Button, Text, View, TextInput, StyleSheet, Alert
+  Alert,
+  Button,
+  Linking,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 import {
-  getLoginTicket, casLogin, getCiviCRMApiKey,
-  storeApiKey, storeId, getStoredApiKey, getStoredId
+  casLogin,
+  getCiviCRMApiKey,
+  getLoginTicket,
+  getStoredApiKey,
+  getStoredId,
+  storeApiKey,
+  storeId,
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
-import { okAlert } from '../../lib/alerts'
+import {
+  okAlert
+} from '../../lib/alerts'
 
 class LoginScreen extends BaseScreen {
 
@@ -57,6 +70,9 @@ class LoginScreen extends BaseScreen {
           />
         </View>
         <Button onPress={() => this._attemptLogin()} title="Login" />
+        <Button onPress={(evt) => {
+          Linking.openURL("https://my.fsf.org/join")
+        }} title="Join FSF" />
         <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
         <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
       </View>
