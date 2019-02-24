@@ -12,12 +12,16 @@
  */
 
 import { AsyncStorage } from "react-native"
-
+import APIRoutes from "./routes";
+import { RefCountDisposable } from "rx";
+const user_info_key = 'user_info';
+const server_url = 'http://localhost:8080';
 /**
  * getLoginTicket talks to CAS and returns a string
  *
  * @return a Promise that resolves to a string
  */
+
 async function getLoginTicket() {
   const resp = await fetch(
     'https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount',
@@ -103,7 +107,7 @@ async function casLogin(email, password, loginTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getCiviCRMApiKey(serviceTicket) {
-  const resp = await fetch('http://fsfmobile0p.fsf.org:8080/login', {
+  const resp = await fetch(server_url + APIRoutes.login, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -118,6 +122,27 @@ async function getCiviCRMApiKey(serviceTicket) {
     return Promise.reject(new Error('Failed to get CiviCRM api key'));
   }
 
+  return resp.json();
+}
+
+/**
+ * Talk to the persistent login backend to get the users info
+ *
+ * @param userId: string
+ *
+ * @return a Promise that resolves to a string API key
+ */
+async function getUserInfo(userId) {
+  const resp = await fetch(server_url + APIRoutes.user_info, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  if (resp.status >= 400) {
+    return Promise.reject(new Error('Failed to get user info'));
+  }
   return resp.json();
 }
 
@@ -154,6 +179,23 @@ async function getStoredId() {
 };
 
 /**
+ * @return a Promise that resolves to a json as the stored user info
+ */
+async function getStoredUserInfo() {
+  try {
+    const userInfoString = await AsyncStorage.getItem(user_info_key);
+    const userInfo = JSON.parse(userInfoString)
+    if (userInfo != null) {
+      return userInfo
+    } else {
+      return Promise.reject(new Error("User info not found"));
+    }
+  } catch (error) {
+    return Promise.reject(new Error("User info not found"));
+  }
+};
+
+/**
  * @param key: a string of api key to store
  */
 async function storeApiKey(key) {
@@ -177,7 +219,19 @@ async function storeId(id) {
   }
 }
 
+/**
+ * @param key: a json of user info to store
+ */
+async function storeUserInfo(key) {
+  try {
+    await AsyncStorage.setItem(user_info_key, JSON.stringify(key));
+  } catch (error) {
+    console.log("Unexpected: fail to save to async storage")
+    console.log(error);
+  }
+}
+
 export {
-  getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
-  storeId, getStoredApiKey, getStoredId
+  getLoginTicket, casLogin, getCiviCRMApiKey, getUserInfo, storeApiKey,
+  storeId, storeUserInfo, getStoredApiKey, getStoredId, getStoredUserInfo
 };

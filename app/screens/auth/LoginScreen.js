@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import {
   getLoginTicket, casLogin, getCiviCRMApiKey,
-  storeApiKey, storeId, getStoredApiKey, getStoredId
+  storeApiKey, storeId, getStoredApiKey, getStoredId, getUserInfo, storeUserInfo
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
@@ -27,9 +27,11 @@ class LoginScreen extends BaseScreen {
       const serviceTicket = await casLogin(state.email, state.password, loginTicket);
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
+      const userInfo = await getUserInfo(apiKey.id);
 
       storeApiKey(apiKey.key)
       storeId(apiKey.id)
+      storeUserInfo(userInfo)
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
@@ -64,7 +66,8 @@ class LoginScreen extends BaseScreen {
   }
 
   _devLogin = async () => {
-    console.log("Logging in");
+    const userInfo = await getUserInfo("fakeID");
+    storeUserInfo(userInfo);
     this.props.navigation.navigate('App');
   };
 
