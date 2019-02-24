@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  WebView,
 } from 'react-native';
 import {
   casLogin,
@@ -29,6 +30,7 @@ class LoginScreen extends BaseScreen {
     this.state = {
       email: '',
       password: '',
+      showRegister: false,
     };
   }
 
@@ -52,9 +54,24 @@ class LoginScreen extends BaseScreen {
     }
   }
 
+  renderRegister() {
+    return (
+      <View>
+        <WebView
+          source={{ uri: 'https://my.fsf.org/join' }}
+          style={styles.webView}
+          startInLoadingState
+          scalesPageToFit={true}
+        />
+      </View>
+    );
+  }
+
   render() {
+    console.log(this.state)
     return (
       <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
+        { this.state.showRegister && this.renderRegister() }
         <View style={styles.container}>
           <Text>Email</Text>
           <TextInput
@@ -70,9 +87,9 @@ class LoginScreen extends BaseScreen {
           />
         </View>
         <Button onPress={() => this._attemptLogin()} title="Login" />
-        <Button onPress={(evt) => {
-          Linking.openURL("https://my.fsf.org/join")
-        }} title="Join FSF" />
+        <Button onPress={() => this.setState({
+          showRegister: true
+        })} title="Join FSF" />
         <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
         <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
       </View>
@@ -99,6 +116,7 @@ class LoginScreen extends BaseScreen {
   }
 }
 
+
 const styles = StyleSheet.create({
   textInput: {
     height: 40,
@@ -113,6 +131,12 @@ const styles = StyleSheet.create({
     marginTop: 180,
     alignSelf: 'stretch',
   },
+  webView: {
+    marginRight: 0,
+    marginLeft: 0,
+    marginTop: 0,
+    alignSelf: 'stretch',
+  }
 });
 
 export default LoginScreen;
