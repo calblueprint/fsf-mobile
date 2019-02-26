@@ -1,22 +1,23 @@
 import React from 'react';
-import { 
-  createAppContainer, 
-  createBottomTabNavigator, 
-  createStackNavigator, 
-  createSwitchNavigator 
+import {
+  createAppContainer,
+  createBottomTabNavigator,
+  createStackNavigator,
+  createSwitchNavigator
 } from 'react-navigation'
-import NewsScreen from '../screens/news/NewsScreen';
-import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 
-import PetitionsScreen from '../screens/petitions/PetitionsScreen';
-import ProfileScreen from '../screens/profile/ProfileScreen';
+import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
 import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
 import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
 import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
-import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
+import NewsDetailScreen from '../screens/news/NewsDetailScreen';
+import NewsScreen from '../screens/news/NewsScreen';
+import PetitionsScreen from '../screens/petitions/PetitionsScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
+
 import { Ionicons } from '@expo/vector-icons'
 
 // This file defines the screens in our app and their relationships
@@ -83,7 +84,7 @@ const MainNav = createBottomTabNavigator(
 );
 
 export const AuthNav = createStackNavigator({
-  Login: LoginScreen
+  Login: LoginScreen,
 });
 
 export const AppNav = createSwitchNavigator(
