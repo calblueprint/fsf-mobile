@@ -9,8 +9,6 @@ class PetitionsScreen extends BaseScreen {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
           <Text>Hi FSF!</Text>
-          
-
       </View>
     );
   }
