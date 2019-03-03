@@ -44,8 +44,8 @@ class LoginScreen extends BaseScreen {
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-      storeApiKey(apiKey.key)
-      storeId(apiKey.id)
+      storeApiKey(apiKey.key);
+      storeId(apiKey.id);
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
@@ -54,6 +54,15 @@ class LoginScreen extends BaseScreen {
       okAlert('Login failed', 'Try again');
     }
   }
+
+  _guestLogin = async () => {
+    this.props.navigation.navigate('App');
+  };
+
+  _handleRegister = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    this.setState({ result });
+  };
 
   render() {
     return (
@@ -73,36 +82,25 @@ class LoginScreen extends BaseScreen {
             secureTextEntry
           />
         </View>
-        <Button onPress={() => this._attemptLogin()} title="Login" />
+        <Button onPress={this._attemptLogin} title="Login" />
         <Button onPress={this._handleRegister} title="Join FSF" />
-        <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
-        <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
+        <Button onPress={this._guestLogin} title="Continue as Guest" />
       </View>
     );
   }
+  // static _showApiKey() {
+  //   const request = async () => {
+  //     try {
+  //       const key = await getStoredApiKey();
+  //       const id = await getStoredId();
+  //       okAlert('Found API Key', `${key} ${id}`);
+  //     } catch (error) {
+  //       okAlert('API Key not found', 'You may need to login first!');
+  //     }
+  //   };
 
-  _devLogin = async () => {
-    this.props.navigation.navigate('App');
-  };
-
-  _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    this.setState({ result });
-  };
-
-  static _showApiKey() {
-    const request = async () => {
-      try {
-        const key = await getStoredApiKey();
-        const id = await getStoredId();
-        okAlert('Found API Key', `${key} ${id}`);
-      } catch (error) {
-        okAlert('API Key not found', 'You may need to login first!');
-      }
-    };
-
-    request();
-  }
+  //   request();
+  // }
 }
 
 

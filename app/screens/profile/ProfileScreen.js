@@ -1,7 +1,19 @@
+import {
+  WebBrowser
+} from 'expo';
 import React from 'react';
-import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
+import {
+  Button,
+  Text,
+  View,
+  AsyncStorage,
+  Alert
+} from 'react-native';
+
 import BaseScreen from '../BaseScreen'
-import { okAlert } from '../../lib/alerts'
+import {
+  okAlert
+} from '../../lib/alerts'
 import {
   getStoredId,
 } from '../../lib/login';
@@ -13,6 +25,7 @@ class ProfileScreen extends BaseScreen {
     this.state = {
       componentDidMount: false,
       loggedIn: false,
+      result: null,
     };
   }
 
@@ -37,7 +50,9 @@ class ProfileScreen extends BaseScreen {
       } else {
         return (
           <View style={{flex: 1, alignItems: 'center'}}>
-            <Text>Sign in to view your profile!</Text>
+            <Text>Sign In or Sign Up to view your profile!</Text>
+            <Button onPress={this._navigateLogin} title="Sign In" />
+            <Button onPress={this._handleRegister} title= "Join FSF" />
           </View>
         );
       }
@@ -56,15 +71,24 @@ class ProfileScreen extends BaseScreen {
         this.setState({
           loggedIn: false,
           componentDidMount: true,
-        })
+        });
       }
-    )
+    );
   }
 
   _signOutAsync = async () => {
-    okAlert('Logged Out', '')
+    okAlert('Logged Out', '');
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');
-  }
+  };
+
+  _handleRegister = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    this.setState({ result });
+  };
+
+  _navigateLogin = async() => {
+    this.props.navigation.navigate('Auth');
+  };
 }
 export default ProfileScreen;

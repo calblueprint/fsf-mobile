@@ -128,7 +128,7 @@ async function getStoredApiKey() {
   try {
     const key = await AsyncStorage.getItem('apikey');
     if (key != null) {
-      return key
+      return key;
     } else {
       return Promise.reject(new Error("API Key not found"));
     }
@@ -144,7 +144,7 @@ async function getStoredId() {
   try {
     const id = await AsyncStorage.getItem('id');
     if (id != null) {
-      return id
+      return id;
     } else {
       return Promise.reject(new Error("User Id not found"));
     }
@@ -160,7 +160,7 @@ async function storeApiKey(key) {
   try {
     await AsyncStorage.setItem('apikey', key);
   } catch (error) {
-    console.log("Unexpected: fail to save to async storage")
+    console.log("Unexpected: fail to save to async storage");
     console.log(error);
   }
 }
@@ -172,7 +172,7 @@ async function storeId(id) {
   try {
     await AsyncStorage.setItem('id', id);
   } catch (error) {
-    console.log("Unexpected: fail to save to async storage")
+    console.log("Unexpected: fail to save to async storage");
     console.log(error);
   }
 }
