@@ -46,7 +46,15 @@ class ProfileScreen extends BaseScreen {
             <Button
               onPress={() => this._signOutAsync()}
               title='Sign Out'
-              />
+            />
+            <Button
+              onPress={() => this._Policy()}
+              title='Privacy Policy'
+            />
+            <Button
+              onPress={() => this._Version()}
+              title='Version'
+            />
           </View>
         );
       } else {
@@ -92,5 +100,13 @@ class ProfileScreen extends BaseScreen {
     await guestLogOut();
     this.props.navigation.navigate('Auth');
   };
+  _Policy = async () => {
+    this.props.navigation.navigate('Privacy');
+  }
+
+  _Version = async () => {
+    this.props.navigation.navigate('Version');
+  }
 }
+
 export default ProfileScreen;

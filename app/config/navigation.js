@@ -19,6 +19,8 @@ import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
 import { Ionicons } from '@expo/vector-icons'
+import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
+import VersionScreen from '../screens/about/VersionScreen';
 
 // This file defines the screens in our app and their relationships
 
@@ -87,11 +89,22 @@ export const AuthNav = createStackNavigator({
   Login: LoginScreen,
 });
 
+export const PrivacyNav = createStackNavigator({
+  Privacy: PrivacyPolicyScreen
+});
+
+export const VersionNav = createStackNavigator({
+  Version: VersionScreen
+});
+
 export const AppNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
-    Auth: AuthNav
+    Auth: AuthNav,
+    Privacy: PrivacyNav,
+    Version: VersionNav,
+    Profile: ProfileNav,
   },
   {
     initialRouteName: "AuthLoading"
