@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
+import { Button, Text, View, AsyncStorage, Alert, ScrollView} from 'react-native';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
@@ -8,6 +8,7 @@ class PrivacyPolicyScreen extends BaseScreen {
  render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
+        <ScrollView>
           <Text>  
           
           	Your trust is important to the Free Software Foundation (FSF), and we take privacy and security very seriously. 
@@ -57,6 +58,7 @@ class PrivacyPolicyScreen extends BaseScreen {
             onPress={() => this.props.navigation.navigate('Profile')}
             title='Back to Profile'/>
 
+        </ScrollView>
 
       </View>
     );
