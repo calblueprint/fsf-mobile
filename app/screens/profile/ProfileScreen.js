@@ -16,6 +16,8 @@ import {
 } from '../../lib/alerts'
 import {
   getStoredId,
+  guestLogOut,
+  userLogOut,
 } from '../../lib/login';
 
 class ProfileScreen extends BaseScreen {
@@ -60,8 +62,7 @@ class ProfileScreen extends BaseScreen {
   }
 
   componentDidMount() {
-    const idPromise = getStoredId();
-    idPromise.then(_ => {
+    getStoredId().then(_ => {
         this.setState({
           loggedIn: true,
           componentDidMount: true,
@@ -78,7 +79,7 @@ class ProfileScreen extends BaseScreen {
 
   _signOutAsync = async () => {
     okAlert('Logged Out', '');
-    await AsyncStorage.clear();
+    await userLogOut();
     this.props.navigation.navigate('Auth');
   };
 
@@ -88,6 +89,7 @@ class ProfileScreen extends BaseScreen {
   };
 
   _navigateLogin = async() => {
+    await guestLogOut();
     this.props.navigation.navigate('Auth');
   };
 }
