@@ -3,7 +3,7 @@ import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
-class PrivacyPolictScreen extends ProfileScreen {
+class PrivacyPolicyScreen extends BaseScreen {
 
  render() {
     return (
@@ -63,3 +63,5 @@ class PrivacyPolictScreen extends ProfileScreen {
   }
 
 }
+
+export default PrivacyPolicyScreen;

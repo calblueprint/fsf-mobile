@@ -3,7 +3,7 @@ import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
-class VersionScreen extends ProfileScreen {
+class VersionScreen extends BaseScreen {
 
  render() {
     return (
@@ -18,3 +18,5 @@ class VersionScreen extends ProfileScreen {
   }
 
 }
+
+export default VersionScreen;

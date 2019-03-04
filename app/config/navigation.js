@@ -100,10 +100,10 @@ export const AppNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
-    Auth: AuthNav
-    Pri: PrivacyNav
-    Ver: VersionNav
-    Profile: ProfileNav
+    Auth: AuthNav,
+    Privacy: PrivacyNav,
+    Version: VersionNav,
+    Profile: ProfileNav,
   },
   {
     initialRouteName: "AuthLoading"

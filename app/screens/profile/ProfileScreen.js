@@ -3,14 +3,14 @@ import { Button, Text, View, AsyncStorage, Alert} from 'react-native';
 import BaseScreen from '../BaseScreen'
 import { okAlert } from '../../lib/alerts'
 
-class AboutScreen extends BaseScreen {
+class ProfileScreen extends BaseScreen {
 
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
           <Text>Hi FSF! This is a profile</Text>
           <Button
-            onPressnavi= {() => this._signOutAsync()}
+            onPress={() => this._signOutAsync()}
             title='Sign Out'
             />
 
@@ -35,11 +35,11 @@ class AboutScreen extends BaseScreen {
   }
 
   _Policy = async () => {
-    this.props.navigation.navigate('Pri');
+    this.props.navigation.navigate('Privacy');
   }
 
   _Version = async () => {
-    this.props.navigation.navigate('Ver');
+    this.props.navigation.navigate('Version');
   }
 }
 
