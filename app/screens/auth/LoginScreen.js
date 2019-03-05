@@ -59,12 +59,8 @@ class LoginScreen extends BaseScreen {
   };
 
   _guestLogin = async () => {
-    guestLogin().then(_ => {
-        this.props.navigation.navigate('App');
-      }
-    ).catch(_ => {
-      console.log("Guest Login Error")
-    });
+    await guestLogin();
+    this.props.navigation.navigate('App');
   };
 
   _handleRegister = async () => {
