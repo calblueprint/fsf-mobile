@@ -16,6 +16,8 @@ import {
   getStoredId,
   storeApiKey,
   storeId,
+  guestLogin,
+  isGuestLoggedIn,
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
 import {
@@ -32,6 +34,7 @@ class LoginScreen extends BaseScreen {
       email: '',
       password: '',
       result: null,
+      componentDidMount: false,
     };
   }
 
@@ -44,8 +47,8 @@ class LoginScreen extends BaseScreen {
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-      storeApiKey(apiKey.key)
-      storeId(apiKey.id)
+      storeApiKey(apiKey.key);
+      storeId(apiKey.id);
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
@@ -53,35 +56,10 @@ class LoginScreen extends BaseScreen {
       console.log(error);
       okAlert('Login failed', 'Try again');
     }
-  }
+  };
 
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
-        { this.state.showRegister && this.renderRegister() }
-        <View style={styles.container}>
-          <Text>Email</Text>
-          <TextInput
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={text => this.setState({ email: text })}
-          />
-          <Text>Password</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={text => this.setState({ password: text })}
-            secureTextEntry
-          />
-        </View>
-        <Button onPress={() => this._attemptLogin()} title="Login" />
-        <Button onPress={this._handleRegister} title="Join FSF" />
-        <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
-        <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
-      </View>
-    );
-  }
-
-  _devLogin = async () => {
+  _guestLogin = async () => {
+    await guestLogin();
     this.props.navigation.navigate('App');
   };
 
@@ -90,18 +68,47 @@ class LoginScreen extends BaseScreen {
     this.setState({ result });
   };
 
-  static _showApiKey() {
-    const request = async () => {
-      try {
-        const key = await getStoredApiKey();
-        const id = await getStoredId();
-        okAlert('Found API Key', `${key} ${id}`);
-      } catch (error) {
-        okAlert('API Key not found', 'You may need to login first!');
-      }
-    };
+  render() {
+    if (this.state.componentDidMount) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
+          { this.state.showRegister && this.renderRegister() }
+          <View style={styles.container}>
+            <Text>Email</Text>
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={text => this.setState({ email: text })}
+            />
+            <Text>Password</Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={text => this.setState({ password: text })}
+              secureTextEntry
+            />
+          </View>
+          <Button onPress={this._attemptLogin} title="Login" />
+          <Button onPress={this._handleRegister} title="Join FSF" />
+          <Button onPress={this._guestLogin} title="Continue as Guest" />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          Loading...
+        </View>
+      );
+    }
+  }
 
-    request();
+  componentDidMount() {
+    isGuestLoggedIn().then(_ => {
+      this.props.navigation.navigate('App');
+    }).catch(_ => {
+      this.setState({
+        componentDidMount: true
+      });
+    });
   }
 }
 
