@@ -6,7 +6,9 @@ import {
   TCSinglePayment,
   storeBillingID,
   storeLastFour,
-  storeCardholder
+  storeCardholder,
+  getStoredEmail,
+  getStoredApiKey
 } from "../../lib/donate";
 import BaseScreen from '../BaseScreen';
 import { okAlert } from '../../lib/alerts';

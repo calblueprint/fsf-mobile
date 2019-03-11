@@ -16,6 +16,7 @@ import {
   getStoredId,
   storeApiKey,
   storeId,
+  storeEmail,
   guestLogin,
   isGuestLoggedIn,
 } from '../../lib/login';
