@@ -42,8 +42,8 @@ class DonatePaymentScreen extends BaseScreen {
           tcInfo["amount"] = mergedNavProps["amount"].toString() + "00";
           // tcInfo['name'] = tcInfo['cardholder'];
           tcInfo['name'] = "John Smith"; //DEMO PURPOSES ONLY, uncomment above for prod
-          tcInfo['email'] = getStoredEmail
-          tcInfo['apikey'] = getStoredApiKey
+          tcInfo['email'] = await getStoredEmail()
+          tcInfo['apikey'] = await getStoredApiKey()
           ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
           // DEV only

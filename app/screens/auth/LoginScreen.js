@@ -47,9 +47,9 @@ class LoginScreen extends BaseScreen {
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-      storeApiKey(apiKey.key)  // store API Key in local storage
-      storeId(apiKey.id)       // store id
-      storeEmail(apiKey.email) // store email
+      await storeApiKey(apiKey.key)  // store API Key in local storage
+      await storeId(apiKey.id)       // store id
+      await storeEmail(apiKey.email) // store email
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
