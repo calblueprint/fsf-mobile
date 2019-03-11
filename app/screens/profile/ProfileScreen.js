@@ -39,24 +39,24 @@ class ProfileScreen extends BaseScreen {
         </View>
       );
     } else {
-      if (this.state.loggedIn) {
-        return (
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <Text>Your Profile</Text>
-            <Button onPress={this._signOutAsync} title='Sign Out' />
-            <Button onPress={this._Policy} title='Privacy Policy' />
-            <Button onPress={this._Version} title='Version' />
-          </View>
-        );
-      } else {
-        return (
-          <View style={{flex: 1, alignItems: 'center'}}>
-            <Text>Sign In or Sign Up to view your profile!</Text>
-            <Button onPress={this._navigateLogin} title="Sign In" />
-            <Button onPress={this._handleRegister} title= "Join FSF" />
-          </View>
-        );
-      }
+      return (
+        <View style={{flex: 1, alignItems: 'center'}}>
+          {this.state.loggedIn ? (
+            <View>
+              <Text>Your Profile</Text>
+              <Button onPress={this._signOutAsync} title='Sign Out' />
+            </View>
+          ) : (
+            <View>
+              <Text>Sign In or Sign Up to view your profile!</Text>
+              <Button onPress={this._navigateLogin} title="Sign In" />
+              <Button onPress={this._handleRegister} title= "Join FSF" />
+            </View>
+          )}
+          <Button onPress={this._Policy} title='Privacy Policy' />
+          <Button onPress={this._Version} title='Version' />
+        </View>
+      )
     }
   }
 
