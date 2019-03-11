@@ -66,6 +66,7 @@ async function casLogin(email, password, loginTicket) {
   });
 
   if (resp.status >= 400) {
+    console.log(resp)
     console.log(resp.status);
     console.log(loginTicket);
     console.log(formData);
@@ -132,13 +133,14 @@ async function getCiviCRMApiKey(serviceTicket) {
  *
  * @return a Promise that resolves to a string API key
  */
-async function getUserInfo(userId) {
+async function getUserInfo(key) {
   const resp = await fetch(server_url + APIRoutes.user_info, {
-    method: 'GET',
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
+    body: JSON.stringify(key),
   });
   if (resp.status >= 400) {
     return Promise.reject(new Error('Failed to get user info'));

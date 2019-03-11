@@ -27,7 +27,7 @@ class LoginScreen extends BaseScreen {
       const serviceTicket = await casLogin(state.email, state.password, loginTicket);
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
-      const userInfo = await getUserInfo(apiKey.id);
+      const userInfo = await getUserInfo(apiKey);
 
       storeApiKey(apiKey.key)
       storeId(apiKey.id)
@@ -66,7 +66,13 @@ class LoginScreen extends BaseScreen {
   }
 
   _devLogin = async () => {
-    const userInfo = await getUserInfo("fakeID");
+    const key = {
+      "key": "45487258096833077078762687654095",
+      "id": "2599186",
+      "email": "mukil.loganathan@gmail.com"
+    }
+    
+    const userInfo = await getUserInfo(key);
     storeUserInfo(userInfo);
     this.props.navigation.navigate('App');
   };

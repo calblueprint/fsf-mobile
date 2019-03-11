@@ -14,15 +14,16 @@ class UserInfoCard extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          <Text style={styles.lead}>{this.props.userInfo.email}</Text>
           <Text style={styles.lead}>
-            {this.props.userInfo.firstname.substring(0, 100)}
+          Email:{this.props.userInfo.email}</Text>
+          <Text style={styles.lead}>
+            First Name:{this.props.userInfo.first_name.substring(0, 100)}
           </Text>
           <Text style={styles.lead}>
-            {this.props.userInfo.lastname.substring(0, 100)}
+            Last Name: {this.props.userInfo.last_name.substring(0, 100)}
           </Text>
           <Text style={styles.lead}>
-            {this.props.userInfo.address.substring(0, 100)}
+            Phone Number: {this.props.userInfo.phone.substring(0, 100)}
           </Text>
         </View>
       </View>
