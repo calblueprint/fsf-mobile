@@ -7,17 +7,17 @@ import {
   Dimensions,
   Linking
 } from 'react-native';
-import HTML from 'react-native-render-html';
 import BaseScreen from '../BaseScreen';
+import HTML from 'react-native-render-html';
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
-  componentDidMount() {}
 
   render() {
     const { params } = this.props.navigation.state;
