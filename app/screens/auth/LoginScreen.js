@@ -97,7 +97,7 @@ class LoginScreen extends BaseScreen {
     } else {
       return (
         <View>
-          Loading...
+          <Text>Loading...</Text>
         </View>
       );
     }
