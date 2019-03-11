@@ -1,13 +1,30 @@
 import React from 'react';
 import {
-  Button, Text, View, TextInput, StyleSheet, Alert
+  Alert,
+  Button,
+  Linking,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
 import {
-  getLoginTicket, casLogin, getCiviCRMApiKey,
-  storeApiKey, storeId, getStoredApiKey, getStoredId
+  casLogin,
+  getCiviCRMApiKey,
+  getLoginTicket,
+  getStoredApiKey,
+  getStoredId,
+  storeApiKey,
+  storeId,
+  guestLogin,
+  isGuestLoggedIn,
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
-import { okAlert } from '../../lib/alerts'
+import {
+  okAlert
+} from '../../lib/alerts';
+
+import { WebBrowser } from 'expo';
 
 class LoginScreen extends BaseScreen {
 
@@ -16,6 +33,8 @@ class LoginScreen extends BaseScreen {
     this.state = {
       email: '',
       password: '',
+      result: null,
+      componentDidMount: false,
     };
   }
 
@@ -38,51 +57,62 @@ class LoginScreen extends BaseScreen {
       console.log(error);
       okAlert('Login failed', 'Try again');
     }
-  }
+  };
 
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
-        <View style={styles.container}>
-          <Text>Email</Text>
-          <TextInput
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={text => this.setState({ email: text })}
-          />
-          <Text>Password</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={text => this.setState({ password: text })}
-            secureTextEntry
-          />
-        </View>
-        <Button onPress={() => this._attemptLogin()} title="Login" />
-        <Button onPress={LoginScreen._showApiKey} title="Show API Key" />
-        <Button onPress={() => this._devLogin()} title="Dev Login Bypass" />
-      </View>
-    );
-  }
-
-  _devLogin = async () => {
-    console.log("Logging in");
+  _guestLogin = async () => {
+    await guestLogin();
     this.props.navigation.navigate('App');
   };
 
-  static _showApiKey() {
-    const request = async () => {
-      try {
-        const key = await getStoredApiKey();
-        const id = await getStoredId();
-        okAlert('Found API Key', `${key} ${id}`);
-      } catch (error) {
-        okAlert('API Key not found', 'You may need to login first!');
-      }
-    };
+  _handleRegister = async () => {
+    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    this.setState({ result });
+  };
 
-    request();
+  render() {
+    if (this.state.componentDidMount) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
+          { this.state.showRegister && this.renderRegister() }
+          <View style={styles.container}>
+            <Text>Email</Text>
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={text => this.setState({ email: text })}
+            />
+            <Text>Password</Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={text => this.setState({ password: text })}
+              secureTextEntry
+            />
+          </View>
+          <Button onPress={this._attemptLogin} title="Login" />
+          <Button onPress={this._handleRegister} title="Join FSF" />
+          <Button onPress={this._guestLogin} title="Continue as Guest" />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          Loading...
+        </View>
+      );
+    }
+  }
+
+  componentDidMount() {
+    isGuestLoggedIn().then(_ => {
+      this.props.navigation.navigate('App');
+    }).catch(_ => {
+      this.setState({
+        componentDidMount: true
+      });
+    });
   }
 }
+
 
 const styles = StyleSheet.create({
   textInput: {
@@ -98,6 +128,12 @@ const styles = StyleSheet.create({
     marginTop: 180,
     alignSelf: 'stretch',
   },
+  webView: {
+    marginRight: 0,
+    marginLeft: 0,
+    marginTop: 0,
+    alignSelf: 'stretch',
+  }
 });
 
 export default LoginScreen;
