@@ -66,6 +66,9 @@ class DonateRepeatableScreen extends BaseScreen {
         amount: amount.toString() + "00"
       };
 
+      tcInfo['email'] = await getStoredEmail()
+      tcInfo['apikey'] = await getStoredApiKey()
+
       console.log(tcInfo);
       const resp = await TCRepeatablePayment(tcInfo);
       console.log(resp);
