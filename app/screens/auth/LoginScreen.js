@@ -16,6 +16,7 @@ import {
   getStoredId,
   storeApiKey,
   storeId,
+  storeEmail,
   guestLogin,
   isGuestLoggedIn,
 } from '../../lib/login';
@@ -47,8 +48,9 @@ class LoginScreen extends BaseScreen {
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-      storeApiKey(apiKey.key);
-      storeId(apiKey.id);
+      await storeApiKey(apiKey.key)  // store API Key in local storage
+      await storeId(apiKey.id)       // store id
+      await storeEmail(apiKey.email) // store email
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');

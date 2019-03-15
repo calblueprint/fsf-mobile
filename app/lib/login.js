@@ -154,13 +154,29 @@ async function getStoredId() {
 };
 
 /**
+ * @return a Promise that resolves to a string as the stored user id
+ */
+async function getStoredEmail() {
+  try {
+    const email = await AsyncStorage.getItem('email');
+    if (email != null) {
+      return email
+    } else {
+      return Promise.reject(new Error("Email not found"));
+    }
+  } catch (error) {
+    return Promise.reject(new Error("Email not found"));
+  }
+};
+
+/**
  * @param key: a string of api key to store
  */
 async function storeApiKey(key) {
   try {
     await AsyncStorage.setItem("apikey", key);
   } catch (error) {
-    console.log("Unexpected: fail to save to async storage");
+    console.log("Unexpected: fail to save APIKey to async storage")
     console.log(error);
   }
 }
@@ -172,7 +188,19 @@ async function storeId(id) {
   try {
     await AsyncStorage.setItem("id", id);
   } catch (error) {
-    console.log("Unexpected: fail to save to async storage");
+    console.log("Unexpected: fail to save Id to async storage")
+    console.log(error);
+  }
+}
+
+/**
+ * @param id: a string of email to store
+ */
+async function storeEmail(email) {
+  try {
+    await AsyncStorage.setItem('email', email);
+  } catch (error) {
+    console.log("Unexpected: fail to save Email to async storage")
     console.log(error);
   }
 }
@@ -219,5 +247,5 @@ async function userLogOut() {
 export {
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut,
+  guestLogOut, userLogOut, storeEmail, getStoredEmail
 };

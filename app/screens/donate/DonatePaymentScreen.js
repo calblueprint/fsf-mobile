@@ -10,6 +10,7 @@ import {
 } from "../../lib/donate";
 import BaseScreen from '../BaseScreen';
 import { okAlert } from '../../lib/alerts';
+import { getStoredEmail, getStoredApiKey } from '../../lib/login';
 
 class DonatePaymentScreen extends BaseScreen {
   constructor(props) {
@@ -41,6 +42,8 @@ class DonatePaymentScreen extends BaseScreen {
           tcInfo["amount"] = mergedNavProps["amount"].toString() + "00";
           // tcInfo['name'] = tcInfo['cardholder'];
           tcInfo['name'] = "John Smith"; //DEMO PURPOSES ONLY, uncomment above for prod
+          tcInfo['email'] = await getStoredEmail()
+          tcInfo['apikey'] = await getStoredApiKey()
           ({ cardholder, securityCode, ...tcInfo } = tcInfo);
 
           // DEV only
@@ -49,12 +52,21 @@ class DonatePaymentScreen extends BaseScreen {
           //   "cc": "4111111111111111",
           //   "exp": "0404",
           //   "zip": "90000"
+          //   "email": 
+          //   "apikey":
           // };
           // remove after dev
 
           console.log(tcInfo);
 
           const transResp = await TCSinglePayment(tcInfo);
+          /*
+            type TCSaleResp struct {
+              TransID  string `json:"transid"`
+              Status   string `json:"status"`
+              AuthCode string `json:"authcode"`
+            }
+          */
           console.log(transResp);
 
           if (transResp.status != "approved") {
