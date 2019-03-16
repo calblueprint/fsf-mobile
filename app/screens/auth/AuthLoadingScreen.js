@@ -1,8 +1,6 @@
 import React from 'react';
-import { NativeModules, ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, View } from 'react-native';
 import BaseScreen from '../BaseScreen'
-
-const { NavigationBridge } = NativeModules
 
 // This screen determines whether the user is logged in or not
 class AuthLoadingScreen extends BaseScreen {
@@ -15,9 +13,9 @@ class AuthLoadingScreen extends BaseScreen {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('apikey');
 
-    // This will switch to the landing screen or Auth screen and this loading
+    // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth')
+    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here
