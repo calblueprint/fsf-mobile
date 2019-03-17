@@ -1,6 +1,15 @@
+import colors from '../../styles/colors'
+
 import React from 'react';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-import { Button, Text, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View} from 'react-native';
+import {
+  Button,
+  TextInput
+} from 'react-native-paper';
 import BaseScreen from '../BaseScreen';
 
 class DonateBillingScreen extends BaseScreen {
@@ -26,54 +35,95 @@ class DonateBillingScreen extends BaseScreen {
   };
 
   _onPress = () => {
-    //TODO figure out propTypes checking with this 
-    let mergedNavProps = { 
-      ...this.state, 
+    //TODO figure out propTypes checking with this
+    let mergedNavProps = {
+      ...this.state,
       ...this.props.navigation.state.params };
     console.log(mergedNavProps);
     this._switchTab(this, "DonatePayment", mergedNavProps)
   }
 
   render() {
-    const formInfos = [
-      {
-        id: 1,
-        label: "address",
-        func: input => this._handleChange("address", input)
-      },
-      {
-        id: 2,
-        label: "city",
-        func: input => this._handleChange("city", input)
-      },
-      {
-        id: 3,
-        label: "country",
-        func: input => this._handleChange("country", input)
-      },
-      {
-        id: 4,
-        label: "state/province",
-        func: input => this._handleChange("stateProvince", input)
-      },
-      {
-        id: 5,
-        label: "postal code",
-        func: input => this._handleChange("postalCode", input)
-      }
-    ];
+    return (
+      <View style={{ flex: 1 }} >
+        <View id="progress_bar" />
+        <View style={styles.addressContainer}>
+          <TextInput
+            style={styles.textInput}
+            label='Address'
+            onChangeText={text => this.setState({ address: text })}
+          />
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.shortText}>
+              <TextInput
+                style={styles.textInput}
+                label='City'
+                onChangeText={text => this.setState({ city: text })}
+              />
+            </View>
+            <View style={styles.shortText}>
+              <TextInput
+                style={styles.textInput}
+                label='Country'
+                onChangeText={text => this.setState({ country: text })}
+              />
+            </View>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.shortText}>
+              <TextInput
+                style={styles.textInput}
+                label='State/Provenance'
+                onChangeText={text => this.setState({ stateProvince: text })}
+              />
+            </View>
+            <View style={styles.shortText}>
+              <TextInput
+                style={styles.textInput}
+                label='Postal Code'
+                onChangeText={text => this.setState({ postalCode: text })}
+              />
+            </View>
+          </View>
 
-    let formInputs = formInfos.map(formInfo => (
-      <View key={formInfo.id}>
-        <FormLabel> {formInfo.label} </FormLabel>
-        <FormInput onChangeText={formInfo.func} />
+          <Button
+            style={styles.continueButton}
+            contentStyle={{ height: 50 }}
+            onPress={this._onPress}
+          >
+            <Text style={styles.buttonText}>
+              Continue
+            </Text>
+          </Button>
+        </View>
       </View>
-    ));
-
-    return <View style={{ flex: 1, alignItems: "center" }}>
-        {formInputs}
-        <Button onPress={this._onPress} title="continue" />
-      </View>;
+    )
   }
 }
+
+const styles = StyleSheet.create({
+  textInput: {
+    backgroundColor: colors.backgroundWhite,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  addressContainer: {
+    flex: 1
+  },
+  shortText: {
+    flex: .5,
+  },
+  continueButton: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: colors.buttonGrey,
+  },
+  buttonText: {
+    color: colors.textLight,
+    fontSize: 18
+  }
+});
+
 export default DonateBillingScreen;

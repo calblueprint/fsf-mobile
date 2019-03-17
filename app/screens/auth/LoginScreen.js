@@ -1,3 +1,4 @@
+import { WebBrowser } from 'expo';
 import React from 'react';
 import {
   Alert,
@@ -9,22 +10,22 @@ import {
   View,
 } from 'react-native';
 import {
+  Button,
+  TextInput
+} from 'react-native-paper';
+
+import {
   getStoredApiKey,
   getStoredId,
   guestLogin,
   isGuestLoggedIn,
   login,
 } from '../../lib/login';
-import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts';
-import {
-  Button,
-  TextInput
-} from 'react-native-paper';
 import colors from '../../styles/colors'
-import { WebBrowser } from 'expo';
+import BaseScreen from '../BaseScreen'
 
 class LoginScreen extends BaseScreen {
 
@@ -87,7 +88,7 @@ class LoginScreen extends BaseScreen {
                 mode='outlined'
                 onPress={this._attemptLogin}
               >
-                <Text style={{color: '#FFFFFF', fontSize: 18}}>
+                <Text style={{color: colors.textLight, fontSize: 18}}>
                   Log In
                 </Text>
               </Button>
