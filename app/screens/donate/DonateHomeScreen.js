@@ -5,7 +5,6 @@ import { TextInput } from 'react-native-gesture-handler';
 import {
   getSavedBillingID
 } from "../../lib/donate";
-import StepperComponent from './StepperComponent';
 import { okAlert } from "../../lib/alerts";
 
 class DonateHomeScreen extends BaseScreen {
