@@ -60,7 +60,6 @@ class DonatePaymentScreen extends BaseScreen {
           console.log(tcInfo);
 
           const transResp = await TCSinglePayment(tcInfo);
-          // TODO 1: POTENTIAL POINT OF FAILURE, when you try to access transResp.status
           /*
             type TCSaleResp struct {
               TransID  string `json:"transid"`
@@ -74,15 +73,12 @@ class DonatePaymentScreen extends BaseScreen {
             okAlert("Error: Transaction not approved", "Try again");
           } else {
             const resp = await TCGetBillingID(tcInfo);
-            // TODO 2: POTENTIAL POINT OF FAILURE, when you try to access resp.billingid
 
-            storeBillingID(resp.billingid);
-            // TODO 3: POTENTIAL POINT OF FAILURE
+            await storeBillingID(resp.billingid);
 
             let lastFour = tcInfo["cc"].toString().slice(8, 12);
-            storeLastFour(lastFour);
-            storeCardholder(this.state.cardholder)
-            // TODO 4: POTENTIAL POINT OF FAILURE
+            await storeLastFour(lastFour);
+            await storeCardholder(this.state.cardholder);
 
             okAlert("Success! Transaction ID: " + transResp.transid);
             this._switchTab(this, "DonateSuccess", mergedNavProps);
