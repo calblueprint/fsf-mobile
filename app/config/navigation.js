@@ -18,9 +18,11 @@ import NewsScreen from '../screens/news/NewsScreen';
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
-import { Ionicons } from '@expo/vector-icons'
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
+
+// replace expo Ionicons
+import Icon from 'react-native-ionicons'
 
 // This file defines the screens in our app and their relationships
 
@@ -74,7 +76,7 @@ const MainNav = createBottomTabNavigator(
 
         // You can return any component that you like here! By default, using Ionicons
         return (
-          <Ionicons
+          <Icon
             name={iconName}
             size={horizontal ? 20 : 25}
             color={tintColor}
