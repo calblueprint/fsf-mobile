@@ -1,6 +1,6 @@
-import {
+/*import {
   WebBrowser
-} from 'expo';
+} from 'expo';*/
 import React from 'react';
 import {
   Button,
@@ -83,8 +83,8 @@ class ProfileScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    this.setState({ result });
+    //let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    //this.setState({ result });
   };
 
   _navigateLogin = async() => {

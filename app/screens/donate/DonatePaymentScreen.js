@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
+// TODO: implement using alternate libraries
+//import { FormLabel, FormInput } from "react-native-elements";
 import { Button, Text, View} from 'react-native';
 import {
   TCGetBillingID,
@@ -114,8 +115,9 @@ class DonatePaymentScreen extends BaseScreen {
 
     let formInputs = formInfos.map(formInfo => (
       <View key={formInfo.id}>
-        <FormLabel> {formInfo.label} </FormLabel>
-        <FormInput onChangeText={formInfo.func} />
+        <Text>Copming Soon</Text>
+        //<FormLabel> {formInfo.label} </FormLabel>
+        //<FormInput onChangeText={formInfo.func} />
       </View>
     ));
     return <View style={{ flex: 1, alignItems: "center" }}>

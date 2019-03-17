@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+// TODO
+//import { FormLabel, FormInput } from 'react-native-elements'
 import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen';
 
@@ -65,8 +66,9 @@ class DonateBillingScreen extends BaseScreen {
 
     let formInputs = formInfos.map(formInfo => (
       <View key={formInfo.id}>
-        <FormLabel> {formInfo.label} </FormLabel>
-        <FormInput onChangeText={formInfo.func} />
+        <Text>Coming Soon</Text>
+        //<FormLabel> {formInfo.label} </FormLabel>
+        //<FormInput onChangeText={formInfo.func} />
       </View>
     ));
 

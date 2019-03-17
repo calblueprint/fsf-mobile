@@ -25,7 +25,7 @@ import {
   okAlert
 } from '../../lib/alerts';
 
-import { WebBrowser } from 'expo';
+//import { WebBrowser } from 'expo';
 
 class LoginScreen extends BaseScreen {
 
@@ -66,8 +66,8 @@ class LoginScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    this.setState({ result });
+    //let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    //this.setState({ result });
   };
 
   render() {
