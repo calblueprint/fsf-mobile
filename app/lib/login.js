@@ -153,20 +153,10 @@ async function getStoredId() {
   }
 };
 
-// async function testNull() {
-//   let x = null
-//   return x.shouldFail
-// }
-
 /**
  * @return a Promise that resolves to a string as the stored user id
  */
 async function getStoredEmail() {
-  // try {
-  //   let shouldFail = await testNull()
-  // } catch (error) {
-  //   return Promise.reject(new Error("Trial works"));
-  // }
   try {
     const email = await AsyncStorage.getItem('email');
     if (email != null) {
