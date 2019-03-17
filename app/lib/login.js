@@ -244,6 +244,16 @@ async function userLogOut() {
   }
 }
 
+async function login(email, password) {
+  const loginTicket = await getLoginTicket();
+  const serviceTicket = await casLogin(email, password, loginTicket);
+  const apiKey = await getCiviCRMApiKey(serviceTicket);
+
+  await storeApiKey(apiKey.key)  // store API Key in local storage
+  await storeId(apiKey.id)       // store id
+  await storeEmail(apiKey.email) // store email
+}
+
 export {
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,

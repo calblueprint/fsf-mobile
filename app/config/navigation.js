@@ -87,7 +87,11 @@ const MainNav = createBottomTabNavigator(
 
 export const AuthNav = createStackNavigator({
   Login: LoginScreen,
-});
+},
+{
+  headerMode: 'none',
+}
+);
 
 export const PrivacyNav = createStackNavigator({
   Privacy: PrivacyPolicyScreen

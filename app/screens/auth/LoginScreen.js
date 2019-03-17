@@ -9,16 +9,11 @@ import {
   View,
 } from 'react-native';
 import {
-  casLogin,
-  getCiviCRMApiKey,
-  getLoginTicket,
   getStoredApiKey,
   getStoredId,
-  storeApiKey,
-  storeId,
-  storeEmail,
   guestLogin,
   isGuestLoggedIn,
+  login,
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
 import {
@@ -45,14 +40,7 @@ class LoginScreen extends BaseScreen {
 
   _attemptLogin = async () => {
     try {
-      const loginTicket = await getLoginTicket();
-      const serviceTicket = await casLogin(this.state.email, thisstate.password, loginTicket);
-      const apiKey = await getCiviCRMApiKey(serviceTicket);
-
-      await storeApiKey(apiKey.key)  // store API Key in local storage
-      await storeId(apiKey.id)       // store id
-      await storeEmail(apiKey.email) // store email
-
+      await login(this.state.email, this.state.password)
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
     } catch (error) {
