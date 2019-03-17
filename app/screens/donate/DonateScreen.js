@@ -18,7 +18,7 @@ class DonateScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 20,
+      amount: '',
       savedCC: false,
       loadingCC: true,
       currentPosition: 0,
@@ -71,7 +71,7 @@ class DonateScreen extends BaseScreen {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, maginTop: 10 }}>
         <StepIndicator
           currentPosition={this.state.currentPosition}
           labels={labels}
