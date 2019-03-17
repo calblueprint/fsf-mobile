@@ -98,12 +98,17 @@ async function TCSinglePayment(paymentInfo) {
     },
     body: JSON.stringify(paymentInfo)
   });
-
-  if (resp.status >= 400) {
-    return Promise.reject(new Error('Failed to complete call to TC for repeatable donation'));
+  try {
+    if (resp.status >= 400) {
+      return Promise.reject(new Error('Call to TC for single payment returned status code >= 400'));
+    }
+  
+    return resp.json();
+  } catch(error) {
+    return Promise.reject(new Error('Failed to complete call for TC for single payment'));
+    
   }
-
-  return resp.json();
+  
 }
 
 /**
