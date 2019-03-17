@@ -64,10 +64,10 @@ async function TCGetBillingID(paymentInfo) {
   });
 
   if (resp.status >= 400) {
-    return Promise.reject(new Error('Failed to complete TC request and get billing ID'));
+    return Promise.reject(new Error('Call to TC to get billing id returned status code >= 400'));
+  } else {
+    return resp.json();
   }
-
-  return resp.json();
 }
 
 /**
@@ -100,10 +100,10 @@ async function TCSinglePayment(paymentInfo) {
   });
 
   if (resp.status >= 400) {
-    return Promise.reject(new Error('Failed to complete call to TC for repeatable donation'));
+    return Promise.reject(new Error('Call to TC for single payment returned status code >= 400'));
+  } else {
+    return resp.json();
   }
-
-  return resp.json();
 }
 
 /**
@@ -124,20 +124,20 @@ async function TCSinglePayment(paymentInfo) {
   }
  */
 async function TCRepeatablePayment(paymentInfo) {
-  const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/repeat_pay", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(paymentInfo)
-  });
+    const resp = await fetch("http://fsfmobile0p.fsf.org:8080/payment/repeat_pay", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(paymentInfo)
+    });
 
-  if (resp.status >= 400) {
-    return Promise.reject(new Error('Failed to complete call to TC for repeatable donation'));
-  }
-
-  return resp.json();
+    if (resp.status >= 400) {
+      return Promise.reject(new Error('Call to TC for repeatable payment returned status code >= 400'));
+    } else {
+      return resp.json();
+    }
 }
 
 /** TEMP SOLUTION (may move to Rails BE, or store to CiviCRM)
@@ -152,8 +152,7 @@ async function storeBillingID(billingID) {
   try {
     await AsyncStorage.setItem('billingID', billingID);
   } catch (error) {
-    console.log("Unexpected error: Failure to save Billing ID to AsyncStorage")
-    console.log(error);
+    return Promise.reject(new Error('Unexpected error: Failure to save Billing ID to AsyncStorage'));
   }
 }
 
@@ -164,8 +163,9 @@ async function storeLastFour(digits) {
   try {
     await AsyncStorage.setItem('lastFour', digits);
   } catch (error) {
-    console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
-    console.log(error);
+    // console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
+    // console.log(error);
+    return Promise.reject(new Error('Unexpected error: Failure to save CC digits to AsyncStorage'));
   }
 }
 
@@ -176,8 +176,9 @@ async function storeCardholder(name) {
   try {
     await AsyncStorage.setItem('cardholder', name);
   } catch (error) {
-    console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
-    console.log(error);
+    // console.log("Unexpected error: Failure to save CC digits to AsyncStorage")
+    // console.log(error);
+    return Promise.reject(new Error('Unexpected error: Failure to save CC digits to AsyncStorage'));
   }
 }
 
