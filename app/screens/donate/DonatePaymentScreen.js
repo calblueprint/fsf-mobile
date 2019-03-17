@@ -1,6 +1,7 @@
 import React from 'react';
-import { FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
 import { Button, Text, View} from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage } from "react-native-elements";
+
 import {
   TCGetBillingID,
   TCSinglePayment,
@@ -9,6 +10,7 @@ import {
   storeCardholder
 } from "../../lib/donate";
 import BaseScreen from '../BaseScreen';
+
 import { okAlert } from '../../lib/alerts';
 import { getStoredEmail, getStoredApiKey } from '../../lib/login';
 
@@ -52,7 +54,7 @@ class DonatePaymentScreen extends BaseScreen {
           //   "cc": "4111111111111111",
           //   "exp": "0404",
           //   "zip": "90000"
-          //   "email": 
+          //   "email":
           //   "apikey":
           // };
           // remove after dev
@@ -87,41 +89,48 @@ class DonatePaymentScreen extends BaseScreen {
     }
   };
 
-
   render() {
-    const formInfos = [
-      {
-        id: 1,
-        label: "cardholder name",
-        func: input => this._handleChange("cardholder", input)
-      },
-      {
-        id: 2,
-        label: "credit card number",
-        func: input => this._handleChange("cc", input)
-      },
-      {
-        id: 3,
-        label: "expiration date",
-        func: input => this._handleChange("exp", input)
-      },
-      {
-        id: 4,
-        label: "security code",
-        func: input => this._handleChange("securityCode", input)
-      }
-    ];
-
-    let formInputs = formInfos.map(formInfo => (
-      <View key={formInfo.id}>
-        <FormLabel> {formInfo.label} </FormLabel>
-        <FormInput onChangeText={formInfo.func} />
+    return (
+      <View>
+        <LiteCreditCardInput />
       </View>
-    ));
-    return <View style={{ flex: 1, alignItems: "center" }}>
-        {formInputs}
-        <Button onPress={() => this._donate()} title="donate" />
-      </View>;
+    )
   }
+
+  // render() {
+  //   const formInfos = [
+  //     {
+  //       id: 1,
+  //       label: "cardholder name",
+  //       func: input => this._handleChange("cardholder", input)
+  //     },
+  //     {
+  //       id: 2,
+  //       label: "credit card number",
+  //       func: input => this._handleChange("cc", input)
+  //     },
+  //     {
+  //       id: 3,
+  //       label: "expiration date",
+  //       func: input => this._handleChange("exp", input)
+  //     },
+  //     {
+  //       id: 4,
+  //       label: "security code",
+  //       func: input => this._handleChange("securityCode", input)
+  //     }
+  //   ];
+
+  //   let formInputs = formInfos.map(formInfo => (
+  //     <View key={formInfo.id}>
+  //       <FormLabel> {formInfo.label} </FormLabel>
+  //       <FormInput onChangeText={formInfo.func} />
+  //     </View>
+  //   ));
+  //   return <View style={{ flex: 1, alignItems: "center" }}>
+  //       {formInputs}
+  //       <Button onPress={() => this._donate()} title="donate" />
+  //     </View>;
+  // }
 }
 export default DonatePaymentScreen;

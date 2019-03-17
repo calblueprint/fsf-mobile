@@ -24,6 +24,7 @@
     "react-native-js-stepper": "^0.2.1",
     "react-native-paper": "^2.13.0",
     "react-native-render-html": "^3.10.0",
+    "react-native-step-indicator": "^0.0.9",
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "^3.0.0-alpha"
   },

@@ -18,6 +18,7 @@ const colors = {
   textLight: '#FFF',
   textLight_70: 'rgba(255, 255, 255, .7)',
   textGrey: '#6E6E6E',
+  textHeader: '#64696B',
 
   logoGrey: '#9B9999',
   buttonGrey: '#B3B3B3',
