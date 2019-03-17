@@ -19,6 +19,8 @@ import {
   storeEmail,
   guestLogin,
   isGuestLoggedIn,
+  getUserInfo,
+  storeUserInfo,
 } from '../../lib/login';
 import BaseScreen from '../BaseScreen'
 import {
@@ -47,6 +49,7 @@ class LoginScreen extends BaseScreen {
       const serviceTicket = await casLogin(state.email, state.password, loginTicket);
 
       const apiKey = await getCiviCRMApiKey(serviceTicket);
+      const userInfo = await getUserInfo(apiKey.id);
 
       await storeApiKey(apiKey.key)  // store API Key in local storage
       await storeId(apiKey.id)       // store id
