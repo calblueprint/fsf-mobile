@@ -7,6 +7,7 @@ import {
   Text,
   View,
   AsyncStorage,
+  ToastAndroid,
   Alert
 } from 'react-native';
 
@@ -14,6 +15,7 @@ import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts'
+import { testNotify } from '../../lib/notifications'
 import {
   getStoredId,
   guestLogOut,
@@ -55,6 +57,11 @@ class ProfileScreen extends BaseScreen {
           )}
           <Button onPress={this._Policy} title='Privacy Policy' />
           <Button onPress={this._Version} title='Version' />
+          <Button
+              onPress={() => this._toggleNotifications()}
+              title='Toggle Notifications'
+              />
+          <Button onPress={() => testNotify("Test Notification")} title="Test Notification"/>
         </View>
       )
     }
@@ -91,6 +98,20 @@ class ProfileScreen extends BaseScreen {
     await guestLogOut();
     this.props.navigation.navigate('Auth');
   };
+
+  _toggleNotifications = async () => {
+    let status = await AsyncStorage.getItem('notificationsOn')
+    if (status == null) {
+      status = true
+    }
+    status = !JSON.parse(status) // Flip the value of status
+    if(status) {
+      ToastAndroid.show("Turned Notifications On", ToastAndroid.SHORT);
+    } else {
+      ToastAndroid.show("Turned Notifications Off", ToastAndroid.SHORT);
+    }
+    await AsyncStorage.setItem('notificationsOn', JSON.stringify(status))
+  }
 
   _Policy = async () => {
     this.props.navigation.navigate('Privacy');
