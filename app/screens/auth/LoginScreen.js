@@ -70,11 +70,10 @@ class LoginScreen extends BaseScreen {
 
   _handleRegister = async () => {
     // let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    // let result = await openLink('https://my.fsf.org/join');
-    try {
-      console.log("here")
-      await InAppBrowser.isAvailable()
-      InAppBrowser.open('https://www.google.com', {
+    console.log(InAppBrowser.isAvailable())
+    console.log(InAppBrowser.open)
+    console.log("AFTER")
+    const result = InAppBrowser.open('https://www.google.com', {
         // iOS Properties
         dismissButtonStyle: 'cancel',
         preferredBarTintColor: 'gray',
@@ -86,20 +85,31 @@ class LoginScreen extends BaseScreen {
         enableUrlBarHiding: true,
         enableDefaultShare: true,
         forceCloseOnRedirection: true,
-      }).then((result) => {
-        Alert.alert(JSON.stringify(result))
       })
-    } catch (error) {
-      Alert.alert(error.message)
-    }
-
-    this.setState({ result });
+      Alert.alert(JSON.stringify(result));
+      // console.log(result)
+    
+    // console.log("BEFORE")
+    // console.log(InAppBrowser)
+    // try {
+    //   await InAppBrowser.isAvailable()
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    // let result = await openLink();
+    // console.log(result)
+    // this.setState({ result });
   };
 
-  openLink = async (website) => {
-    try {
+  openLink = async () => {
       console.log("here")
-      await InAppBrowser.isAvailable()
+      console.log("\n")
+      try {
+        await InAppBrowser.isAvailable()
+      } catch (error) {
+        console.log("inAppBrowser error")
+      }
+      
       InAppBrowser.open('https://www.google.com', {
         // iOS Properties
         dismissButtonStyle: 'cancel',
@@ -112,12 +122,8 @@ class LoginScreen extends BaseScreen {
         enableUrlBarHiding: true,
         enableDefaultShare: true,
         forceCloseOnRedirection: true,
-      }).then((result) => {
-        Alert.alert(JSON.stringify(result))
       })
-    } catch (error) {
-      Alert.alert(error.message)
-    }
+     
   }
 
   render() {
