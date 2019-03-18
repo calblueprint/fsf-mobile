@@ -2,6 +2,7 @@ import { WebBrowser } from 'expo';
 import React from 'react';
 import {
   Alert,
+  Image,
   Linking,
   KeyboardAvoidingView,
   Platform,
@@ -67,7 +68,12 @@ class LoginScreen extends BaseScreen {
             style={styles.container}
             behavior={Platform.OS == "ios" ? "padding" : null}
           >
-            <View style={styles.logoContainer} />
+            <View style={styles.logoContainer}>
+              <Image
+                style={{ marginTop: 80 }}
+                source={require('../../assets/fsf_transparent.png')}
+              />
+            </View>
             <View style={styles.loginContainer} >
               <TextInput
                 style={styles.textInput}
@@ -142,6 +148,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     height: 277,
     backgroundColor: colors.logoGrey,
+    alignItems: "center"
   },
   loginContainer: {
     marginTop: 40,
