@@ -3,8 +3,10 @@ import {
   createAppContainer,
   createBottomTabNavigator,
   createStackNavigator,
-  createSwitchNavigator
-} from 'react-navigation'
+  createSwitchNavigator,
+} from 'react-navigation';
+import { Platform } from 'react-native';
+
 
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
@@ -28,7 +30,10 @@ import Icon from 'react-native-ionicons'
 
 const NewsNav = createStackNavigator(
   { NewsHome: NewsScreen,
-    NewsDetail: NewsDetailScreen
+    NewsDetail: {
+      screen: NewsDetailScreen,
+      path: 'news/:id', // Allows for deep linking
+    },
   },
   {initialRouteName: 'NewsHome'}
 )
@@ -38,7 +43,10 @@ const PetitionsNav = createStackNavigator(
 )
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateHomeScreen,
+  DonateHome: {
+    screen: DonateHomeScreen,
+    path: 'donate', // Deep link
+  },
   DonateRepeatable: DonateRepeatableScreen,
   DonateBilling: DonateBillingScreen,
   DonatePayment: DonatePaymentScreen,
@@ -102,7 +110,10 @@ export const VersionNav = createStackNavigator({
 export const AppNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: MainNav,
+    App: {
+      screen: MainNav,
+      path: '',
+    },
     Auth: AuthNav,
     Privacy: PrivacyNav,
     Version: VersionNav,
@@ -113,4 +124,5 @@ export const AppNav = createSwitchNavigator(
   }
 );
 
+export const prefix = Platform.OS === 'android' ? 'fsf://fsf/' : 'fsf://';
 export const NavContainer = createAppContainer(AppNav);
