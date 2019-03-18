@@ -1,33 +1,34 @@
+import { WebBrowser } from 'expo';
 import React from 'react';
 import {
   Alert,
-  Button,
+  Image,
   Linking,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import {
-  casLogin,
-  getCiviCRMApiKey,
-  getLoginTicket,
+  Button,
+  TextInput
+} from 'react-native-paper';
+
+import {
   getStoredApiKey,
   getStoredId,
-  storeApiKey,
-  storeId,
-  storeEmail,
   guestLogin,
   isGuestLoggedIn,
+  login,
   getUserInfo,
   storeUserInfo,
 } from '../../lib/login';
-import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts';
-
-import { WebBrowser } from 'expo';
+import colors from '../../styles/colors'
+import BaseScreen from '../BaseScreen'
 
 class LoginScreen extends BaseScreen {
 
@@ -43,17 +44,8 @@ class LoginScreen extends BaseScreen {
 
   _attemptLogin = async () => {
     try {
-      const { props, state } = { props: this.props, state: this.state };
-      const loginTicket = await getLoginTicket();
-
-      const serviceTicket = await casLogin(state.email, state.password, loginTicket);
-
-      const apiKey = await getCiviCRMApiKey(serviceTicket);
+      const apiKey = await login(this.state.email, this.state.password)
       const userInfo = await getUserInfo(apiKey.id);
-
-      await storeApiKey(apiKey.key)  // store API Key in local storage
-      await storeId(apiKey.id)       // store id
-      await storeEmail(apiKey.email) // store email
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
@@ -76,26 +68,57 @@ class LoginScreen extends BaseScreen {
   render() {
     if (this.state.componentDidMount) {
       return (
-        <View style={{ flex: 1, alignItems: 'center', backgroundColor: '#ff7878' }}>
-          { this.state.showRegister && this.renderRegister() }
-          <View style={styles.container}>
-            <Text>Email</Text>
-            <TextInput
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={text => this.setState({ email: text })}
-            />
-            <Text>Password</Text>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={text => this.setState({ password: text })}
-              secureTextEntry
-            />
-          </View>
-          <Button onPress={this._attemptLogin} title="Login" />
-          <Button onPress={this._handleRegister} title="Join FSF" />
-          <Button onPress={this._guestLogin} title="Continue as Guest" />
-        </View>
+          <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS == "ios" ? "padding" : null}
+          >
+            <View style={styles.logoContainer}>
+              <Image
+                style={{ marginTop: 80 }}
+                source={require('../../assets/fsf_transparent.png')}
+              />
+            </View>
+            <View style={styles.loginContainer} >
+              <TextInput
+                style={styles.textInput}
+                label='username'
+                autoCapitalize="none"
+                blurOnSubmit={true}
+                onChangeText={text => this.setState({ email: text })}
+              />
+              <TextInput
+                style={styles.textInput}
+                label='password'
+                onChangeText={text => this.setState({ password: text })}
+                secureTextEntry
+              />
+              <Button
+                style={{marginTop: 30, backgroundColor: colors.buttonGrey}}
+                contentStyle={styles.loginContent}
+                mode='outlined'
+                onPress={this._attemptLogin}
+              >
+                <Text style={{color: colors.textLight, fontSize: 18}}>
+                  Log In
+                </Text>
+              </Button>
+              <Button
+                style={{marginTop: 10}}
+                onPress={this._handleRegister}
+              >
+                <Text style={{color: colors.textGrey, fontSize: 14}}>
+                  Don't have an FSF account?
+                </Text>
+              </Button>
+              <Button onPress={this._guestLogin}>
+                <Text style={{color: colors.textGrey, fontSize: 14}}>
+                  Continue as guest
+                </Text>
+              </Button>
+            </View>
+            <View style = {{flex: 1}} />
+          </KeyboardAvoidingView>
+
       );
     } else {
       return (
@@ -120,23 +143,28 @@ class LoginScreen extends BaseScreen {
 
 const styles = StyleSheet.create({
   textInput: {
-    height: 40,
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#fff',
-    color: '#fff',
+    backgroundColor: colors.backgroundWhite,
   },
   container: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+  logoContainer: {
+    height: 277,
+    backgroundColor: colors.logoGrey,
+    alignItems: "center"
+  },
+  loginContainer: {
+    marginTop: 40,
     marginRight: 40,
     marginLeft: 40,
-    marginTop: 180,
-    alignSelf: 'stretch',
   },
-  webView: {
-    marginRight: 0,
-    marginLeft: 0,
-    marginTop: 0,
-    alignSelf: 'stretch',
+  loginButton: {
+    marginTop: 30,
+    backgroundColor: colors.buttonGrey,
+  },
+  loginContent: {
+    height: 50,
   }
 });
 

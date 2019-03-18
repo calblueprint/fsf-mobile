@@ -7,18 +7,14 @@ import {
 } from 'react-navigation'
 
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
-import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
-import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
-import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
-import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
-import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
-import LoginScreen from '../screens/auth/LoginScreen'
+import DonateScreen from '../screens/donate/DonateScreen';
+import LoginScreen from '../screens/auth/LoginScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
 
@@ -36,11 +32,7 @@ const PetitionsNav = createStackNavigator(
 )
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateHomeScreen,
-  DonateRepeatable: DonateRepeatableScreen,
-  DonateBilling: DonateBillingScreen,
-  DonatePayment: DonatePaymentScreen,
-  DonateSuccess: DonateSuccessScreen
+  DonateHome: DonateScreen
 });
 
 const ProfileNav = createStackNavigator(
@@ -87,7 +79,11 @@ const MainNav = createBottomTabNavigator(
 
 export const AuthNav = createStackNavigator({
   Login: LoginScreen,
-});
+},
+{
+  headerMode: 'none',
+}
+);
 
 export const PrivacyNav = createStackNavigator({
   Privacy: PrivacyPolicyScreen

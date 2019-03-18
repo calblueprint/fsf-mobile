@@ -287,6 +287,16 @@ async function userLogOut() {
   }
 }
 
+async function login(email, password) {
+  const loginTicket = await getLoginTicket();
+  const serviceTicket = await casLogin(email, password, loginTicket);
+  const apiKey = await getCiviCRMApiKey(serviceTicket);
+
+  await storeApiKey(apiKey.key)  // store API Key in local storage
+  await storeId(apiKey.id)       // store id
+  await storeEmail(apiKey.email) // store email
+  return apiKey;
+}
 /**
  * @param key: a json of user info to store
  */
@@ -302,6 +312,6 @@ async function storeUserInfo(key) {
 export {
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut, storeEmail, getStoredEmail,
-  getUserInfo, storeUserInfo, getStoredUserInfo
+  guestLogOut, userLogOut, storeEmail, getStoredEmail, login,
+  getUserInfo, storeUserInfo, getStoredUserInfo,
 };

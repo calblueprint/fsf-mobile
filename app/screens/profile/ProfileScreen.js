@@ -72,11 +72,11 @@ class ProfileScreen extends BaseScreen {
         });
       }
     ).catch(_ => {
-        this.setState({
-          loggedIn: false,
-          componentDidMount: true,
-        });
-      }
+      this.setState({
+        loggedIn: false,
+        componentDidMount: true,
+      });
+    });
   }
 
   _signOutAsync = async () => {
