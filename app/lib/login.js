@@ -296,6 +296,7 @@ async function login(email, password) {
   await storeId(apiKey.id)       // store id
   await storeEmail(apiKey.email) // store email
   return apiKey;
+}
 /**
  * @param key: a json of user info to store
  */
@@ -311,6 +312,6 @@ async function storeUserInfo(key) {
 export {
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut, storeEmail, getStoredEmail, login
-  getUserInfo, storeUserInfo, getStoredUserInfo
+  guestLogOut, userLogOut, storeEmail, getStoredEmail, login,
+  getUserInfo, storeUserInfo, getStoredUserInfo,
 };
