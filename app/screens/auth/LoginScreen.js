@@ -25,7 +25,10 @@ import {
   okAlert
 } from '../../lib/alerts';
 
-import { WebBrowser } from 'expo';
+// NEED TO REMOVE
+// import { WebBrowser } from 'expo';
+import InAppBrowser  from 'react-native-inappbrowser-reborn';
+
 
 class LoginScreen extends BaseScreen {
 
@@ -66,9 +69,56 @@ class LoginScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    // let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    // let result = await openLink('https://my.fsf.org/join');
+    try {
+      console.log("here")
+      await InAppBrowser.isAvailable()
+      InAppBrowser.open('https://www.google.com', {
+        // iOS Properties
+        dismissButtonStyle: 'cancel',
+        preferredBarTintColor: 'gray',
+        preferredControlTintColor: 'white',
+        // Android Properties
+        showTitle: true,
+        toolbarColor: '#6200EE',
+        secondaryToolbarColor: 'black',
+        enableUrlBarHiding: true,
+        enableDefaultShare: true,
+        forceCloseOnRedirection: true,
+      }).then((result) => {
+        Alert.alert(JSON.stringify(result))
+      })
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+
     this.setState({ result });
   };
+
+  openLink = async (website) => {
+    try {
+      console.log("here")
+      await InAppBrowser.isAvailable()
+      InAppBrowser.open('https://www.google.com', {
+        // iOS Properties
+        dismissButtonStyle: 'cancel',
+        preferredBarTintColor: 'gray',
+        preferredControlTintColor: 'white',
+        // Android Properties
+        showTitle: true,
+        toolbarColor: '#6200EE',
+        secondaryToolbarColor: 'black',
+        enableUrlBarHiding: true,
+        enableDefaultShare: true,
+        forceCloseOnRedirection: true,
+      }).then((result) => {
+        Alert.alert(JSON.stringify(result))
+      })
+    } catch (error) {
+      Alert.alert(error.message)
+    }
+  }
 
   render() {
     if (this.state.componentDidMount) {

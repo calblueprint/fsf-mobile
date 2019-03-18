@@ -545,6 +545,13 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
+"@matt-block/react-native-in-app-browser@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@matt-block/react-native-in-app-browser/-/react-native-in-app-browser-1.4.0.tgz#c7c2a6b6768c8fabcc4fb34fda151b11e553612e"
+  integrity sha512-K0LWrhNP3K1NTp9KAcdQTeH0qgwf4pS7HXi71i3U0VEP3ziwzrCCH2L8X3IWRZUbM0jyY9i/SNNu3Uowvt1s8w==
+  dependencies:
+    tinycolor2 "^1.4.1"
+
 "@react-navigation/core@3.0.0-alpha.19":
   version "3.0.0-alpha.19"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.0.0-alpha.19.tgz#262f3eb17d4171aaa9229695693d6d877b156bbe"
@@ -5191,6 +5198,13 @@ react-native-gesture-handler@1.0.6:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-inappbrowser-reborn@^1.3.13:
+  version "1.3.13"
+  resolved "https://registry.yarnpkg.com/react-native-inappbrowser-reborn/-/react-native-inappbrowser-reborn-1.3.13.tgz#3ef0acd7a8aa182621d16f85c0cdc630bf7ef18c"
+  integrity sha512-QieWyZalK1YLKoSqVvHrtWcxhxV/U4m1Wdk8E5rawEvIwXctfNgUifcPFA2lDyYhFJcKS6v2f0hzABobNhRKAA==
+  dependencies:
+    invariant "^2.2.4"
+
 react-native-js-stepper@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-js-stepper/-/react-native-js-stepper-0.2.1.tgz#aefd8fcfc8209f168fe6d6d86d9525d8c0f90ced"
@@ -6128,6 +6142,11 @@ tiny-queue@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/tiny-queue/-/tiny-queue-0.2.1.tgz#25a67f2c6e253b2ca941977b5ef7442ef97a6046"
   integrity sha1-JaZ/LG4lOyypQZd7XvdELvl6YEY=
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 tmp@^0.0.33:
   version "0.0.33"
