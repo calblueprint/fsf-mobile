@@ -13,6 +13,7 @@ import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
 import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import LoginScreen from '../screens/auth/LoginScreen'
+import RegisterScreen from '../screens/auth/RegisterScreen'
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
 import PetitionsScreen from '../screens/petitions/PetitionsScreen';
@@ -87,6 +88,7 @@ const MainNav = createBottomTabNavigator(
 
 export const AuthNav = createStackNavigator({
   Login: LoginScreen,
+  Register: RegisterScreen
 });
 
 export const PrivacyNav = createStackNavigator({
