@@ -252,10 +252,11 @@ async function login(email, password) {
   await storeApiKey(apiKey.key)  // store API Key in local storage
   await storeId(apiKey.id)       // store id
   await storeEmail(apiKey.email) // store email
+  return apiKey;
 }
 
 export {
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut, storeEmail, getStoredEmail
+  guestLogOut, userLogOut, storeEmail, getStoredEmail, login
 };

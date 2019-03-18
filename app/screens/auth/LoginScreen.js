@@ -41,7 +41,7 @@ class LoginScreen extends BaseScreen {
 
   _attemptLogin = async () => {
     try {
-      await login(this.state.email, this.state.password)
+      const apiKey = await login(this.state.email, this.state.password)
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
     } catch (error) {
