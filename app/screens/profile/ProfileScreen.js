@@ -18,7 +18,9 @@ import {
   getStoredId,
   guestLogOut,
   userLogOut,
+  getStoredUserInfo,
 } from '../../lib/login';
+import UserInfoCard from '../../components/UserInfoCard';
 
 class ProfileScreen extends BaseScreen {
 
@@ -43,7 +45,8 @@ class ProfileScreen extends BaseScreen {
         <View style={{flex: 1, alignItems: 'center'}}>
           {this.state.loggedIn ? (
             <View>
-              <Text>Your Profile</Text>
+              <Text>Hi FSF! This is a profile</Text>
+              {this.state.userInfo != null ? <UserInfoCard userInfo={this.state.userInfo}></UserInfoCard> : null}
               <Button onPress={this._signOutAsync} title='Sign Out' />
             </View>
           ) : (
@@ -61,6 +64,7 @@ class ProfileScreen extends BaseScreen {
   }
 
   componentDidMount() {
+    this._fetchUserInfo();
     getStoredId().then(_ => {
         this.setState({
           loggedIn: true,
@@ -73,7 +77,6 @@ class ProfileScreen extends BaseScreen {
           componentDidMount: true,
         });
       }
-    );
   }
 
   _signOutAsync = async () => {
@@ -99,6 +102,15 @@ class ProfileScreen extends BaseScreen {
   _Version = async () => {
     this.props.navigation.navigate('Version');
   };
+
+  _fetchUserInfo = async () => {
+    //todo add specific user handling
+    console.log("fetching");
+    let userInfo = await getStoredUserInfo();
+    this.setState({ userInfo: userInfo});
+    console.log(userInfo)
+  }
+
 }
 
 export default ProfileScreen;

@@ -21,6 +21,8 @@ import {
   guestLogin,
   isGuestLoggedIn,
   login,
+  getUserInfo,
+  storeUserInfo,
 } from '../../lib/login';
 import {
   okAlert
@@ -43,6 +45,8 @@ class LoginScreen extends BaseScreen {
   _attemptLogin = async () => {
     try {
       const apiKey = await login(this.state.email, this.state.password)
+      const userInfo = await getUserInfo(apiKey.id);
+
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
       this.props.navigation.navigate('App');
     } catch (error) {
