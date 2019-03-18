@@ -23,6 +23,7 @@ class BillingComponent extends React.Component {
         <TextInput
           style={styles.textInput}
           label='Address'
+          value={this.props.props.address}
           onChangeText={text => this.props.handleChange('address', text)}
         />
         <View style={{ flexDirection: 'row' }}>
@@ -30,6 +31,7 @@ class BillingComponent extends React.Component {
             <TextInput
               style={styles.textInput}
               label='City'
+              value={this.props.props.city}
               onChangeText={text => this.props.handleChange('city', text)}
             />
           </View>
@@ -37,6 +39,7 @@ class BillingComponent extends React.Component {
             <TextInput
               style={styles.textInput}
               label='Country'
+              value={this.props.props.country}
               onChangeText={text => this.props.handleChange('country', text)}
             />
           </View>
@@ -46,6 +49,7 @@ class BillingComponent extends React.Component {
             <TextInput
               style={styles.textInput}
               label='State/Provenance'
+              value={this.props.props.stateProv}
               onChangeText={text => this.props.handleChange('stateProv', text)}
             />
           </View>
@@ -53,6 +57,7 @@ class BillingComponent extends React.Component {
             <TextInput
               style={styles.textInput}
               label='Postal Code'
+              value={this.props.props.postalCode}
               onChangeText={text => this.props.handleChange('postalCode', text)}
             />
           </View>

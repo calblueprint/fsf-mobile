@@ -87,8 +87,9 @@ class AmountComponent extends React.Component {
         </Text>
         <Text>{strings.donations.donationBody}</Text>
         <TextInput
-          label="Amount"
           style={{backgroundColor: colors.backgroundWhite}}
+          label="Amount"
+          value={this.renderMoneyValue()}
           keyboardType="number-pad"
           returnKeyType="done"
           onChangeText={(val) => {
@@ -98,9 +99,7 @@ class AmountComponent extends React.Component {
               this.props.handleChange('amount', val)
             }
           }}
-        >
-          {this.renderMoneyValue()}
-        </TextInput>
+        />
         <View style={styles.buttonRow}>
           {this.renderMoneyButton(10)}
           {this.renderMoneyButton(100)}

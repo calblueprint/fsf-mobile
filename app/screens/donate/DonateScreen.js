@@ -56,6 +56,7 @@ class DonateScreen extends BaseScreen {
           handleChange={this.handleChange}
           changePage={this.onPageChange}
           styles={styles}
+          props={this.state}
         />
       )
     } else if (this.state.currentPosition == 2) {
