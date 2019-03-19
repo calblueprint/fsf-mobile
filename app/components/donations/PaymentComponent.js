@@ -1,23 +1,31 @@
 import React from 'react';
-import { Button, Text, View} from 'react-native';
+import { Text, TouchableWithoutFeedback, Keyboard, View} from 'react-native';
+import { Button } from 'react-native-paper';
 
-import BaseScreen from '../BaseScreen';
+import { CreditCardInput } from 'react-native-credit-card-input';
 
-class DonatePaymentScreen extends BaseScreen {
+class PaymentComponent extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  onChange(form) {
-    console.log(form)
-  }
-
   render() {
     return (
-      <View>
-        <LiteCreditCardInput onChange={this._onChange} />
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={ this.props.styles.container } >
+          <CreditCardInput onChange={this.props.handleChange} />
+          <Button
+            style={this.props.styles.donationButton}
+            contentStyle={this.props.styles.donationButtonContent}
+            onPress={this.props.donate}
+          >
+            <Text style={this.props.styles.donationButtonText}>
+              Donate ${this.props.amount}
+            </Text>
+          </Button>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }
-export default DonatePaymentScreen;
+export default PaymentComponent;

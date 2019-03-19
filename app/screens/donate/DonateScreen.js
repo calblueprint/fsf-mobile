@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Keyboard,
   StyleSheet,
   Text,
   View
@@ -9,6 +10,7 @@ import StepIndicator from 'react-native-step-indicator';
 
 import AmountComponent from '../../components/donations/AmountComponent';
 import BillingComponent from '../../components/donations/BillingComponent';
+import PaymentComponent from '../../components/donations/PaymentComponent';
 import BaseScreen from '../BaseScreen';
 import colors from '../../styles/colors';
 import {
@@ -48,7 +50,7 @@ class DonateScreen extends BaseScreen {
     }
   }
 
-  _donate = async () => {
+  donate = async () => {
     try {
       const amount = 0;
       if (this.state.amount.indexOf(".") == -1) {
@@ -106,6 +108,17 @@ class DonateScreen extends BaseScreen {
     this.setState({ [target]: text });
   };
 
+  handleCreditCardChange = (form) => {
+    if (form.valid == true) {
+      Keyboard.dismiss();
+      this.setState({
+        'cc': form.values.number,
+        'exp': form.values.expiry,
+        'securityCode': form.values.cvc,
+      });
+    }
+  };
+
   onPageChange = (position) => {
     this.setState({ currentPosition: position })
   };
@@ -131,10 +144,12 @@ class DonateScreen extends BaseScreen {
       )
     } else if (this.state.currentPosition == 2) {
       return (
-        <BillingComponent
-          handleChange={this.handleChange}
+        <PaymentComponent
+          handleChange={this.handleCreditCardChange}
           changePage={this.onPageChange}
           styles={styles}
+          amount={this.state.amount}
+          donate={this.donate}
         />
       )
     }
