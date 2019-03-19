@@ -11,6 +11,20 @@ import AmountComponent from '../../components/donations/AmountComponent';
 import BillingComponent from '../../components/donations/BillingComponent';
 import BaseScreen from '../BaseScreen';
 import colors from '../../styles/colors';
+import {
+  okAlert
+} from '../../lib/alerts';
+import {
+  TCGetBillingID,
+  TCSinglePayment,
+  storeBillingID,
+  storeLastFour,
+  storeCardholder
+} from "../../lib/donate";
+import {
+  getStoredApiKey,
+  getStoredEmail
+} from '../../lib/login';
 
 
 const labels = ["Amount", "Billing Information", "Payment Information"]
@@ -27,16 +41,72 @@ class DonateScreen extends BaseScreen {
       country: "",
       stateProvince: "",
       postalCode: 0,
+      cardholder: '',
+      cc: '',
+      exp: '',
+      securityCode: '',
     }
   }
+
+  _donate = async () => {
+    try {
+      const amount = 0;
+      if (this.state.amount.indexOf(".") == -1) {
+        amount = amount + "00";
+      } else {
+        amount = amount;
+      }
+      const email = await getStoredEmail();
+      const apiKey = await getStoredApiKey()
+      tcInfo = {
+        "name": this.state.cardholder,
+        "cc": this.state.cc,
+        "exp": this.state.exp,
+        "amount": amount,
+        "email": email,
+        "apikey": apiKey,
+      };
+      console.log(tcInfo)
+      // DEV only
+      // tcInfo = {
+      //   "name": "John Smith",
+      //   "cc": "4111111111111111",
+      //   "exp": "0404",
+      //   "zip": "90000"
+      //   "email":
+      //   "apikey":
+      // };
+      const transResp = await TCSinglePayment(tcInfo);
+      /*
+        type TCSaleResp struct {
+          TransID  string `json:"transid"`
+          Status   string `json:"status"`
+          AuthCode string `json:"authcode"`
+        }
+      */
+      console.log(transResp);
+
+      if (transResp.status != "approved") {
+        okAlert("Error: Transaction not approved", "Try again");
+      } else {
+        const resp = await TCGetBillingID(tcInfo);
+        storeBillingID(resp.billingid);
+        storeLastFour(tcInfo["cc"].slice(8, 12));
+        storeCardholder(this.state.cardholder)
+        okAlert("Success! Transaction ID: " + transResp.transid);
+        // TODO
+        // this._switchTab(this, "DonateSuccess", mergedNavProps);
+      }
+    } catch(error) {
+      okAlert('Donate failed', 'Try again');
+    }
+  };
 
   handleChange = (target, text) => {
     this.setState({ [target]: text });
   };
 
   onPageChange = (position) => {
-    console.log(position)
-    console.log(this.state)
     this.setState({ currentPosition: position })
   };
 
