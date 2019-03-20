@@ -14,10 +14,14 @@ import {
   getCiviCRMApiKey,
   storeApiKey,
   storeId,
+<<<<<<< HEAD
   getUserInfo,
   storeUserInfo,
   getStoredApiKey,
   getStoredId,
+=======
+  storeEmail,
+>>>>>>> master
   guestLogin,
   isGuestLoggedIn,
 } from '../../lib/login';
@@ -50,8 +54,9 @@ class LoginScreen extends BaseScreen {
       const apiKey = await getCiviCRMApiKey(serviceTicket);
       const userInfo = await getUserInfo(apiKey);
 
-      storeApiKey(apiKey.key)
-      storeId(apiKey.id)
+      await storeApiKey(apiKey.key)  // store API Key in local storage
+      await storeId(apiKey.id)       // store id
+      await storeEmail(apiKey.email) // store email
       storeUserInfo(userInfo)
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
@@ -64,11 +69,6 @@ class LoginScreen extends BaseScreen {
 
   _guestLogin = async () => {
     await guestLogin();
-    const key = {
-      "key": "45487258096833077078762687654095",
-      "id": "2599186",
-      "email": "mukil.loganathan@gmail.com"
-    }
     
     const userInfo = await getUserInfo(key);
     storeUserInfo(userInfo);
