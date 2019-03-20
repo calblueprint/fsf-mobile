@@ -6,6 +6,8 @@ import { Platform } from 'react-native';
 if (process.env.NODE_ENV === "production") {
   console.log("In Production Environment");
   URL = "http://fsfmobile0p.fsf.org:3000";
+  // TODO: LOGIN_URL is a hack since go backend is on a different port
+  LOGIN_URL = "http://fsfmobile0p.fsf.org:8080";
 } else {
   console.log("In Staging (Dev) Environment");
   URL = Platform.select({
@@ -13,11 +15,16 @@ if (process.env.NODE_ENV === "production") {
     ios: 'http://localhost:3000',
     android: 'http://10.0.2.2:3000'
   });
+  LOGIN_URL = Platform.select({
+    ios: 'http://localhost:3000',
+    android: 'http://10.0.2.2:3000'
+  });
 }
 
 export const networkSettings = {
   env: process.env.NODE_ENV,
-  URL
+  URL,
+  LOGIN_URL
 };
 
 export default networkSettings;
