@@ -15,7 +15,7 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterWebScreen from '../screens/auth/RegisterWebScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
-import ActionScreen from '../screens/petitions/ActionScreen';
+import ActionScreen from '../screens/action/ActionScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
