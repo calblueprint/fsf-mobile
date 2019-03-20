@@ -22,14 +22,14 @@ import {
   storeBillingID,
   storeLastFour,
   storeCardholder
-} from "../../lib/donate";
+} from '../../lib/donate';
 import {
   getStoredApiKey,
   getStoredEmail
 } from '../../lib/login';
 
 
-const labels = ["Amount", "Billing Information", "Payment Information"]
+const labels = ['Amount', 'Billing Information', 'Payment Information']
 class DonateScreen extends BaseScreen {
   constructor(props) {
     super(props);
@@ -38,11 +38,11 @@ class DonateScreen extends BaseScreen {
       savedCC: false,
       loadingCC: true,
       currentPosition: 0,
-      address: "",
-      city: "",
-      country: "",
-      stateProvince: "",
-      postalCode: 0,
+      address: '',
+      city: '',
+      country: '',
+      stateProvince: '',
+      postalCode: '',
       cardholder: '',
       cc: '',
       exp: '',
@@ -53,51 +53,32 @@ class DonateScreen extends BaseScreen {
   donate = async () => {
     try {
       const amount = 0;
-      if (this.state.amount.indexOf(".") == -1) {
-        amount = amount + "00";
+      if (this.state.amount.indexOf('.') == -1) {
+        amount = amount + '00';
       } else {
         amount = amount;
       }
       const email = await getStoredEmail();
-      const apiKey = await getStoredApiKey()
+      const apiKey = await getStoredApiKey();
       tcInfo = {
-        "name": this.state.cardholder,
-        "cc": this.state.cc,
-        "exp": this.state.exp,
-        "amount": amount,
-        "email": email,
-        "apikey": apiKey,
+        'name': this.state.cardholder,
+        'cc': this.state.cc,
+        'exp': this.state.exp,
+        'amount': amount,
+        'email': email,
+        'apikey': apiKey,
       };
-      console.log(tcInfo)
-      // DEV only
-      // tcInfo = {
-      //   "name": "John Smith",
-      //   "cc": "4111111111111111",
-      //   "exp": "0404",
-      //   "zip": "90000"
-      //   "email":
-      //   "apikey":
-      // };
       const transResp = await TCSinglePayment(tcInfo);
-      /*
-        type TCSaleResp struct {
-          TransID  string `json:"transid"`
-          Status   string `json:"status"`
-          AuthCode string `json:"authcode"`
-        }
-      */
-      console.log(transResp);
 
-      if (transResp.status != "approved") {
-        okAlert("Error: Transaction not approved", "Try again");
+      if (transResp.status != 'approved') {
+        okAlert('Error: Transaction not approved', 'Try again');
       } else {
         const resp = await TCGetBillingID(tcInfo);
         storeBillingID(resp.billingid);
-        storeLastFour(tcInfo["cc"].slice(8, 12));
+        storeLastFour(tcInfo['cc'].slice(8, 12));
         storeCardholder(this.state.cardholder)
-        okAlert("Success! Transaction ID: " + transResp.transid);
-        // TODO
-        // this._switchTab(this, "DonateSuccess", mergedNavProps);
+        okAlert('Success! Transaction ID: ' + transResp.transid);
+        this.props.navigation.navigate('DonateSuccess');
       }
     } catch(error) {
       okAlert('Donate failed', 'Try again');
@@ -110,7 +91,6 @@ class DonateScreen extends BaseScreen {
 
   handleCreditCardChange = (form) => {
     if (form.valid == true) {
-      Keyboard.dismiss();
       this.setState({
         'cc': form.values.number,
         'exp': form.values.expiry,
@@ -157,7 +137,7 @@ class DonateScreen extends BaseScreen {
 
   render() {
     return (
-      <View style={{ flex: 1, maginTop: 10 }}>
+      <View style={{ flex: 1, marginTop: 10 }}>
         <StepIndicator
           currentPosition={this.state.currentPosition}
           labels={labels}

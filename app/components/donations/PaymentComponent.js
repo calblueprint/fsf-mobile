@@ -13,7 +13,10 @@ class PaymentComponent extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={ this.props.styles.container } >
-          <CreditCardInput onChange={this.props.handleChange} />
+          <CreditCardInput
+            onChange={this.props.handleChange}
+            requiresName={true}
+          />
           <Button
             style={this.props.styles.donationButton}
             contentStyle={this.props.styles.donationButtonContent}
