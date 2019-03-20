@@ -10,6 +10,7 @@ import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateScreen from '../screens/donate/DonateScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
+import RegisterWebScreen from '../screens/auth/RegisterWebScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
 import ActionScreen from '../screens/action/ActionScreen';
@@ -37,9 +38,12 @@ const DonateNav = createStackNavigator({
   DonateSuccess: DonateSuccessScreen,
 });
 
-const ProfileNav = createStackNavigator(
-  {ProfileHome: ProfileScreen}
-)
+const ProfileNav = createStackNavigator({
+  ProfileHome: ProfileScreen,
+  Register: RegisterWebScreen,
+  Privacy: PrivacyPolicyScreen,
+  Version: VersionScreen
+})
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
@@ -80,19 +84,13 @@ const MainNav = createBottomTabNavigator(
 );
 
 export const AuthNav = createStackNavigator({
-  Login: LoginScreen,
-},
-{
-  headerMode: 'none',
-}
-);
-
-export const PrivacyNav = createStackNavigator({
-  Privacy: PrivacyPolicyScreen
-});
-
-export const VersionNav = createStackNavigator({
-  Version: VersionScreen
+  Login: { 
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  Register: RegisterWebScreen
 });
 
 export const AppNav = createSwitchNavigator(
@@ -100,8 +98,6 @@ export const AppNav = createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
     Auth: AuthNav,
-    Privacy: PrivacyNav,
-    Version: VersionNav,
     Profile: ProfileNav,
   },
   {
