@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {WebView, Text} from 'react-native';
+import {WebView} from 'react-native';
 import BaseScreen from '../BaseScreen'
 
 class RegisterWebScreen extends BaseScreen {
