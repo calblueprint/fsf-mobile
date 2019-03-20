@@ -1,4 +1,4 @@
-## FSF mobile's React Native frontend.
+## FSF mobile's React Native frontend
 
 `app/`: The React Native frontend.
 
