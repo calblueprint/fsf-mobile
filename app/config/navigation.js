@@ -8,10 +8,11 @@ import {
 
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateScreen from '../screens/donate/DonateScreen';
+import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
 import LoginScreen from '../screens/auth/LoginScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
-import PetitionsScreen from '../screens/petitions/PetitionsScreen';
+import ActionScreen from '../screens/action/ActionScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -27,12 +28,13 @@ const NewsNav = createStackNavigator(
   {initialRouteName: 'NewsHome'}
 )
 
-const PetitionsNav = createStackNavigator(
-  {PetitionsHome: PetitionsScreen}
+const ActionNav = createStackNavigator(
+  {ActionHome: ActionScreen}
 )
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateScreen
+  DonateHome: DonateScreen,
+  DonateSuccess: DonateSuccessScreen,
 });
 
 const ProfileNav = createStackNavigator(
@@ -43,7 +45,7 @@ const ProfileNav = createStackNavigator(
 const MainNav = createBottomTabNavigator(
   { // Screens on bottom tab bar
     News: { screen: NewsNav },
-    Petitions: { screen: PetitionsNav },
+    Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
   },
@@ -56,7 +58,7 @@ const MainNav = createBottomTabNavigator(
         let iconName = "md-options";
         if (routeName === "News") {
           iconName = "md-volume-up";
-        } else if (routeName === "Petitions") {
+        } else if (routeName === "Action") {
           iconName = "md-microphone";
         } else if (routeName === "Donate") {
           iconName = "md-cash";

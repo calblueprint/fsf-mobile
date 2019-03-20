@@ -11,8 +11,8 @@ import {
 
 import {
   getSavedBillingID
-} from "../../lib/donate";
-import { okAlert } from "../../lib/alerts";
+} from '../../lib/donate';
+import { okAlert } from '../../lib/alerts';
 import strings from '../../res/strings';
 import colors from '../../styles/colors';
 
@@ -49,13 +49,13 @@ class AmountComponent extends React.Component {
   // {
   //   if (repeatable) {
   //     console.log(repeatable);
-  //     this._switchTab(this, "DonateRepeatable", this.state);
+  //     this._switchTab(this, 'DonateRepeatable', this.state);
   //   } else {
-  //     this._switchTab(this, "DonateBilling", this.state);
+  //     this._switchTab(this, 'DonateBilling', this.state);
   //   }
   // }
   renderMoneyButton(val) {
-    const renderVal = "$" + val;
+    const renderVal = '$' + val;
     return (
       <View style={{ flex: 1}}>
         <Button
@@ -70,10 +70,10 @@ class AmountComponent extends React.Component {
     )
   }
   renderMoneyValue() {
-    if (this.props.props.amount == "") {
+    if (this.props.props.amount == '') {
       return;
     } else {
-      return "$" + this.props.props.amount;
+      return '$' + this.props.props.amount;
     }
   }
 
@@ -81,19 +81,19 @@ class AmountComponent extends React.Component {
     return (
       <View style={ this.props.styles.container }>
         <Text
-          style={{ fontWeight: "bold", fontSize: 20, color: colors.textHeader }}
+          style={{ fontWeight: 'bold', fontSize: 20, color: colors.textHeader }}
         >
           {strings.donations.donationHeader}
         </Text>
         <Text>{strings.donations.donationBody}</Text>
         <TextInput
           style={{backgroundColor: colors.backgroundWhite}}
-          label="Amount"
+          label='Amount'
           value={this.renderMoneyValue()}
-          keyboardType="number-pad"
-          returnKeyType="done"
+          keyboardType='number-pad'
+          returnKeyType='done'
           onChangeText={(val) => {
-            if (val[0] == "$") {
+            if (val[0] == '$') {
               this.props.handleChange('amount', val.substr(1))
             } else {
               this.props.handleChange('amount', val)

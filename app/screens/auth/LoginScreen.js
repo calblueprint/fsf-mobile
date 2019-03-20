@@ -70,7 +70,7 @@ class LoginScreen extends BaseScreen {
       return (
           <KeyboardAvoidingView
             style={styles.container}
-            behavior={Platform.OS == "ios" ? "padding" : null}
+            behavior={Platform.OS == 'ios' ? 'padding' : null}
           >
             <View style={styles.logoContainer}>
               <Image
@@ -82,7 +82,7 @@ class LoginScreen extends BaseScreen {
               <TextInput
                 style={styles.textInput}
                 label='username'
-                autoCapitalize="none"
+                autoCapitalize='none'
                 blurOnSubmit={true}
                 onChangeText={text => this.setState({ email: text })}
               />
@@ -147,12 +147,12 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   logoContainer: {
     height: 277,
     backgroundColor: colors.logoGrey,
-    alignItems: "center"
+    alignItems: 'center'
   },
   loginContainer: {
     marginTop: 40,
