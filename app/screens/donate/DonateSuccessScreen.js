@@ -8,10 +8,6 @@ class DonateSuccessScreen extends BaseScreen {
     super(props);
   }
 
-  static navigationOptions = {
-    headerVisible: false
-  };
-
   _toHome = () => {
     const resetAction = StackActions.reset({
       index: 0,

@@ -90,7 +90,7 @@ class AmountComponent extends React.Component {
           style={{backgroundColor: colors.backgroundWhite}}
           label='Amount'
           value={this.renderMoneyValue()}
-          keyboardType='number-pad'
+          keyboardType='numeric'
           returnKeyType='done'
           onChangeText={(val) => {
             if (val[0] == '$') {

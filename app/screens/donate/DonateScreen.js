@@ -90,13 +90,12 @@ class DonateScreen extends BaseScreen {
   };
 
   handleCreditCardChange = (form) => {
-    if (form.valid == true) {
-      this.setState({
-        'cc': form.values.number,
-        'exp': form.values.expiry,
-        'securityCode': form.values.cvc,
-      });
-    }
+    this.setState({
+      'cc': form.values.number,
+      'exp': form.values.expiry,
+      'securityCode': form.values.cvc,
+      'name': form.values.name,
+    });
   };
 
   onPageChange = (position) => {
