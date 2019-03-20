@@ -95,6 +95,7 @@ class DonateScreen extends BaseScreen {
         'cc': form.values.number,
         'exp': form.values.expiry,
         'securityCode': form.values.cvc,
+        'cardholder': form.values.name,
       });
     }
   };
