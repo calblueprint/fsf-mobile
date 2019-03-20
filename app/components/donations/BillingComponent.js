@@ -58,6 +58,7 @@ class BillingComponent extends React.Component {
               style={styles.textInput}
               label='Postal Code'
               value={this.props.props.postalCode}
+              type="numeric"
               onChangeText={text => this.props.handleChange('postalCode', text)}
             />
           </View>
