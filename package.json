@@ -19,10 +19,12 @@
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-background-fetch": "^2.5.1",
+    "react-native-credit-card-input": "^0.4.1",
     "react-native-fsf-local-notifications": "^1.1.0",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
     "react-native-render-html": "^3.10.0",
+    "react-native-step-indicator": "^0.0.9",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.0-alpha"
   },

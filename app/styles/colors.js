@@ -17,7 +17,11 @@ const colors = {
   textDark_30: 'rgba(33, 33, 33, .3)',
   textLight: '#FFF',
   textLight_70: 'rgba(255, 255, 255, .7)',
+  textGrey: '#6E6E6E',
+  textHeader: '#64696B',
 
+  logoGrey: '#9B9999',
+  buttonGrey: '#B3B3B3',
   backgroundGrey: '#F5F5F6',
   backgroundWhite: '#FFFFFF',
   dividerGrey: '#E0E0E0',
