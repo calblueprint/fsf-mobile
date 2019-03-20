@@ -26,6 +26,7 @@ import {
 } from '../../lib/alerts';
 
 //import { WebBrowser } from 'expo';
+import { CustomTabs } from 'react-native-custom-tabs';
 
 class LoginScreen extends BaseScreen {
 
@@ -67,6 +68,12 @@ class LoginScreen extends BaseScreen {
 
   _handleRegister = async () => {
     //let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    CustomTabs.openURL('https://www.google.com')
+    // .then((launched: {boolean}) => {
+    //   console.log(`Launched custom tabs: ${launched}`);
+    // }).catch(err => {
+    //   console.error(err)
+    // });
     //this.setState({ result });
   };
 

@@ -16,12 +16,13 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
     "flow-bin": "^0.87.0",
-    "react-native-vector-icons": "^6.1.0",
     "react": "16.6.1",
     "react-native": "0.57.5",
+    "react-native-custom-tabs": "^0.1.7",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
     "react-native-render-html": "^3.10.0",
+    "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^3.0.0-alpha"
   },
   "devDependencies": {
