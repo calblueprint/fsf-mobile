@@ -86,8 +86,9 @@ class ProfileScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    this.setState({ result });
+    // let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
+    this.props.navigation.navigate('Register');
+    // this.setState({ result });
   };
 
   _navigateLogin = async() => {
