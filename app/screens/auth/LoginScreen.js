@@ -1,4 +1,3 @@
-import { WebBrowser } from 'expo';
 import React from 'react';
 import {
   Alert,
@@ -61,8 +60,6 @@ class LoginScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    // let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    // this.setState({ result });
     this.props.navigation.navigate('Register');
   };
 
