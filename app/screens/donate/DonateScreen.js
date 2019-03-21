@@ -58,9 +58,9 @@ class DonateScreen extends BaseScreen {
     try {
       const amount = 0;
       if (this.state.amount.indexOf('.') == -1) {
-        amount = amount + '00';
+        amount = this.state.amount + '00';
       } else {
-        amount = amount;
+        amount = this.state.amount;
       }
       const email = await getStoredEmail();
       const apiKey = await getStoredApiKey();
@@ -94,6 +94,7 @@ class DonateScreen extends BaseScreen {
   };
 
   handleCreditCardChange = (form) => {
+    console.log(form)
     this.setState({
       'cc': form.values.number,
       'exp': form.values.expiry,
@@ -114,7 +115,7 @@ class DonateScreen extends BaseScreen {
           handleChange={this.handleChange}
           changePage={this.onPageChange}
           styles={styles}
-          props={this.state}
+          amount={this.state.amount}
         />
       )
     } else if (this.state.currentPosition == 1) {
@@ -133,6 +134,7 @@ class DonateScreen extends BaseScreen {
           changePage={this.onPageChange}
           styles={styles}
           amount={this.state.amount}
+          disabledButton={this.state.valid_cc}
           donate={this.donate}
         />
       )
@@ -166,7 +168,15 @@ const styles = StyleSheet.create({
     bottom: 5,
     left: 0,
     right: 0,
-    backgroundColor: colors.buttonGrey,
+    backgroundColor: '#27ae60',
+  },
+  disabledDonationButton: {
+    position: 'absolute',
+    bottom: 5,
+    left: 0,
+    right: 0,
+    backgroundColor: '#27ae60',
+    opacity: .25
   },
   donationButtonContent: {
     height: 50
