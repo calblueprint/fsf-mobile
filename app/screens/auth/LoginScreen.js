@@ -14,14 +14,11 @@ import {
   getCiviCRMApiKey,
   storeApiKey,
   storeId,
-<<<<<<< HEAD
   getUserInfo,
   storeUserInfo,
   getStoredApiKey,
   getStoredId,
-=======
   storeEmail,
->>>>>>> master
   guestLogin,
   isGuestLoggedIn,
 } from '../../lib/login';

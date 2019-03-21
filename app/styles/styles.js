@@ -1,6 +1,8 @@
 import { StyleSheet } from 'react-native';
-
-const cardStyles = StyleSheet.create({
+import colors from './colors';
+// eventually we probably want a context or something
+// for now, any styles used in multiple components i'm putting here
+const globalStyles = StyleSheet.create({
   outerContainer: {
     flex: 1,
     backgroundColor: '#000',
@@ -25,7 +27,7 @@ const cardStyles = StyleSheet.create({
   count: {
     paddingLeft: 16,
     paddingTop: 8
-  }
+  },
 });
 
-export { cardStyles };
+export { globalStyles };

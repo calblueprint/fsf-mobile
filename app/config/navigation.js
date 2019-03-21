@@ -7,18 +7,16 @@ import {
 } from 'react-navigation'
 
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
-import DonateHomeScreen from '../screens/donate/DonateHomeScreen';
-import DonatePaymentScreen from '../screens/donate/DonatePaymentScreen';
-import DonateBillingScreen from '../screens/donate/DonateBillingScreen';
-import DonateRepeatableScreen from '../screens/donate/DonateRepeatableScreen';
+import DonateScreen from '../screens/donate/DonateScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
-import LoginScreen from '../screens/auth/LoginScreen'
+import LoginScreen from '../screens/auth/LoginScreen';
+import RegisterWebScreen from '../screens/auth/RegisterWebScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
-import PetitionsScreen from '../screens/petitions/PetitionsScreen';
+import ActionScreen from '../screens/action/ActionScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons';
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
 
@@ -31,27 +29,27 @@ const NewsNav = createStackNavigator(
   {initialRouteName: 'NewsHome'}
 )
 
-const PetitionsNav = createStackNavigator(
-  {PetitionsHome: PetitionsScreen}
+const ActionNav = createStackNavigator(
+  {ActionHome: ActionScreen}
 )
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateHomeScreen,
-  DonateRepeatable: DonateRepeatableScreen,
-  DonateBilling: DonateBillingScreen,
-  DonatePayment: DonatePaymentScreen,
-  DonateSuccess: DonateSuccessScreen
+  DonateHome: DonateScreen,
+  DonateSuccess: DonateSuccessScreen,
 });
 
-const ProfileNav = createStackNavigator(
-  {ProfileHome: ProfileScreen}
-)
+const ProfileNav = createStackNavigator({
+  ProfileHome: ProfileScreen,
+  Register: RegisterWebScreen,
+  Privacy: PrivacyPolicyScreen,
+  Version: VersionScreen
+})
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
   { // Screens on bottom tab bar
     News: { screen: NewsNav },
-    Petitions: { screen: PetitionsNav },
+    Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
   },
@@ -64,7 +62,7 @@ const MainNav = createBottomTabNavigator(
         let iconName = "md-options";
         if (routeName === "News") {
           iconName = "md-volume-up";
-        } else if (routeName === "Petitions") {
+        } else if (routeName === "Action") {
           iconName = "md-microphone";
         } else if (routeName === "Donate") {
           iconName = "md-cash";
@@ -86,15 +84,13 @@ const MainNav = createBottomTabNavigator(
 );
 
 export const AuthNav = createStackNavigator({
-  Login: LoginScreen,
-});
-
-export const PrivacyNav = createStackNavigator({
-  Privacy: PrivacyPolicyScreen
-});
-
-export const VersionNav = createStackNavigator({
-  Version: VersionScreen
+  Login: { 
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  Register: RegisterWebScreen
 });
 
 export const AppNav = createSwitchNavigator(
@@ -102,8 +98,6 @@ export const AppNav = createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
     Auth: AuthNav,
-    Privacy: PrivacyNav,
-    Version: VersionNav,
     Profile: ProfileNav,
   },
   {

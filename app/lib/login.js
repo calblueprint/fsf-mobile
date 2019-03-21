@@ -181,7 +181,6 @@ async function getStoredId() {
 };
 
 /**
-<<<<<<< HEAD
  * @return a Promise that resolves to a json as the stored user info
  */
 async function getStoredUserInfo() {
@@ -195,7 +194,9 @@ async function getStoredUserInfo() {
     }
   } catch (error) {
     return Promise.reject(new Error("User info not found"));
-=======
+  }
+}
+/**
  * @return a Promise that resolves to a string as the stored user id
  */
 async function getStoredEmail() {
@@ -208,7 +209,6 @@ async function getStoredEmail() {
     }
   } catch (error) {
     return Promise.reject(new Error("Email not found"));
->>>>>>> master
   }
 };
 
@@ -299,13 +299,8 @@ async function userLogOut() {
 }
 
 export {
-<<<<<<< HEAD
-  getLoginTicket, casLogin, getCiviCRMApiKey, getUserInfo, storeApiKey,
-  storeId, storeUserInfo, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut, getStoredUserInfo
-=======
   getLoginTicket, casLogin, getCiviCRMApiKey, storeApiKey,
   storeId, getStoredApiKey, getStoredId, guestLogin, isGuestLoggedIn,
-  guestLogOut, userLogOut, storeEmail, getStoredEmail
->>>>>>> master
+  guestLogOut, userLogOut, storeEmail, getStoredEmail, getUserInfo,
+  getStoredUserInfo
 };

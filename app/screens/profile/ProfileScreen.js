@@ -1,6 +1,3 @@
-import {
-  WebBrowser
-} from 'expo';
 import React from 'react';
 import {
   Button,
@@ -45,7 +42,7 @@ class ProfileScreen extends BaseScreen {
         <View style={{flex: 1, alignItems: 'center'}}>
           {this.state.loggedIn ? (
             <View>
-              <Text>Your Profile</Text>
+              <Text>Hi FSF! This is a profile</Text>
               {this.state.userInfo != null ? <UserInfoCard userInfo={this.state.userInfo}></UserInfoCard> : null}
               <Button onPress={this._signOutAsync} title='Sign Out' />
             </View>
@@ -64,6 +61,7 @@ class ProfileScreen extends BaseScreen {
   }
 
   componentDidMount() {
+    this._fetchUserInfo();
     getStoredId().then(_ => {
         this.setState({
           loggedIn: true,
@@ -87,8 +85,7 @@ class ProfileScreen extends BaseScreen {
   };
 
   _handleRegister = async () => {
-    let result = await WebBrowser.openBrowserAsync('https://my.fsf.org/join');
-    this.setState({ result });
+    this.props.navigation.navigate('Register');
   };
 
   _navigateLogin = async() => {

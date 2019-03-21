@@ -3,14 +3,16 @@ import { Button, Text, View} from 'react-native';
 import BaseScreen from '../BaseScreen'
 
 
-class PetitionsScreen extends BaseScreen {
+class ActionScreen extends BaseScreen {
 
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
-          <Text>Hi FSF!</Text>
+        <View style={{flex: .5, justifyContent: 'flex-end'}}>
+          <Text>Coming Soon!</Text>
+        </View>
       </View>
     );
   }
 }
-export default PetitionsScreen;
+export default ActionScreen;
