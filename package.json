@@ -11,6 +11,7 @@
     "lint-fix": "eslint app/components/newsfeed/*  --fix; exit 0"
   },
   "dependencies": {
+    "@babel/plugin-transform-react-jsx-source": "^7.2.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
