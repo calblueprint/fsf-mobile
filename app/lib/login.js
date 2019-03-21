@@ -108,7 +108,7 @@ async function casLogin(email, password, loginTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getCiviCRMApiKey(serviceTicket) {
-  const resp = await fetch(networkSettings.URL + APIRoutes.login, {
+  const resp = await fetch(networkSettings.LOGIN_URL + APIRoutes.login, {
     method: 'POST',
     headers: {
       Accept: "application/json",
@@ -134,7 +134,7 @@ async function getCiviCRMApiKey(serviceTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getUserInfo(userId) {
-  const resp = await fetch(networkSettings.URL + APIRoutes.user_info, {
+  const resp = await fetch(networkSettings.LOGIN_URL + APIRoutes.user_info, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
