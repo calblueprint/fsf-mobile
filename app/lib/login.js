@@ -134,7 +134,7 @@ async function getCiviCRMApiKey(serviceTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getUserInfo(key) {
-  const resp = await fetch(server_url + APIRoutes.user_info, {
+  const resp = await fetch(networkSettings.LOGIN_URL + APIRoutes.user_info, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
