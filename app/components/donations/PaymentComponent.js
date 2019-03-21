@@ -11,7 +11,6 @@ class PaymentComponent extends React.Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={ this.props.styles.container } >
           <CreditCardInput
             onChange={this.props.handleChange}
@@ -27,7 +26,6 @@ class PaymentComponent extends React.Component {
             </Text>
           </Button>
         </View>
-      </TouchableWithoutFeedback>
     )
   }
 }

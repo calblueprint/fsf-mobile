@@ -2,8 +2,11 @@ import React from 'react';
 import {
   Button,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
@@ -138,15 +141,21 @@ class DonateScreen extends BaseScreen {
 
   render() {
     return (
-      <View style={{ flex: 1, marginTop: 10 }}>
-        <StepIndicator
-          currentPosition={this.state.currentPosition}
-          labels={labels}
-          stepCount={3}
-          onPress={this.onPageChange}
-        />
-        {this.renderStepComponent()}
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+          style={{ flex: 1, marginTop: 10 }}
+          behavior={Platform.OS == 'ios' ? 'padding' : null}
+        >
+          <StepIndicator
+            currentPosition={this.state.currentPosition}
+            labels={labels}
+            stepCount={3}
+            onPress={this.onPageChange}
+          />
+            {this.renderStepComponent()}
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+
     );
   }
 }
