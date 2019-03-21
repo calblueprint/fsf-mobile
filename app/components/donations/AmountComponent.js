@@ -69,11 +69,12 @@ class AmountComponent extends React.Component {
       </View>
     )
   }
+
   renderMoneyValue() {
-    if (this.props.props.amount == '') {
+    if (this.props.amount == '') {
       return;
     } else {
-      return '$' + this.props.props.amount;
+      return '$' + this.props.amount;
     }
   }
 
@@ -90,7 +91,7 @@ class AmountComponent extends React.Component {
           style={{backgroundColor: colors.backgroundWhite}}
           label='Amount'
           value={this.renderMoneyValue()}
-          keyboardType='number-pad'
+          keyboardType='numeric'
           returnKeyType='done'
           onChangeText={(val) => {
             if (val[0] == '$') {
@@ -111,7 +112,7 @@ class AmountComponent extends React.Component {
           {this.renderMoneyButton(2500)}
         </View>
         <Button
-          style={this.props.styles.donationButton}
+          style={this.props.amount == '' ? this.props.styles.disabledDonationButton : this.props.styles.donationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(1)}
         >

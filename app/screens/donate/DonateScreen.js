@@ -2,8 +2,11 @@ import React from 'react';
 import {
   Button,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
@@ -47,6 +50,7 @@ class DonateScreen extends BaseScreen {
       cc: '',
       exp: '',
       securityCode: '',
+      valid_cc: false,
     }
   }
 
@@ -54,9 +58,9 @@ class DonateScreen extends BaseScreen {
     try {
       const amount = 0;
       if (this.state.amount.indexOf('.') == -1) {
-        amount = amount + '00';
+        amount = this.state.amount + '00';
       } else {
-        amount = amount;
+        amount = this.state.amount;
       }
       const email = await getStoredEmail();
       const apiKey = await getStoredApiKey();
@@ -90,14 +94,14 @@ class DonateScreen extends BaseScreen {
   };
 
   handleCreditCardChange = (form) => {
-    if (form.valid == true) {
-      this.setState({
-        'cc': form.values.number,
-        'exp': form.values.expiry,
-        'securityCode': form.values.cvc,
-        'cardholder': form.values.name,
-      });
-    }
+    console.log(form)
+    this.setState({
+      'cc': form.values.number,
+      'exp': form.values.expiry,
+      'securityCode': form.values.cvc,
+      'cardholder': form.values.name,
+      'valid_cc': form.valid,
+    });
   };
 
   onPageChange = (position) => {
@@ -111,7 +115,7 @@ class DonateScreen extends BaseScreen {
           handleChange={this.handleChange}
           changePage={this.onPageChange}
           styles={styles}
-          props={this.state}
+          amount={this.state.amount}
         />
       )
     } else if (this.state.currentPosition == 1) {
@@ -130,6 +134,7 @@ class DonateScreen extends BaseScreen {
           changePage={this.onPageChange}
           styles={styles}
           amount={this.state.amount}
+          disabledButton={this.state.valid_cc}
           donate={this.donate}
         />
       )
@@ -138,15 +143,21 @@ class DonateScreen extends BaseScreen {
 
   render() {
     return (
-      <View style={{ flex: 1, marginTop: 10 }}>
-        <StepIndicator
-          currentPosition={this.state.currentPosition}
-          labels={labels}
-          stepCount={3}
-          onPress={this.onPageChange}
-        />
-        {this.renderStepComponent()}
-      </View>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <KeyboardAvoidingView
+          style={{ flex: 1, marginTop: 10 }}
+          behavior={Platform.OS == 'ios' ? 'padding' : null}
+        >
+          <StepIndicator
+            currentPosition={this.state.currentPosition}
+            labels={labels}
+            stepCount={3}
+            onPress={this.onPageChange}
+          />
+            {this.renderStepComponent()}
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+
     );
   }
 }
@@ -157,7 +168,15 @@ const styles = StyleSheet.create({
     bottom: 5,
     left: 0,
     right: 0,
-    backgroundColor: colors.buttonGrey,
+    backgroundColor: '#27ae60',
+  },
+  disabledDonationButton: {
+    position: 'absolute',
+    bottom: 5,
+    left: 0,
+    right: 0,
+    backgroundColor: '#27ae60',
+    opacity: .25
   },
   donationButtonContent: {
     height: 50

@@ -17,6 +17,19 @@ class BillingComponent extends React.Component {
     super(props);
   }
 
+  disableButton() {
+    if (
+      this.props.props.address != '' &&
+      this.props.props.city != '' &&
+      this.props.props.country != '' &&
+      this.props.props.stateProv != '' &&
+      this.props.props.postalCode != '') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   render() {
     return (
       <View style={ this.props.styles.container } >
@@ -58,12 +71,13 @@ class BillingComponent extends React.Component {
               style={styles.textInput}
               label='Postal Code'
               value={this.props.props.postalCode}
+              type="numeric"
               onChangeText={text => this.props.handleChange('postalCode', text)}
             />
           </View>
         </View>
         <Button
-          style={this.props.styles.donationButton}
+          style={this.disableButton() ? this.props.styles.disabledDonationButton : this.props.styles.donationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(2)}
         >
