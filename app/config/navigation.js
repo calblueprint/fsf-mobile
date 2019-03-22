@@ -59,11 +59,12 @@ const MainNav = createBottomTabNavigator(
         const { routeName } = navigation.state;
 
         // Here's where Franco will eventually insert beautiful icons
+        // Fang took some liberties here to silence the wrong icons being passed in error
         let iconName = "md-options";
         if (routeName === "News") {
-          iconName = "md-volume-up";
+          iconName = "md-paper";
         } else if (routeName === "Action") {
-          iconName = "md-microphone";
+          iconName = "md-pulse";
         } else if (routeName === "Donate") {
           iconName = "md-cash";
         } else if (routeName === "Profile") {
