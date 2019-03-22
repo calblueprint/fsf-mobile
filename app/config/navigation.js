@@ -4,6 +4,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator,
   createSwitchNavigator,
+  createMaterialTopTabNavigator,
 } from 'react-navigation';
 import { Platform } from 'react-native';
 
@@ -21,6 +22,7 @@ import ProfileScreen from '../screens/profile/ProfileScreen';
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
 import GNUsocialDetailScreen from '../screens/news/GNUsocialDetailScreen';
+import GNUsocialScreen from '../screens/news/GNUsocialScreen';
 import SplashScreen from '../screens/SplashScreen';
 
 // replace expo Ionicons
@@ -125,6 +127,7 @@ const ProfileNav = createStackNavigator({
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
+  {
     // Screens on bottom tab bar
     News: { screen: NewsTopTabNav },
     Action: { screen: ActionNav },
