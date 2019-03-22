@@ -80,6 +80,7 @@ class BillingComponent extends React.Component {
           style={this.disableButton() ? this.props.styles.disabledDonationButton : this.props.styles.donationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(2)}
+          disabled={this.disableButton()}
         >
           <Text style={this.props.styles.donationButtonText}>
             Continue

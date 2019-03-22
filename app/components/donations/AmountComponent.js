@@ -116,6 +116,7 @@ class AmountComponent extends React.Component {
           style={this.props.amount == '' ? this.props.styles.disabledDonationButton : this.props.styles.donationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(1)}
+          disabled={this.props.amount == ''}
         >
           <Text style={this.props.styles.donationButtonText}>
             Continue

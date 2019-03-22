@@ -295,16 +295,19 @@ async function login(email, password) {
     const loginTicket = await getLoginTicket();
     const serviceTicket = await casLogin(email, password, loginTicket);
     const apiKey = await getCiviCRMApiKey(serviceTicket);
+    const userInfo = await getUserInfo(apiKey)
 
     await storeApiKey(apiKey.key)  // store API Key in local storage
     await storeId(apiKey.id)       // store id
     await storeEmail(apiKey.email) // store email
+    await storeUserInfo(userInfo)
     return apiKey;
-  } catch (error) { 
-    // TODO: currently encapsulating in a try catch to prevent failure - might want 
+  } catch (error) {
+    // TODO: currently encapsulating in a try catch to prevent failure - might want
     // to explore more granular error handling in the future
+    console.log(error)
     return Promise.reject(new Error("Login failed"))
-  } 
+  }
 }
 /**
  * @param key: a json of user info to store

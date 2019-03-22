@@ -100,6 +100,8 @@ class DonateScreen extends BaseScreen {
       }
     } catch(error) {
       okAlert('Donate failed', 'Try again');
+      // Can considering uncommenting this line just to show them what the complete flow will look like
+      // this.props.navigation.navigate('DonateSuccess');   
     }
   };
 

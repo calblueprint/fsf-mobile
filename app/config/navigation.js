@@ -94,8 +94,13 @@ const NewsTopTabNav = createMaterialTopTabNavigator(
 const ActionNav = createStackNavigator({ ActionHome: ActionScreen });
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateScreen,
-  DonateSuccess: DonateSuccessScreen
+  DonateHome: DonateScreen, 
+  DonateSuccess: { 
+    screen: DonateSuccessScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
 });
 
 const ProfileNav = createStackNavigator({
