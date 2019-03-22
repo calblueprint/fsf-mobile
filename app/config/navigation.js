@@ -35,7 +35,12 @@ const ActionNav = createStackNavigator(
 
 const DonateNav = createStackNavigator({
   DonateHome: DonateScreen, 
-  DonateSuccess: DonateSuccessScreen,
+  DonateSuccess: { 
+    screen: DonateSuccessScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
 });
 
 const ProfileNav = createStackNavigator({
