@@ -22,6 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
 import GNUsocialDetailScreen from '../screens/news/GNUsocialDetailScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 // This file defines the screens in our app and their relationships
 
@@ -94,13 +95,13 @@ const NewsTopTabNav = createMaterialTopTabNavigator(
 const ActionNav = createStackNavigator({ ActionHome: ActionScreen });
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateScreen, 
-  DonateSuccess: { 
+  DonateHome: DonateScreen,
+  DonateSuccess: {
     screen: DonateSuccessScreen,
     navigationOptions: {
-      header: null,
+      header: null
     }
-  },
+  }
 });
 
 const ProfileNav = createStackNavigator({
@@ -163,14 +164,13 @@ export const AuthNav = createStackNavigator({
 
 export const AppNav = createSwitchNavigator(
   {
+    Splash: SplashScreen,
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
     Auth: AuthNav,
     Profile: ProfileNav
   },
-  {
-    initialRouteName: 'AuthLoading'
-  }
+  { initialRouteName: 'Splash' }
 );
 
 export const NavContainer = createAppContainer(AppNav);
