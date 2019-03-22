@@ -3,10 +3,12 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
+    "bundle": "react-native bundle --platform android --dev false --minify false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint app/components/newsfeed/* ; exit 0",
-    "lint-fix": "eslint app/components/newsfeed/*  --fix; exit 0"
+    "lint-fix": "eslint app/components/newsfeed/*  --fix; exit 0",
+    "postinstall": "./fix_flipcard.sh"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.1",
