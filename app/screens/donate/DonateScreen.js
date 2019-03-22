@@ -56,11 +56,17 @@ class DonateScreen extends BaseScreen {
 
   donate = async () => {
     try {
-      const amount = 0;
-      if (this.state.amount.indexOf('.') == -1) {
-        amount = this.state.amount + '00';
+      var amount = this.state.amount.toString();
+
+      // Represent amount in the number of cents
+      // e.g. $10.34 = 1034
+      // TODO: validation of the correctness of amount
+      const dotIndex = amount.indexOf('.');
+      if (dotIndex == -1) {
+        amount = amount + '00';
       } else {
-        amount = this.state.amount;
+        amount = amount.substring(0, dotIndex) +
+                 amount.substring(dotIndex + 1, dotIndex + 3);
       }
       const email = await getStoredEmail();
       const apiKey = await getStoredApiKey();
