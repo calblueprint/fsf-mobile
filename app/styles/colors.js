@@ -12,6 +12,7 @@ const colors = {
   errorRed: '#E53935',
   errorPink: '#FFEAE9',
 
+  textBlack: '#000000',
   textDark: '#212121',
   textDark_70: 'rgba(33, 33, 33, .7)',
   textDark_30: 'rgba(33, 33, 33, .3)',

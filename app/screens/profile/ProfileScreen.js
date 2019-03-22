@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  Button,
   Text,
   View,
   AsyncStorage,
   ToastAndroid,
-  Alert
+  StyleSheet
 } from 'react-native';
+import {
+  Button,
+} from 'react-native-paper';
 
 import BaseScreen from '../BaseScreen'
 import {
@@ -19,8 +21,7 @@ import {
   userLogOut,
   getStoredUserInfo,
 } from '../../lib/login';
-import UserInfoCard from '../../components/UserInfoCard';
-
+import colors from '../../styles/colors'
 class ProfileScreen extends BaseScreen {
 
   constructor(props) {
@@ -41,27 +42,115 @@ class ProfileScreen extends BaseScreen {
       );
     } else {
       return (
-        <View style={{flex: 1, alignItems: 'center'}}>
+        <View>
           {this.state.loggedIn ? (
             <View>
-              <Text>Hi FSF! This is a profile</Text>
-             {this.state.userInfo != null ? <UserInfoCard userInfo={this.state.userInfo}></UserInfoCard> : null}
-              <Button onPress={this._signOutAsync} title='Sign Out' />
+              {this.state.userInfo != null ?
+                      <View style={styles.userInfoContainer}>
+                      <Text style={styles.textBold}>
+                          {this.state.userInfo.first_name.substring(0, 100)}
+                        </Text>
+                        <Text style={styles.textRegular}>
+                          {this.state.userInfo.email.substring(0, 100)}
+                        </Text>
+                        <Text style={styles.textRegular}>
+                          {this.state.userInfo.contact_type.substring(0, 100)}
+                        </Text>
+                    </View>
+                    : null}
+              </View>
+              <View style={styles.buttonContainer}>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={() => this._toggleNotifications()}
+                  />
+                  <Text style={styles.textButton}>Toggle Notifications</Text>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={() => testNotify("Test Notification")}
+                  />
+                  <Text style={styles.textButton}>Test Notification</Text>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._Policy}
+                    >
+                    <Text style={styles.textButton}>Privacy Policy</Text>
+                  </Button>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._Version}
+                    >
+                    <Text style={styles.textButton}>Version </Text>
+                  </Button>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._signOutAsync}
+                    >
+                    <Text style={styles.textButton}>Sign out</Text>
+                  </Button>
+              </View>
             </View>
           ) : (
-            <View>
-              <Text>Sign In or Sign Up to view your profile!</Text>
-              <Button onPress={this._navigateLogin} title="Sign In" />
-              <Button onPress={this._handleRegister} title= "Join FSF" />
+            <View style={styles.buttonContainer}>
+              <Text style={styles.textBold}>Sign In or Sign Up to view your profile!</Text>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={() => this._toggleNotifications()}
+                  />
+                  <Text style={styles.textButton}>Toggle Notifications</Text>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={() => testNotify("Test Notification")}
+                  />
+                  <Text style={styles.textButton}>Test Notification</Text>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._navigateLogin}
+                    >
+                    <Text style={styles.textButton}>Sign in</Text>
+                  </Button>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._handleRegister}
+                    >
+                    <Text style={styles.textButton}>Join FSF </Text>
+                  </Button>
+              <Button
+                style={styles.actionButton}
+                mode='outlined'
+                compact={true}
+                onPress={this._Policy}
+                >
+                <Text style={styles.textButton}>Privacy Policy</Text>
+              </Button>
+                <Button
+                  style={styles.actionButton}
+                  mode='outlined'
+                  compact={true}
+                  onPress={this._Version}
+                  >
+                  <Text style={styles.textButton}>Version </Text>
+              </Button>
             </View>
           )}
-          <Button onPress={this._Policy} title='Privacy Policy' />
-          <Button onPress={this._Version} title='Version' />
-          <Button
-              onPress={() => this._toggleNotifications()}
-              title='Toggle Notifications'
-              />
-          <Button onPress={() => testNotify("Test Notification")} title="Test Notification"/>
         </View>
       )
     }
@@ -107,7 +196,6 @@ class ProfileScreen extends BaseScreen {
       console.log(error);
     }
     this.props.navigation.navigate('Auth');
-    
   };
 
   _toggleNotifications = async () => {
@@ -148,5 +236,67 @@ class ProfileScreen extends BaseScreen {
   }
 
 }
+
+const styles = StyleSheet.create({
+  textBold: {
+    backgroundColor: colors.backgroundWhite,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 36,
+    lineHeight: 'normal',
+    color: colors.textBlack
+  }, pushNotificationText: {
+    backgroundColor: colors.backgroundWhite,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 36,
+    lineHeight: 'normal',
+    color: colors.textBlack,
+    marginLeft: 10
+  }, textRegular: {
+    backgroundColor: colors.backgroundWhite,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 28,
+    lineHeight: 'normal',
+    color: colors.textBlack
+  }, textButton: {
+    fontSize: 14,
+    color: colors.textGrey
+  }
+  , userInfoContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    marginLeft:10,
+    marginTop:10,
+    height: 150,
+    alignItems: 'left',
+    flexDirection: 'column',
+  }, pushNotificationContainer: {
+    height: 100,
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    borderTopColor: 'black',
+    borderTopWidth: 1,
+    flexDirection: 'column',
+    justifyContent : 'center',
+    alignSelf: 'stretch'
+  }, buttonContainer: {
+    height: 300,
+    flexDirection: 'column',
+    justifyContent : 'space-evenly',
+    alignSelf: 'stretch',
+    alignItems: 'center'
+  }, actionButton: {
+    marginLeft:3,
+    marginRight: 3,
+    width: 150,
+  }
+});
 
 export default ProfileScreen;
