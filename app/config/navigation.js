@@ -20,6 +20,7 @@ import ProfileScreen from '../screens/profile/ProfileScreen';
 
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
+import GNUsocialDetailScreen from '../screens/news/GNUsocialDetailScreen';
 
 // replace expo Ionicons
 import Icon from 'react-native-ionicons'
@@ -27,7 +28,10 @@ import Icon from 'react-native-ionicons'
 // This file defines the screens in our app and their relationships
 
 const NewsNav = createStackNavigator(
-  { NewsHome: NewsScreen,
+  { NewsHome: {
+      screen: NewsScreen,
+      navigationOptions: { header: null },
+    },
     NewsDetail: {
       screen: NewsDetailScreen,
       path: 'news/:id', // Allows for deep linking
@@ -35,6 +39,64 @@ const NewsNav = createStackNavigator(
   },
   {initialRouteName: 'NewsHome'}
 )
+
+NewsNav.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+const GNUsocialNav = createStackNavigator({
+  GNUsocialHome: {
+    screen: GNUsocialScreen,
+    navigationOptions: {
+      header: null,
+      initialRouteName: 'GNUsocialHome'
+    }
+  },
+  GNUsocialDetail: { screen: GNUsocialDetailScreen }
+});
+GNUsocialNav.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
+
+const NewsTopTabNav = createMaterialTopTabNavigator(
+  {
+    FSFnews: { screen: NewsNav },
+    GNUsocial: { screen: GNUsocialNav }
+  },
+  {
+    order: ['FSFnews', 'GNUsocial'],
+    initialRouteName: 'FSFnews',
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 16,
+        paddingTop: 20,
+        paddingBottom: 0
+      },
+      tabStyle: {
+        height: 100
+      },
+      indicatorStyle: {
+        backgroundColor: '#F4FAFF'
+      },
+      style: {
+        backgroundColor: '#292F36'
+      }
+    }
+  }
+);
 
 const ActionNav = createStackNavigator(
   {ActionHome: ActionScreen}
@@ -62,8 +124,8 @@ const ProfileNav = createStackNavigator({
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
-  { // Screens on bottom tab bar
-    News: { screen: NewsNav },
+    // Screens on bottom tab bar
+    News: { screen: NewsTopTabNav },
     Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
