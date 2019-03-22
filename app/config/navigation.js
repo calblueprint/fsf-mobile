@@ -34,7 +34,7 @@ const ActionNav = createStackNavigator(
 )
 
 const DonateNav = createStackNavigator({
-  DonateHome: DonateScreen,
+  DonateHome: DonateSuccessScreen, // #1 DonateScreen
   DonateSuccess: DonateSuccessScreen,
 });
 
@@ -48,7 +48,7 @@ const ProfileNav = createStackNavigator({
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
   { // Screens on bottom tab bar
-    News: { screen: NewsNav },
+    News: { screen: DonateNav },  // #2 NewsNav
     Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
