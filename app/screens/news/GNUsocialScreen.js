@@ -1,37 +1,35 @@
 import React from 'react';
 import {
-  Button,
   Text,
   View,
   StyleSheet,
   RefreshControl,
-  FlatList,
   SectionList
 } from 'react-native';
 import { getRequest } from '../../lib/requests';
 import BaseScreen from '../BaseScreen';
-import NewsCard from '../../components/newsfeed/NewsCard';
+import NoticeCard from '../../components/newsfeed/NoticeCard';
 
 // Make sure to add your new screen to /config/navigation.js
 class GNUsocialScreen extends BaseScreen {
   constructor(props) {
     super(props);
     this.state = {
-      articles: [],
+      notices: [],
       refreshing: true
     };
-    this._fetchArticles = this._fetchArticles.bind(this);
+    this._fetchNotices = this._fetchNotices.bind(this);
   }
 
   componentDidMount() {
-    this._fetchArticles(true);
+    this._fetchNotices(true);
   }
 
   render() {
     const refreshControl = (
       <RefreshControl
         refreshing={this.state.refreshing}
-        onRefresh={() => this._fetchArticles(true)}
+        onRefresh={() => this._fetchNotices(true)}
       />
     );
 
@@ -42,35 +40,35 @@ class GNUsocialScreen extends BaseScreen {
           style={styles.listContainer}
           extraData={this.state}
           renderItem={info => (
-            <NewsCard
+            <NoticeCard
               onPressNav={() =>
-                this.props.navigation.navigate('NewsDetail', {
-                  articleParams: JSON.stringify(info.item.value)
+                this.props.navigation.navigate('GNUsocialDetail', {
+                  noticeParams: JSON.stringify(info.item.value)
                 })
               }
-              articleParams={info.item.value}
+              noticeParams={info.item.value}
             />
           )}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.category}>{title}</Text>
           )}
-          sections={[{ title: 'Recent News', data: this.state.articles }]}
+          sections={[{ title: 'Recent Notices', data: this.state.notices }]}
           keyExtractor={item => item.key}
         />
       </View>
     );
   }
 
-  async _fetchArticles(refresh = false) {
+  async _fetchNotices(refresh = false) {
     this.setState({ refreshing: true });
     await getRequest(
-      '/api/v1/articles',
+      '/api/v1/notices',
       res => {
-        const articleList = res.data.map(article => ({
-          key: article.id.toString(),
-          value: article
+        const noticeList = res.data.map(notice => ({
+          key: notice.id.toString(),
+          value: notice
         }));
-        this.setState({ articles: articleList, refreshing: false });
+        this.setState({ notices: noticeList, refreshing: false });
       },
       error => console.log(error)
     );
