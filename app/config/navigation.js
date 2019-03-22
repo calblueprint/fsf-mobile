@@ -3,8 +3,9 @@ import {
   createAppContainer,
   createBottomTabNavigator,
   createStackNavigator,
-  createSwitchNavigator
-} from 'react-navigation'
+  createSwitchNavigator,
+  createMaterialTopTabNavigator
+} from 'react-navigation';
 
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateScreen from '../screens/donate/DonateScreen';
@@ -13,6 +14,7 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import RegisterWebScreen from '../screens/auth/RegisterWebScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
+import GNUsocialScreen from '../screens/news/GNUsocialScreen';
 import ActionScreen from '../screens/action/ActionScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
@@ -23,19 +25,35 @@ import VersionScreen from '../screens/about/VersionScreen';
 // This file defines the screens in our app and their relationships
 
 const NewsNav = createStackNavigator(
-  { NewsHome: NewsScreen,
+  {
+    NewsHome: NewsScreen,
     NewsDetail: NewsDetailScreen
   },
-  {initialRouteName: 'NewsHome'}
-)
+  { initialRouteName: 'NewsHome' }
+);
+const GNUsocialNav = createStackNavigator(
+  {
+    GNUsocialHome: GNUsocialScreen
+  },
+  { initialRouteName: 'GNUsocialHome' }
+);
 
-const ActionNav = createStackNavigator(
-  {ActionHome: ActionScreen}
-)
+const NewsTopNav = createMaterialTopTabNavigator(
+  {
+    NewsHomeTab: { screen: NewsNav },
+    GNUsocialTab: { screen: GNUsocialNav }
+  },
+  {
+    order: ['NewsHomeTab', 'GNUsocialTab'],
+    initialRouteName: 'NewsHomeTab'
+  }
+);
+
+const ActionNav = createStackNavigator({ ActionHome: ActionScreen });
 
 const DonateNav = createStackNavigator({
   DonateHome: DonateScreen,
-  DonateSuccess: DonateSuccessScreen,
+  DonateSuccess: DonateSuccessScreen
 });
 
 const ProfileNav = createStackNavigator({
@@ -43,32 +61,34 @@ const ProfileNav = createStackNavigator({
   Register: RegisterWebScreen,
   Privacy: PrivacyPolicyScreen,
   Version: VersionScreen
-})
+});
 
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
-  { // Screens on bottom tab bar
-    News: { screen: NewsNav },
+  {
+    // Screens on bottom tab bar
+    News: { screen: NewsTopNav },
     Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
-    Profile: { screen: ProfileNav },
+    Profile: { screen: ProfileNav }
   },
-  { // Options
+  {
+    // Options
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
 
         // Here's where Franco will eventually insert beautiful icons
         // Fang took some liberties here to silence the wrong icons being passed in error
-        let iconName = "md-options";
-        if (routeName === "News") {
-          iconName = "md-paper";
-        } else if (routeName === "Action") {
-          iconName = "md-pulse";
-        } else if (routeName === "Donate") {
-          iconName = "md-cash";
-        } else if (routeName === "Profile") {
-          iconName = "md-person";
+        let iconName = 'md-options';
+        if (routeName === 'News') {
+          iconName = 'md-paper';
+        } else if (routeName === 'Action') {
+          iconName = 'md-pulse';
+        } else if (routeName === 'Donate') {
+          iconName = 'md-cash';
+        } else if (routeName === 'Profile') {
+          iconName = 'md-person';
         }
 
         // You can return any component that you like here! By default, using Ionicons
@@ -85,10 +105,10 @@ const MainNav = createBottomTabNavigator(
 );
 
 export const AuthNav = createStackNavigator({
-  Login: { 
+  Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null,
+      header: null
     }
   },
   Register: RegisterWebScreen
@@ -99,10 +119,10 @@ export const AppNav = createSwitchNavigator(
     AuthLoading: AuthLoadingScreen,
     App: MainNav,
     Auth: AuthNav,
-    Profile: ProfileNav,
+    Profile: ProfileNav
   },
   {
-    initialRouteName: "AuthLoading"
+    initialRouteName: 'AuthLoading'
   }
 );
 
