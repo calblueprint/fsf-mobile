@@ -102,9 +102,16 @@ class ProfileScreen extends BaseScreen {
   _fetchUserInfo = async () => {
     //todo add specific user handling
     console.log("fetching");
-    let userInfo = await getStoredUserInfo();
-    this.setState({ userInfo: userInfo});
-    console.log(userInfo)
+    let userInfo;
+    try {
+      let userInfo = await getStoredUserInfo();
+      this.setState({ userInfo: userInfo});
+      console.log(userInfo)  
+    } catch (error) {
+      this.setState({ userInfo: null});
+      console.log("error getting user info")  
+    }
+   
   }
 
 }
