@@ -43,7 +43,7 @@ class DonateSuccessScreen extends BaseScreen {
       
       <ScrollView>
         <View style={{ flex: 1, alignItems: "center" }}>
-          <Text style={{ width: '85%', fontWeight: "bold", fontSize: 24, marginTop: 15, marginBottom: 24, textAlign: "center" }} >  
+          <Text style={{ width: '85%', fontWeight: "bold", fontSize: 24, marginTop: 50, marginBottom: 24, textAlign: "center" }} >  
             Thank you {name} for your generous donation of ${amount}!
           </Text>
           <Image source={require('../../assets/campaign.png')} />

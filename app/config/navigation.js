@@ -45,7 +45,12 @@ const DonateNav = createStackNavigator({
     screen: DonateScreen,
     path: 'donate', // Deep link
   },
-  DonateSuccess: DonateSuccessScreen
+  DonateSuccess: {
+    screen: DonateSuccessScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
 });
 
 const ProfileNav = createStackNavigator({
@@ -58,7 +63,7 @@ const ProfileNav = createStackNavigator({
 // TODO (Franco): See if MaterialBottomTabNavigator is a better fit for our design
 const MainNav = createBottomTabNavigator(
   { // Screens on bottom tab bar
-    News: { screen: NewsNav },  
+    News: { screen: NewsNav },
     Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
