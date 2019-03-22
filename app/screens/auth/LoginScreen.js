@@ -3,10 +3,12 @@ import {
   Alert,
   Image,
   Linking,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import {
@@ -66,59 +68,58 @@ class LoginScreen extends BaseScreen {
   render() {
     if (this.state.componentDidMount) {
       return (
-          <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS == 'ios' ? 'padding' : null}
-          >
-            <View style={styles.logoContainer}>
-              <Image
-                style={{ marginTop: 80 }}
-                source={require('../../assets/fsf_transparent.png')}
-              />
-            </View>
-            <View style={styles.loginContainer} >
-              <TextInput
-                style={styles.textInput}
-                label='username'
-                autoCapitalize='none'
-                blurOnSubmit={true}
-                onChangeText={text => this.setState({ email: text })}
-                value={this.state.email}
-              />
-              <TextInput
-                style={styles.textInput}
-                label='password'
-                onChangeText={text => this.setState({ password: text })}
-                value={this.state.password}
-                secureTextEntry
-              />
-              <Button
-                style={{marginTop: 30, backgroundColor: colors.buttonGrey}}
-                contentStyle={styles.loginContent}
-                mode='outlined'
-                onPress={this._attemptLogin}
-              >
-                <Text style={{color: colors.textLight, fontSize: 18}}>
-                  Log In
-                </Text>
-              </Button>
-              <Button
-                style={{marginTop: 10}}
-                onPress={this._handleRegister}
-              >
-                <Text style={{color: colors.textGrey, fontSize: 14}}>
-                  Don't have an FSF account?
-                </Text>
-              </Button>
-              <Button onPress={this._guestLogin}>
-                <Text style={{color: colors.textGrey, fontSize: 14}}>
-                  Continue as guest
-                </Text>
-              </Button>
-            </View>
-            <View style = {{flex: 1}} />
-          </KeyboardAvoidingView>
-
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS == 'ios' ? 'padding' : null}
+        >
+          <View style={styles.logoContainer}>
+            <Image
+              style={{ marginTop: 80 }}
+              source={require('../../assets/fsf_transparent.png')}
+            />
+          </View>
+          <View style={styles.loginContainer} >
+            <TextInput
+              style={styles.textInput}
+              label='username'
+              autoCapitalize='none'
+              blurOnSubmit={true}
+              onChangeText={text => this.setState({ email: text })}
+              value={this.state.email}
+            />
+            <TextInput
+              style={styles.textInput}
+              label='password'
+              onChangeText={text => this.setState({ password: text })}
+              value={this.state.password}
+              secureTextEntry
+            />
+            <Button
+              style={{marginTop: 30, backgroundColor: colors.buttonGrey}}
+              contentStyle={styles.loginContent}
+              mode='outlined'
+              onPress={this._attemptLogin}
+            >
+              <Text style={{color: colors.textLight, fontSize: 18}}>
+                Log In
+              </Text>
+            </Button>
+            <Button
+              style={{marginTop: 10}}
+              onPress={this._handleRegister}
+            >
+              <Text style={{color: colors.textGrey, fontSize: 14}}>
+                Don't have an FSF account?
+              </Text>
+            </Button>
+            <Button onPress={this._guestLogin}>
+              <Text style={{color: colors.textGrey, fontSize: 14}}>
+                Continue as guest
+              </Text>
+            </Button>
+          </View>
+          <View style = {{flex: 1}} />
+        </KeyboardAvoidingView>
       );
     } else {
       return (
