@@ -83,11 +83,13 @@ class LoginScreen extends BaseScreen {
                 autoCapitalize='none'
                 blurOnSubmit={true}
                 onChangeText={text => this.setState({ email: text })}
+                value={this.state.email}
               />
               <TextInput
                 style={styles.textInput}
                 label='password'
                 onChangeText={text => this.setState({ password: text })}
+                value={this.state.password}
                 secureTextEntry
               />
               <Button
