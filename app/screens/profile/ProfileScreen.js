@@ -58,22 +58,22 @@ class ProfileScreen extends BaseScreen {
                         </Text>
                     </View>
                     : null}
-              </View>
               <View style={styles.buttonContainer}>
+                <View>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
                     onPress={() => this._toggleNotifications()}
-                  />
-                  <Text style={styles.textButton}>Toggle Notifications</Text>
+                    />
+                    <Text style={styles.textButton}>Toggle Notifications</Text>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
                     onPress={() => testNotify("Test Notification")}
-                  />
-                  <Text style={styles.textButton}>Test Notification</Text>
+                    />
+                    <Text style={styles.textButton}>Test Notification</Text>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
@@ -98,8 +98,9 @@ class ProfileScreen extends BaseScreen {
                     >
                     <Text style={styles.textButton}>Sign out</Text>
                   </Button>
-              </View>
+                </View>
             </View>
+          </View>
           ) : (
             <View style={styles.buttonContainer}>
               <Text style={styles.textBold}>Sign In or Sign Up to view your profile!</Text>
