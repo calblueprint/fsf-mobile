@@ -65,15 +65,17 @@ class ProfileScreen extends BaseScreen {
                     mode='outlined'
                     compact={true}
                     onPress={() => this._toggleNotifications()}
-                    />
+                    >
                     <Text style={styles.textButton}>Toggle Notifications</Text>
+                    </Button>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
                     onPress={() => testNotify("Test Notification")}
-                    />
+                    >
                     <Text style={styles.textButton}>Test Notification</Text>
+                    </Button>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
@@ -109,15 +111,17 @@ class ProfileScreen extends BaseScreen {
                     mode='outlined'
                     compact={true}
                     onPress={() => this._toggleNotifications()}
-                  />
-                  <Text style={styles.textButton}>Toggle Notifications</Text>
+                    >
+                    <Text style={styles.textButton}>Toggle Notifications</Text>
+                  </Button>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
                     onPress={() => testNotify("Test Notification")}
-                  />
-                  <Text style={styles.textButton}>Test Notification</Text>
+                    >
+                    <Text style={styles.textButton}>Test Notification</Text>
+                  </Button>
                   <Button
                     style={styles.actionButton}
                     mode='outlined'
@@ -134,22 +138,22 @@ class ProfileScreen extends BaseScreen {
                     >
                     <Text style={styles.textButton}>Join FSF </Text>
                   </Button>
-              <Button
-                style={styles.actionButton}
-                mode='outlined'
-                compact={true}
-                onPress={this._Policy}
-                >
-                <Text style={styles.textButton}>Privacy Policy</Text>
-              </Button>
-                <Button
-                  style={styles.actionButton}
-                  mode='outlined'
-                  compact={true}
-                  onPress={this._Version}
-                  >
-                  <Text style={styles.textButton}>Version </Text>
-              </Button>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={this._Policy}
+                    >
+                    <Text style={styles.textButton}>Privacy Policy</Text>
+                  </Button>
+                  <Button
+                      style={styles.actionButton}
+                      mode='outlined'
+                      compact={true}
+                      onPress={this._Version}
+                      >
+                      <Text style={styles.textButton}>Version </Text>
+                  </Button>
             </View>
           )}
         </View>
