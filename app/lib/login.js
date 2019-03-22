@@ -300,11 +300,11 @@ async function login(email, password) {
     await storeId(apiKey.id)       // store id
     await storeEmail(apiKey.email) // store email
     return apiKey;
-  } catch (error) { 
-    // TODO: currently encapsulating in a try catch to prevent failure - might want 
+  } catch (error) {
+    // TODO: currently encapsulating in a try catch to prevent failure - might want
     // to explore more granular error handling in the future
     return Promise.reject(new Error("Login failed"))
-  } 
+  }
 }
 /**
  * @param key: a json of user info to store
