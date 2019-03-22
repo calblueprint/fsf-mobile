@@ -23,7 +23,6 @@ const user_info_key = 'user_info';
  */
 
 async function getLoginTicket() {
-  console.log("Getting login ticket")
   const resp = await fetch(
     'https://cas.fsf.org/login?service=https%3A%2F%2Fcrmserver3d.fsf.org%2Fassociate%2Faccount'
   );
@@ -55,7 +54,6 @@ async function getLoginTicket() {
  * @return a Promise that resolves to a service token string
  */
 async function casLogin(email, password, loginTicket) {
-  console.log("Logging in")
   const formData = new FormData();
   formData.append('username', email);
   formData.append('password', password);
@@ -111,7 +109,6 @@ async function casLogin(email, password, loginTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getCiviCRMApiKey(serviceTicket) {
-  console.log("Getting api key")
   const resp = await fetch(networkSettings.LOGIN_URL + APIRoutes.login, {
     method: 'POST',
     headers: {
@@ -138,7 +135,6 @@ async function getCiviCRMApiKey(serviceTicket) {
  * @return a Promise that resolves to a string API key
  */
 async function getUserInfo(key) {
-  console.log("Getting user info")
   const resp = await fetch(networkSettings.LOGIN_URL + APIRoutes.user_info, {
     method: 'POST',
     headers: {
