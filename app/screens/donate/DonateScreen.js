@@ -78,9 +78,9 @@ class DonateScreen extends BaseScreen {
         okAlert('Error: Transaction not approved', 'Try again');
       } else {
         const resp = await TCGetBillingID(tcInfo);
-        storeBillingID(resp.billingid);
-        storeLastFour(tcInfo['cc'].slice(8, 12));
-        storeCardholder(this.state.cardholder)
+        await storeBillingID(resp.billingid);
+        await storeLastFour(tcInfo['cc'].slice(8, 12));
+        await storeCardholder(this.state.cardholder)
         okAlert('Success! Transaction ID: ' + transResp.transid);
         this.props.navigation.navigate('DonateSuccess');
       }

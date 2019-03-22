@@ -78,7 +78,12 @@ class ProfileScreen extends BaseScreen {
 
   _signOutAsync = async () => {
     okAlert('Logged Out', '');
-    await userLogOut();
+    try {
+      await userLogOut();
+    } catch(error) {
+      console.log("signOutAsync failed");
+      console.log(error);
+    }
     this.props.navigation.navigate('Auth');
   };
 
@@ -87,8 +92,14 @@ class ProfileScreen extends BaseScreen {
   };
 
   _navigateLogin = async() => {
-    await guestLogOut();
+    try {
+      await guestLogOut();
+    } catch(error) {
+      console.log("guest logout failed");
+      console.log(error);
+    }
     this.props.navigation.navigate('Auth');
+    
   };
 
   _Policy = async () => {
