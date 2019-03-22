@@ -21,6 +21,7 @@ import ProfileScreen from '../screens/profile/ProfileScreen';
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
 import VersionScreen from '../screens/about/VersionScreen';
 import GNUsocialDetailScreen from '../screens/news/GNUsocialDetailScreen';
+import SplashScreen from '../screens/SplashScreen';
 
 // replace expo Ionicons
 import Icon from 'react-native-ionicons'
@@ -110,9 +111,9 @@ const DonateNav = createStackNavigator({
   DonateSuccess: {
     screen: DonateSuccessScreen,
     navigationOptions: {
-      header: null,
+      header: null
     }
-  },
+  }
 });
 
 const ProfileNav = createStackNavigator({
@@ -173,6 +174,7 @@ export const AuthNav = createStackNavigator({
 
 export const AppNav = createSwitchNavigator(
   {
+    Splash: SplashScreen,
     AuthLoading: AuthLoadingScreen,
     App: {
       screen: MainNav,
@@ -181,9 +183,7 @@ export const AppNav = createSwitchNavigator(
     Auth: AuthNav,
     Profile: ProfileNav,
   },
-  {
-    initialRouteName: "AuthLoading"
-  }
+  { initialRouteName: 'Splash' }
 );
 
 export const prefix = Platform.OS === 'android' ? 'fsf://fsf/' : 'fsf://';
