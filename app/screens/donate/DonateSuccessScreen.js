@@ -19,21 +19,7 @@ class DonateSuccessScreen extends BaseScreen {
     this.props.navigation.dispatch(resetAction);
     this.props.navigation.navigate("NewsHome");
   };
-
-  // render() {
-  //   const { navigation } = this.props;
-  //   const amount = navigation.getParam("amount", "no-amount");
-  //   const name = navigation.getParam("cardholder", "no-name");
-  //   return (
-  //     // Try setting `flexDirection` to `column`.
-  //     <View style={{flex: 1, alignItems: "center"}}>
-  //       <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-  //       <View style={{width: 50, height: 50, backgroundColor: 'skyblue'}} />
-  //       <View style={{width: 50, height: 50, backgroundColor: 'steelblue'}} />
-  //     </View>
-  //   );
-  // }
-
+  
   render() {
     const { navigation } = this.props;
     const amount = navigation.getParam("amount", "0");
