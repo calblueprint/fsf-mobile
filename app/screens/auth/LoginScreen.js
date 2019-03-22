@@ -9,12 +9,9 @@ import {
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
+  View
 } from 'react-native';
-import {
-  Button,
-  TextInput
-} from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 
 import {
   getStoredApiKey,
@@ -23,29 +20,27 @@ import {
   isGuestLoggedIn,
   login,
   getUserInfo,
-  storeUserInfo,
+  storeUserInfo
 } from '../../lib/login';
-import {
-  okAlert
-} from '../../lib/alerts';
-import colors from '../../styles/colors'
-import BaseScreen from '../BaseScreen'
+import { okAlert } from '../../lib/alerts';
+import colors from '../../styles/colors';
+import BaseScreen from '../BaseScreen';
+import Loading from '../../components/utils/Loading';
 
 class LoginScreen extends BaseScreen {
-
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
       result: null,
-      componentDidMount: false,
+      componentDidMount: false
     };
   }
 
   _attemptLogin = async () => {
     try {
-      const apiKey = await login(this.state.email, this.state.password)
+      const apiKey = await login(this.state.email, this.state.password);
       // const userInfo = await getUserInfo(apiKey);
 
       okAlert('Login succeeded', `${apiKey.id} ${apiKey.key}`);
@@ -78,77 +73,76 @@ class LoginScreen extends BaseScreen {
               source={require('../../assets/fsf_transparent.png')}
             />
           </View>
-          <View style={styles.loginContainer} >
+          <View style={styles.loginContainer}>
             <TextInput
               style={styles.textInput}
-              label='username'
-              autoCapitalize='none'
+              label="username"
+              autoCapitalize="none"
               blurOnSubmit={true}
               onChangeText={text => this.setState({ email: text })}
               value={this.state.email}
             />
             <TextInput
               style={styles.textInput}
-              label='password'
+              label="password"
               onChangeText={text => this.setState({ password: text })}
               value={this.state.password}
               secureTextEntry
             />
             <Button
-              style={{marginTop: 30, backgroundColor: colors.buttonGrey}}
+              style={{ marginTop: 30, backgroundColor: colors.buttonGrey }}
               contentStyle={styles.loginContent}
-              mode='outlined'
+              mode="outlined"
               onPress={this._attemptLogin}
             >
-              <Text style={{color: colors.textLight, fontSize: 18}}>
+              <Text style={{ color: colors.textLight, fontSize: 18 }}>
                 Log In
               </Text>
             </Button>
-            <Button
-              style={{marginTop: 10}}
-              onPress={this._handleRegister}
-            >
-              <Text style={{color: colors.textGrey, fontSize: 14}}>
+            <Button style={{ marginTop: 10 }} onPress={this._handleRegister}>
+              <Text style={{ color: colors.textGrey, fontSize: 14 }}>
                 Don't have an FSF account?
               </Text>
             </Button>
             <Button onPress={this._guestLogin}>
-              <Text style={{color: colors.textGrey, fontSize: 14}}>
+              <Text style={{ color: colors.textGrey, fontSize: 14 }}>
                 Continue as guest
               </Text>
             </Button>
           </View>
-          <View style = {{flex: 1}} />
+          <View style={{ flex: 1 }} />
         </KeyboardAvoidingView>
       );
     } else {
       return (
-        <View>
+        <View style={styles.loadingContainer}>
           <Text>Loading...</Text>
+          <Loading />
         </View>
       );
     }
   }
 
   componentDidMount() {
-    isGuestLoggedIn().then(_ => {
-      this.props.navigation.navigate('App');
-    }).catch(_ => {
-      this.setState({
-        componentDidMount: true
+    isGuestLoggedIn()
+      .then(_ => {
+        this.props.navigation.navigate('App');
+      })
+      .catch(_ => {
+        this.setState({
+          componentDidMount: true
+        });
       });
-    });
   }
 }
 
-
 const styles = StyleSheet.create({
   textInput: {
-    backgroundColor: colors.backgroundWhite,
+    backgroundColor: colors.backgroundWhite
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   logoContainer: {
     height: 277,
@@ -158,14 +152,19 @@ const styles = StyleSheet.create({
   loginContainer: {
     marginTop: 40,
     marginRight: 40,
-    marginLeft: 40,
+    marginLeft: 40
   },
   loginButton: {
     marginTop: 30,
-    backgroundColor: colors.buttonGrey,
+    backgroundColor: colors.buttonGrey
   },
   loginContent: {
-    height: 50,
+    height: 50
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
