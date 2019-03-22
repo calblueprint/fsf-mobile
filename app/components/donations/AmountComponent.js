@@ -9,10 +9,11 @@ import {
   TextInput
 } from 'react-native-paper';
 
-import {
-  getSavedBillingID
-} from '../../lib/donate';
-import { okAlert } from '../../lib/alerts';
+// import {
+//   getSavedBillingID
+// } from '../../lib/donate';
+// import { okAlert } from '../../lib/alerts';
+
 import strings from '../../res/strings';
 import colors from '../../styles/colors';
 

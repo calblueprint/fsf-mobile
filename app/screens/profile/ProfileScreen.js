@@ -86,7 +86,12 @@ class ProfileScreen extends BaseScreen {
 
   _signOutAsync = async () => {
     okAlert('Logged Out', '');
-    await userLogOut();
+    try {
+      await userLogOut();
+    } catch(error) {
+      console.log("signOutAsync failed");
+      console.log(error);
+    }
     this.props.navigation.navigate('Auth');
   };
 
@@ -95,8 +100,14 @@ class ProfileScreen extends BaseScreen {
   };
 
   _navigateLogin = async() => {
-    await guestLogOut();
+    try {
+      await guestLogOut();
+    } catch(error) {
+      console.log("guest logout failed");
+      console.log(error);
+    }
     this.props.navigation.navigate('Auth');
+    
   };
 
   _toggleNotifications = async () => {
@@ -124,9 +135,16 @@ class ProfileScreen extends BaseScreen {
   _fetchUserInfo = async () => {
     // TODO: add specific user handling
     console.log("fetching");
-    let userInfo = await getStoredUserInfo();
-    this.setState({ userInfo: userInfo});
-    console.log(userInfo)
+    let userInfo;
+    try {
+      let userInfo = await getStoredUserInfo();
+      this.setState({ userInfo: userInfo});
+      console.log(userInfo)  
+    } catch (error) {
+      this.setState({ userInfo: null});
+      console.log("error getting user info")  
+    }
+   
   }
 
 }

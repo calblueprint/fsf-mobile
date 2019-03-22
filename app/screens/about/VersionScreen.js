@@ -8,11 +8,8 @@ class VersionScreen extends BaseScreen {
  render() {
     return (
       <View style={{flex: 1, alignItems: 'center'}}>
-          <Text>  Version 0.4.0  </Text>  
-
-          <Button
-            onPress={() => this.props.navigation.navigate('Profile')}
-            title='Back to Profile'/>        
+          
+          <Text>  Version 0.4.0  </Text>          
       </View>
     );
   }

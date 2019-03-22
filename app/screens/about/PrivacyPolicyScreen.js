@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Text, View, AsyncStorage, Alert, ScrollView} from 'react-native';
 import BaseScreen from '../BaseScreen'
-import { okAlert } from '../../lib/alerts'
 
 class PrivacyPolicyScreen extends BaseScreen {
 
@@ -53,10 +52,6 @@ class PrivacyPolicyScreen extends BaseScreen {
 
 
           </Text>
-          
-          <Button
-            onPress={() => this.props.navigation.navigate('Profile')}
-            title='Back to Profile'/>
 
         </ScrollView>
 

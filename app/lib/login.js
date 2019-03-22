@@ -277,7 +277,7 @@ async function guestLogOut() {
     await AsyncStorage.removeItem('guestLogin');
     return true;
   } catch (error) {
-    return Promise.reject(new Error('Fail'));
+    return Promise.reject(new Error("Guest failed to log out"))
   }
 }
 
@@ -291,14 +291,20 @@ async function userLogOut() {
 }
 
 async function login(email, password) {
-  const loginTicket = await getLoginTicket();
-  const serviceTicket = await casLogin(email, password, loginTicket);
-  const apiKey = await getCiviCRMApiKey(serviceTicket);
+  try {
+    const loginTicket = await getLoginTicket();
+    const serviceTicket = await casLogin(email, password, loginTicket);
+    const apiKey = await getCiviCRMApiKey(serviceTicket);
 
-  await storeApiKey(apiKey.key); // store API Key in local storage
-  await storeId(apiKey.id); // store id
-  await storeEmail(apiKey.email); // store email
-  return apiKey;
+    await storeApiKey(apiKey.key)  // store API Key in local storage
+    await storeId(apiKey.id)       // store id
+    await storeEmail(apiKey.email) // store email
+    return apiKey;
+  } catch (error) { 
+    // TODO: currently encapsulating in a try catch to prevent failure - might want 
+    // to explore more granular error handling in the future
+    return Promise.reject(new Error("Login failed"))
+  } 
 }
 /**
  * @param key: a json of user info to store
