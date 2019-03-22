@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Text, View, Image, StyleSheet } from 'react-native';
+import { Button, Text, View, Image } from 'react-native';
 import { StackActions, NavigationActions } from "react-navigation";
 import BaseScreen from '../BaseScreen'
 import { ScrollView } from 'react-native-gesture-handler';
-import colors from '../../styles/colors'
 
 class DonateSuccessScreen extends BaseScreen {
   constructor(props) {
@@ -41,6 +40,7 @@ class DonateSuccessScreen extends BaseScreen {
     const name = navigation.getParam("cardholder", "person");
     // Original text color #64696B
     return (
+      
       <ScrollView>
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text style={{ width: '85%', fontWeight: "bold", fontSize: 24, marginTop: 15, marginBottom: 24, textAlign: "center" }} >  
@@ -50,46 +50,23 @@ class DonateSuccessScreen extends BaseScreen {
           <Text style={{width: '85%', fontSize: 16, marginTop: 24, marginBottom: 8, lineHeight: 20}} >
             Your generous gift will help us continue promoting, protecting, and developing free software. 
           </Text>
-          <Text style={{width: '85%', fontSize: 16, marginTop: 8, marginBottom: 4, lineHeight: 20}} >
+          <Text style={{width: '85%', fontSize: 16, marginTop: 8, marginBottom: 8, lineHeight: 20}} >
           Without members like you, we could not effectively protect and enforce the GNU General Public 
           License and actively maintain programs like the GNU Project and the Defective by Design campaign.
           </Text>
-          <Button type="outline"
-            style={{marginTop: 30, backgroundColor: colors.buttonGrey}}
-            contentStyle={styles.loginContent}
-            mode='outlined'
-            onPress={this._toHome}
-            title="CLOSE"
-          />
+
+          <View style={{width: 145, height: 45, marginTop: 20, borderWidth: 2, borderColor: "#757575", borderRadius: 2}}>
+            <Button
+              onPress={this._toHome}
+              width="145"
+              height="45"
+              title="CLOSE"
+              color="#757575"
+            />
+          </View>
         </View>
       </ScrollView>
     );
   }
 }
-const styles = StyleSheet.create({
-  textInput: {
-    backgroundColor: colors.backgroundWhite,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  logoContainer: {
-    height: 277,
-    backgroundColor: colors.logoGrey,
-    alignItems: 'center'
-  },
-  loginContainer: {
-    marginTop: 40,
-    marginRight: 40,
-    marginLeft: 40,
-  },
-  loginButton: {
-    marginTop: 30,
-    backgroundColor: colors.buttonGrey,
-  },
-  loginContent: {
-    height: 50,
-  }
-});
 export default DonateSuccessScreen;
