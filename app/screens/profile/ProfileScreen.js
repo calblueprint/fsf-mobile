@@ -245,7 +245,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'bold',
     fontSize: 36,
-    lineHeight: 'normal',
     color: colors.textBlack
   }, pushNotificationText: {
     backgroundColor: colors.backgroundWhite,
@@ -253,7 +252,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'bold',
     fontSize: 36,
-    lineHeight: 'normal',
     color: colors.textBlack,
     marginLeft: 10
   }, textRegular: {
@@ -262,7 +260,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 28,
-    lineHeight: 'normal',
     color: colors.textBlack
   }, textButton: {
     fontSize: 14,
@@ -271,12 +268,10 @@ const styles = StyleSheet.create({
   , userInfoContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
     alignSelf: 'stretch',
     marginLeft:10,
     marginTop:10,
     height: 150,
-    alignItems: 'left',
     flexDirection: 'column',
   }, pushNotificationContainer: {
     height: 100,
