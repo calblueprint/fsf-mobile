@@ -68,12 +68,20 @@ class DonateScreen extends BaseScreen {
         amount = amount.substring(0, dotIndex) +
                  amount.substring(dotIndex + 1, dotIndex + 3);
       }
+
       const email = await getStoredEmail();
       const apiKey = await getStoredApiKey();
+
+      var exp = this.state.exp;
+      exp = exp.substring(0, 2) + exp.substring(3);
+
+      var cc = this.state.cc;
+      cc = cc.replace(/\s+/g, '');
+
       tcInfo = {
         'name': this.state.cardholder,
-        'cc': this.state.cc,
-        'exp': this.state.exp,
+        'cc': cc,
+        'exp': exp,
         'amount': amount,
         'email': email,
         'apikey': apiKey,
