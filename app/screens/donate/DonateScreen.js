@@ -96,7 +96,10 @@ class DonateScreen extends BaseScreen {
         await storeLastFour(tcInfo['cc'].slice(8, 12));
         await storeCardholder(this.state.cardholder)
         okAlert('Success! Transaction ID: ' + transResp.transid);
-        this.props.navigation.navigate('DonateSuccess');
+        this.props.navigation.navigate('DonateSuccess', {
+          amount: amount,
+          cardholder: this.state.cardholder,
+        });
       }
     } catch(error) {
       okAlert('Donate failed', 'Try again');
