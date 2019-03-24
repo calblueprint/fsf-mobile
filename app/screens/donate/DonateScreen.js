@@ -97,7 +97,7 @@ class DonateScreen extends BaseScreen {
         await storeCardholder(this.state.cardholder)
         okAlert('Success! Transaction ID: ' + transResp.transid);
         this.props.navigation.navigate('DonateSuccess', {
-          amount: this.state.amount,
+          amount: this.state.amount.toString(),
           cardholder: this.state.cardholder,
         });
       }
