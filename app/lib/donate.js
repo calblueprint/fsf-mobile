@@ -99,7 +99,9 @@ async function TCSinglePayment(paymentInfo) {
     body: JSON.stringify(paymentInfo)
   });
 
-  if (resp.status >= 400) {
+  if (resp.status >= 500) {
+    return Promise.reject(new Error(resp.statusText));
+  } else if (resp.status >= 400) {
     return Promise.reject(new Error('Call to TC for single payment returned status code >= 400'));
   } else {
     return resp.json();
