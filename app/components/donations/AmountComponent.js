@@ -8,6 +8,10 @@ import {
   Button,
   TextInput
 } from 'react-native-paper';
+import {
+  TextField
+} from 'react-native-material-textfield';
+
 
 // import {
 //   getSavedBillingID
@@ -20,6 +24,9 @@ import colors from '../../styles/colors';
 class AmountComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      errorText: '',
+    }
   }
 
   // async componentDidMount() {
@@ -38,23 +45,6 @@ class AmountComponent extends React.Component {
   //   });
   // }
 
-  // _changeAmount = textAmount => {
-  //   let newAmount = parseInt(textAmount.slice(1));
-  //   if (isNaN(newAmount)) {
-  //     newAmount = 0;
-  //   }
-  //   this.setState({ amount: newAmount });
-  // };
-
-  // _goToNext = (repeatable) =>
-  // {
-  //   if (repeatable) {
-  //     console.log(repeatable);
-  //     this._switchTab(this, 'DonateRepeatable', this.state);
-  //   } else {
-  //     this._switchTab(this, 'DonateBilling', this.state);
-  //   }
-  // }
   renderMoneyButton(val) {
     const renderVal = '$' + val;
     return (
@@ -71,11 +61,30 @@ class AmountComponent extends React.Component {
     )
   }
 
+  // invariant that this.props.amount is always a numeric value
   renderMoneyValue() {
     if (this.props.amount == '') {
       return;
     } else {
       return '$' + this.props.amount;
+    }
+  }
+
+  renderErrorText = (val) => {
+    if (!val.match(/^\$?\d+(\.\d{0,2})?$/)) {
+      if (this.state.errorText == '') {
+        this.setState({
+          errorText: 'Invalid amount. Please use only numbers, $ and at most one "."'
+        });
+      }
+      console.log("here")
+    } else {
+      if (this.state.errorText != '') {
+        this.setState({
+          errorText: ''
+        });
+      }
+      console.log("there")
     }
   }
 
@@ -88,18 +97,20 @@ class AmountComponent extends React.Component {
           {strings.donations.donationHeader}
         </Text>
         <Text>{strings.donations.donationBody}</Text>
-        <TextInput
-          style={{backgroundColor: colors.backgroundWhite}}
+        <TextField
           label='Amount'
           value={this.renderMoneyValue()}
+          error={this.state.errorText}
           keyboardType='numeric'
           returnKeyType='done'
           onChangeText={(val) => {
+            console.log(val)
             if (val[0] == '$') {
               this.props.handleChange('amount', val.substr(1))
             } else {
               this.props.handleChange('amount', val)
             }
+            this.renderErrorText(val)
           }}
         />
         <View style={styles.buttonRow}>
