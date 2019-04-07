@@ -35,9 +35,3 @@ allprojects {
         }
     }
 }
-
-
-wrapper {
-    gradleVersion = '4.4'
-    distributionUrl = distributionUrl.replace("bin", "all")
-}
