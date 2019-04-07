@@ -91,6 +91,8 @@ class DonateScreen extends BaseScreen {
       if (transResp.status != 'approved') {
         okAlert('Error: Transaction not approved', 'Try again');
       } else {
+        // TODO JASON: This is where tyou want to add the 'toggle' of whether the save the user's 
+        // billing ID or not
         const resp = await TCGetBillingID(tcInfo);
         await storeBillingID(resp.billingid);
         await storeLastFour(tcInfo['cc'].slice(8, 12));
