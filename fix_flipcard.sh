@@ -4,11 +4,11 @@
 
 FILE=node_modules/react-native-flip-card/lib/FlipCard.js
 
-LINE169=$(sed -n '169p' $FILE)
-LINE173=$(sed -n '173p' $FILE)
+LINE169=$(sed -i '' -n '169p' $FILE)
+LINE173=$(sed -i '' -n '173p' $FILE)
 
 
-if [ $LINE169 = "style={{flex:1}}" ] && [ "$LINE173 = 'style={{flex: 1}}'" ]; then
+if [[ $LINE169 = "style={{flex:1}}" ]] && [[ "$LINE173 = 'style={{flex: 1}}'" ]]; then
     echo 'REMOVING line 169 from react-native-flip-card'
 
     sed -i '169d' $FILE
