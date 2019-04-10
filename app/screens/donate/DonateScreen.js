@@ -81,12 +81,14 @@ class DonateScreen extends BaseScreen {
             and in the backend is unchanged because we simply pass in the email and apikey 
             of the correspending 'anonymous' user
       */
+
+     let email = "anonymous@payment.com";
+     let apiKey = "api_key_here";
       try {
-        const email = await getStoredEmail();
-        const apiKey = await getStoredApiKey(); 
+        email = await getStoredEmail();
+        apiKey = await getStoredApiKey(); 
       } catch (error) {
-        const email = "anonymous@payment.com";
-        const apiKey = "api_key_here";
+        console.log('anonymous donation');
       }
 
       var exp = this.state.exp;
