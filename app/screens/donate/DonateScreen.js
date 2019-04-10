@@ -69,8 +69,25 @@ class DonateScreen extends BaseScreen {
                  amount.substring(dotIndex + 1, dotIndex + 3);
       }
 
-      const email = await getStoredEmail();
-      const apiKey = await getStoredApiKey();
+      /*
+        ANONYMOUS DONATIONS:
+          Current approach is to create an Anonymous_Payment User with:
+            - email: anonymous@payment.com
+            - apiKey: whatever api key CiviCRM returns, simply hardcore this apikey into all anonymous payments
+          
+            I didn't actually go ahead to make this user because I'm not sure if this is the approach we wanna take
+
+            Taking this approach, we the rest of the function call both here
+            and in the backend is unchanged because we simply pass in the email and apikey 
+            of the correspending 'anonymous' user
+      */
+      try {
+        const email = await getStoredEmail();
+        const apiKey = await getStoredApiKey(); 
+      } catch (error) {
+        const email = "anonymous@payment.com";
+        const apiKey = "api_key_here";
+      }
 
       var exp = this.state.exp;
       exp = exp.substring(0, 2) + exp.substring(3);
@@ -78,10 +95,14 @@ class DonateScreen extends BaseScreen {
       var cc = this.state.cc;
       cc = cc.replace(/\s+/g, '');
 
+      var cvv = this.state.securityCode;
+      // Jason: need to check what cvv looks like and sanitize if necessary
+
       tcInfo = {
         'name': this.state.cardholder,
         'cc': cc,
         'exp': exp,
+        'cvv': cvv,
         'amount': amount,
         'email': email,
         'apikey': apiKey,
