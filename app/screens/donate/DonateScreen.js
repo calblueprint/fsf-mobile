@@ -166,6 +166,7 @@ class DonateScreen extends BaseScreen {
         <View style={{flex: 1}}>
           <KeyboardAvoidingView
             style={{ flex: 1, marginTop: 10 }}
+            behavior='padding'
           >
             <StepIndicator
               currentPosition={this.state.currentPosition}

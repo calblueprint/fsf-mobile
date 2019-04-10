@@ -67,8 +67,7 @@ class LoginScreen extends BaseScreen {
           <View style={{flex: 1}}>
             <KeyboardAvoidingView
               style={styles.container}
-              behavior={'padding'}
-              ref={(r) => { debugger; }}
+              behavior='padding'
             >
               <View style={styles.logoContainer}>
                 <Image
