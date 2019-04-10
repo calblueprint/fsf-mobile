@@ -74,17 +74,20 @@ class AmountComponent extends React.Component {
     if (!val.match(/^\$?\d+(\.\d{0,2})?$/)) {
       if (this.state.errorText == '') {
         this.setState({
-          errorText: 'Invalid amount. Please use only numbers, $ and at most one "."'
+          errorText: 'Invalid amount'
         });
       }
-      console.log("here")
     } else {
       if (this.state.errorText != '') {
         this.setState({
           errorText: ''
         });
       }
-      console.log("there")
+    }
+    if (val[0] == '$') {
+      this.props.handleChange('amount', val.substr(1))
+    } else {
+      this.props.handleChange('amount', val)
     }
   }
 
@@ -103,15 +106,7 @@ class AmountComponent extends React.Component {
           error={this.state.errorText}
           keyboardType='numeric'
           returnKeyType='done'
-          onChangeText={(val) => {
-            console.log(val)
-            if (val[0] == '$') {
-              this.props.handleChange('amount', val.substr(1))
-            } else {
-              this.props.handleChange('amount', val)
-            }
-            this.renderErrorText(val)
-          }}
+          onChangeText={this.renderErrorText}
         />
         <View style={styles.buttonRow}>
           {this.renderMoneyButton(10)}
@@ -124,7 +119,7 @@ class AmountComponent extends React.Component {
           {this.renderMoneyButton(2500)}
         </View>
         <Button
-          style={this.props.amount == '' ? this.props.styles.disabledDonationButton : this.props.styles.donationButton}
+          style={this.props.amount.match(/^\$?\d+(\.\d{0,2})?$/) ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(1)}
           disabled={this.props.amount == ''}
