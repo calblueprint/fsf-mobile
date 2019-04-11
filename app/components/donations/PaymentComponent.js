@@ -20,16 +20,28 @@ class PaymentComponent extends React.Component {
   }
 
   formatNumber() {
-    console.log(this.state.lastFour)
     return "**** **** ****" + this.state.lastFour
   }
 
-  renderDeleteButton() {
+  deleteSavedCreditCard() {
+    // Add remove from Active Storage
+    this.setState({
+      hasSavedCard: false,
+      lastFour: '',
+      cardholder: ''
+    })
+  }
+
+  editSavedCreditCard() {
+
+  }
+
+  renderDonateButton(repeat) {
     return (
       <Button
         style={this.props.disabledButton ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
         contentStyle={this.props.styles.donationButtonContent}
-        onPress={this.props.donate}
+        onPress={_ => this.props.donate(repeat)}
         disabled={!this.props.disabledButton}
       >
         <Text style={this.props.styles.donationButtonText}>
@@ -50,26 +62,28 @@ class PaymentComponent extends React.Component {
             />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, marginLeft: 10, marginRight: 10 }} >
-            <View style={{ flex : 1 }}>
+            <View style={{ flex: 1 }}>
               <Button
                 mode='outlined'
                 compact={true}
                 style={{marginLeft: 10, marginRight: 10}}
+                onPress={this.editSavedCreditCard}
               >
                 <Text>Edit</Text>
               </Button>
             </View>
-            <View style={{ flex : 1 }}>
+            <View style={{ flex: 1 }}>
               <Button
                 mode='outlined'
                 compact={true}
                 style={{marginLeft: 10, marginRight: 10}}
+                onPress={this.deleteSavedCreditCard}
               >
                 <Text>Delete</Text>
               </Button>
             </View>
           </View>
-          {this.renderDeleteButton()}
+          {this.renderDonateButton(true)}
         </View>
       )
     } else {
@@ -88,7 +102,7 @@ class PaymentComponent extends React.Component {
               Remember My Card
             </Text>
           </View>
-          {this.renderDeleteButton()}
+          {this.renderDonateButton(false)}
         </View>
       )
     }

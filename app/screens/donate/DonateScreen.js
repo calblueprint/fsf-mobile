@@ -22,9 +22,11 @@ import {
 import {
   TCGetBillingID,
   TCSinglePayment,
+  TCRepeatablePayment,
   storeBillingID,
   storeLastFour,
   storeCardholder,
+  getSavedBillingID,
 } from '../../lib/donate';
 import {
   getStoredApiKey,
@@ -55,59 +57,78 @@ class DonateScreen extends BaseScreen {
     }
   }
 
-  donate = async () => {
-    try {
-      var amount = this.state.amount.toString();
+  // this could be written better im tired :( - jason
+  // sigh its so ugly
+  donate = async (repeat) => {
+    var amount = this.state.amount.toString();
 
-      // Represent amount in the number of cents
-      // e.g. $10.34 = 1034
-      // TODO: validation of the correctness of amount
-      const dotIndex = amount.indexOf('.');
-      if (dotIndex == -1) {
-        amount = amount + '00';
-      } else {
-        amount = amount.substring(0, dotIndex) +
-                 amount.substring(dotIndex + 1, dotIndex + 3);
-      }
-
-      const email = await getStoredEmail();
-      const apiKey = await getStoredApiKey();
-
-      var exp = this.state.exp;
-      exp = exp.substring(0, 2) + exp.substring(3);
-
-      var cc = this.state.cc;
-      cc = cc.replace(/\s+/g, '');
-
-      tcInfo = {
-        'name': this.state.cardholder,
-        'cc': cc,
-        'exp': exp,
-        'amount': amount,
-        'email': email,
-        'apikey': apiKey,
-      };
-      const transResp = await TCSinglePayment(tcInfo);
-
-      if (transResp.status != 'approved') {
-        okAlert('Error: Transaction not approved', 'Try again');
-      } else {
-        const resp = await TCGetBillingID(tcInfo);
-        if (this.state.remember_card) {
-          await storeBillingID(resp.billingid);
-          await storeLastFour(tcInfo['cc'].slice(8, 12));
-          await storeCardholder(this.state.cardholder)
+    // Represent amount in the number of cents
+    // e.g. $10.34 = 1034
+    // TODO: validation of the correctness of amount
+    const dotIndex = amount.indexOf('.');
+    if (dotIndex == -1) {
+      amount = amount + '00';
+    } else {
+      amount = amount.substring(0, dotIndex) +
+               amount.substring(dotIndex + 1, dotIndex + 3);
+    }
+    if (repeat) {
+      try {
+        const billingId = await getSavedBillingID();
+        var params = {
+          billingid: billindId,
+          amount: amount,
         }
-        okAlert('Success! Transaction ID: ' + transResp.transid);
-        this.props.navigation.navigate('DonateSuccess', {
-          amount: this.state.amount.toString(),
-          cardholder: this.state.cardholder,
-        });
+        const transResp = await TCRepeatablePayment(params);
+        if (transResp.status != 'approved') {
+          okAlert('Error: Transaction not approved', 'Try again');
+        } else {
+          okAlert('Success! Transaction ID: ' + transResp.transid);
+          this.props.navigation.navigate('DonateSuccess', {
+            amount: this.state.amount.toString(),
+            cardholder: this.state.cardholder,
+          });
+        }
+      } catch(error) {
+        okAlert('Donate failed', 'Try again');
       }
-    } catch(error) {
-      okAlert('Donate failed', 'Try again');
-      // Can considering uncommenting this line just to show them what the complete flow will look like
-      // this.props.navigation.navigate('DonateSuccess');
+    } else {
+      try {
+        const email = await getStoredEmail();
+        const apiKey = await getStoredApiKey();
+
+        var exp = this.state.exp;
+        exp = exp.substring(0, 2) + exp.substring(3);
+
+        var cc = this.state.cc;
+        cc = cc.replace(/\s+/g, '');
+
+        tcInfo = {
+          'name': this.state.cardholder,
+          'cc': cc,
+          'exp': exp,
+          'amount': amount,
+          'email': email,
+          'apikey': apiKey,
+        };
+        const transResp = await TCSinglePayment(tcInfo);
+        if (transResp.status != 'approved') {
+          okAlert('Error: Transaction not approved', 'Try again');
+        } else {
+          const resp = await TCGetBillingID(tcInfo);
+          if (this.state.remember_card) {
+            await storeBillingID(resp.billingid);
+            await storeLastFour(tcInfo['cc'].slice(8, 12));
+            await storeCardholder(this.state.cardholder)
+          }
+          okAlert('Success! Transaction ID: ' + transResp.transid);
+          this.props.navigation.navigate('DonateSuccess', {
+            amount: this.state.amount.toString(),
+            cardholder: this.state.cardholder,
+          });
+      } catch(error) {
+        okAlert('Donate failed', 'Try again');
+      }
     }
   };
 
