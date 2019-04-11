@@ -1,33 +1,114 @@
 import React from 'react';
-import { Text, TouchableWithoutFeedback, Keyboard, View} from 'react-native';
-import { Button } from 'react-native-paper';
+import { Text, View} from 'react-native';
+import { Button, Switch } from 'react-native-paper';
 
-import { CreditCardInput } from 'react-native-credit-card-input';
+import { CardView, CreditCardInput } from 'react-native-credit-card-input';
+
+import {
+  getSavedLastFour,
+  getCardholder,
+} from '../../lib/donate';
 
 class PaymentComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hasSavedCard: false,
+      lastFour: '',
+      cardholder: '',
+    }
+  }
+
+  formatNumber() {
+    console.log(this.state.lastFour)
+    return "**** **** ****" + this.state.lastFour
+  }
+
+  renderDeleteButton() {
+    return (
+      <Button
+        style={this.props.disabledButton ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
+        contentStyle={this.props.styles.donationButtonContent}
+        onPress={this.props.donate}
+        disabled={!this.props.disabledButton}
+      >
+        <Text style={this.props.styles.donationButtonText}>
+          Donate ${this.props.amount}
+        </Text>
+      </Button>
+    )
   }
 
   render() {
-    return (
+    if (this.state.hasSavedCard) {
+      return (
+        <View style={ this.props.styles.container } >
+          <View style={{ flexDirection: 'row', justifyContent:'center' }}>
+            <CardView
+              number={this.formatNumber()}
+              name={this.state.cardholder}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10, marginLeft: 10, marginRight: 10 }} >
+            <View style={{ flex : 1 }}>
+              <Button
+                mode='outlined'
+                compact={true}
+                style={{marginLeft: 10, marginRight: 10}}
+              >
+                <Text>Edit</Text>
+              </Button>
+            </View>
+            <View style={{ flex : 1 }}>
+              <Button
+                mode='outlined'
+                compact={true}
+                style={{marginLeft: 10, marginRight: 10}}
+              >
+                <Text>Delete</Text>
+              </Button>
+            </View>
+          </View>
+          {this.renderDeleteButton()}
+        </View>
+      )
+    } else {
+      return (
         <View style={ this.props.styles.container } >
           <CreditCardInput
             onChange={this.props.handleChange}
             requiresName={true}
           />
-          <Button
-            style={this.props.disabledButton ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
-            contentStyle={this.props.styles.donationButtonContent}
-            onPress={this.props.donate}
-            disabled={!this.props.disabledButton}
-          >
-            <Text style={this.props.styles.donationButtonText}>
-              Donate ${this.props.amount}
+          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 30}}>
+            <Switch
+              value={this.props.remember_card}
+              onValueChange={_=> this.props.handleCheck('remember_card', !this.props.remember_card)}
+            />
+            <Text style={{marginTop: 6, marginLeft: 8}}>
+              Remember My Card
             </Text>
-          </Button>
+          </View>
+          {this.renderDeleteButton()}
         </View>
-    )
+      )
+    }
+  }
+
+  componentDidMount() {
+    Promise.all([
+      getSavedLastFour(),
+      getCardholder()
+    ]).then((values) => {
+      console.log(values)
+      if (values.every((v) => v !== null)) {
+        this.setState({
+          hasSavedCard: true,
+          lastFour: values[0],
+          cardholder: values[1],
+        });
+      }
+    });
+    console.log("here")
   }
 }
 export default PaymentComponent;

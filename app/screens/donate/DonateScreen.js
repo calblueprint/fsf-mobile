@@ -24,7 +24,7 @@ import {
   TCSinglePayment,
   storeBillingID,
   storeLastFour,
-  storeCardholder
+  storeCardholder,
 } from '../../lib/donate';
 import {
   getStoredApiKey,
@@ -50,7 +50,8 @@ class DonateScreen extends BaseScreen {
       cc: '',
       exp: '',
       securityCode: '',
-      valid_cc: false,
+      validCC: false,
+      remember_card: false,
     }
   }
 
@@ -92,9 +93,11 @@ class DonateScreen extends BaseScreen {
         okAlert('Error: Transaction not approved', 'Try again');
       } else {
         const resp = await TCGetBillingID(tcInfo);
-        await storeBillingID(resp.billingid);
-        await storeLastFour(tcInfo['cc'].slice(8, 12));
-        await storeCardholder(this.state.cardholder)
+        if (this.state.remember_card) {
+          await storeBillingID(resp.billingid);
+          await storeLastFour(tcInfo['cc'].slice(8, 12));
+          await storeCardholder(this.state.cardholder)
+        }
         okAlert('Success! Transaction ID: ' + transResp.transid);
         this.props.navigation.navigate('DonateSuccess', {
           amount: this.state.amount.toString(),
@@ -104,7 +107,7 @@ class DonateScreen extends BaseScreen {
     } catch(error) {
       okAlert('Donate failed', 'Try again');
       // Can considering uncommenting this line just to show them what the complete flow will look like
-      // this.props.navigation.navigate('DonateSuccess');   
+      // this.props.navigation.navigate('DonateSuccess');
     }
   };
 
@@ -119,7 +122,7 @@ class DonateScreen extends BaseScreen {
       'exp': form.values.expiry,
       'securityCode': form.values.cvc,
       'cardholder': form.values.name,
-      'valid_cc': form.valid,
+      'validCC': form.valid,
     });
   };
 
@@ -149,11 +152,13 @@ class DonateScreen extends BaseScreen {
     } else if (this.state.currentPosition == 2) {
       return (
         <PaymentComponent
+          handleCheck={this.handleChange}
           handleChange={this.handleCreditCardChange}
           changePage={this.onPageChange}
           styles={styles}
+          remember_card={this.state.remember_card}
           amount={this.state.amount}
-          disabledButton={this.state.valid_cc}
+          disabledButton={this.state.validCC}
           donate={this.donate}
         />
       )
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
     marginRight: 12,
-    marginTop: 15
+    marginTop: 15,
   }
 });
 

@@ -4,37 +4,37 @@ import { AsyncStorage } from "react-native";
  * This file provides async functions for TC API calls and CiviCRM updates
  *
  * It contains the following functions:
- * 
+ *
  * async function TCGetBillingID(paymentInfo)
- * 
+ *
  * async function TCSinglePayment(paymentInfo)
- * 
+ *
  * async function TCRepeatablePayment(paymentInfo)
- * 
+ *
  * async function storeBillingID(billingID)
- * 
+ *
  * async function storeLastFour(digits)
- * 
+ *
  * async function storeCardholder(name)
- * 
+ *
  * async function getSavedBillingID()
- * 
+ *
  * async function getSavedLastFour()
- * 
+ *
  * async function getCardholder()
- * 
+ *
  *  ---- the last four should be replaced with the following for CiviCRM integration next semester ----
- * 
+ *
  * async function CiviStoreBillingID(contactID, billingID)
- * 
+ *
  * async function CiviStoreLastFour(contactID, digits)
- * 
+ *
  * async function CiviGetBillingID(contactID)
- * 
+ *
  * async function CiviGetLastFour(contactID)
- * 
+ *
  * async function CiviCreateContribution(contactID, entity, params)
- * 
+ *
  */
 
 /**
@@ -71,7 +71,7 @@ async function TCGetBillingID(paymentInfo) {
 }
 
 /**
- * API Call for a single payment to Go backend 
+ * API Call for a single payment to Go backend
  *
  * note: "amount" should be a string, pad with "00" for cents
  * @param paymentInfo in the following format:
@@ -81,7 +81,7 @@ async function TCGetBillingID(paymentInfo) {
     "exp": "0404",
     "amount": "2000"
     }
- * 
+ *
  * @return a Promise that resolves to JSON object containing transaction info
  *  {
       "transid": "a transaction id from TrustCommerce",
@@ -107,7 +107,7 @@ async function TCSinglePayment(paymentInfo) {
 }
 
 /**
- * API Call for a repeatable payment to Go backend 
+ * API Call for a repeatable payment to Go backend
  *
  * note: "amount" should be a string, pad with "00" for cents
  * @param paymentInfo in the following format:
@@ -221,7 +221,7 @@ async function getCardholder() {
 /**
 * 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP
 *
-* Note: the billing_id is saved as a custom field, custom_324 in crmserver3d.org; 
+* Note: the billing_id is saved as a custom field, custom_324 in crmserver3d.org;
 * This is because I literally created the custom field to save it.
 * Not sure if there's a better way, or if FSF will have to customize these
 * CiviCRM calls here to create on the correctly numbered custom field.
@@ -239,7 +239,7 @@ async function CiviStoreLastFour(contactID, digits) {
 
 /**
  * 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP
- * 
+ *
  * Passing query params with "fetch" is not a nice built-in
  * https://github.com/github/fetch/issues/256 will help
  *
