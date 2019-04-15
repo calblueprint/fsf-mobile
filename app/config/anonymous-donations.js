@@ -1,5 +1,5 @@
 ANONYMOUS_EMAIL = "bpanon.donations@gmail.com";
-ANONYMOUS_API_KEY = "2599189";
+ANONYMOUS_API_KEY = "TLMODYLUMGUQDIWWMNPPQIMGEGMGKBNP";
 
 export const anonymousDonationSettings = {
     ANONYMOUS_EMAIL,
