@@ -9,7 +9,7 @@ React Native without Expo repository; only Android support is complete.
 1. Make sure you have `react-native-cli`, or install it using npm:
 
 ```
-npm install -g react-native-cli
+sudo npm install -g react-native-cli
 ```
 
 On a Debian-based environment, you can install nodejs and npm via:
@@ -37,7 +37,9 @@ Then we set `ANDROID_HOME` env variable so that react-native uses the SDK we dow
 export ANDROID_HOME=/opt/android
 ```
 
-3. Install all the Javascript dependencies in `package.json`.
+3. Install all the Javascript dependencies in `package.json`. We recommend using `yarn` instead of `npm` in this project.
+
+You should follow the instructions from the `yarn` [website](https://yarnpkg.com/lang/en/docs/install/) for installation.
 
 ```
 yarn
