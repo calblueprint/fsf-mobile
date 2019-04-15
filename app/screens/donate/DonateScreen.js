@@ -31,6 +31,7 @@ import {
   getStoredEmail
 } from '../../lib/login';
 
+import anonymousDonationSettings from '../../config/anonymous-donations';
 
 const labels = ['Amount', 'Billing Information', 'Payment Information']
 class DonateScreen extends BaseScreen {
@@ -82,8 +83,8 @@ class DonateScreen extends BaseScreen {
             of the correspending 'anonymous' user
       */
 
-     let email = "anonymous@payment.com";
-     let apiKey = "api_key_here";
+     let email = anonymousDonationSettings.ANONYMOUS_EMAIL;
+     let apiKey = anonymousDonationSettings.ANONYMOUS_API_KEY;
       try {
         email = await getStoredEmail();
         apiKey = await getStoredApiKey(); 
