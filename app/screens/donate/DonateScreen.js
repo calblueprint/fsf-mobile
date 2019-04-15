@@ -131,7 +131,7 @@ class DonateScreen extends BaseScreen {
       // okAlert('Donate failed', 'Try again');
       okAlert('Donate failed:', error);
       // Can considering uncommenting this line just to show them what the complete flow will look like
-      // this.props.navigation.navigate('DonateSuccess');   
+      // this.props.navigation.navigate('DonateSuccess');
     }
   };
 
@@ -190,18 +190,20 @@ class DonateScreen extends BaseScreen {
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <KeyboardAvoidingView
-          style={{ flex: 1, marginTop: 10 }}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}
-        >
-          <StepIndicator
-            currentPosition={this.state.currentPosition}
-            labels={labels}
-            stepCount={3}
-            onPress={this.onPageChange}
-          />
-            {this.renderStepComponent()}
-        </KeyboardAvoidingView>
+        <View style={{flex: 1}}>
+          <KeyboardAvoidingView
+            style={{ flex: 1, marginTop: 10 }}
+            behavior='padding'
+          >
+            <StepIndicator
+              currentPosition={this.state.currentPosition}
+              labels={labels}
+              stepCount={3}
+              onPress={this.onPageChange}
+            />
+              {this.renderStepComponent()}
+          </KeyboardAvoidingView>
+        </View>
       </TouchableWithoutFeedback>
 
     );

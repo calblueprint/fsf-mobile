@@ -6,18 +6,41 @@ React Native without Expo repository; only Android support is complete.
 
 #### Prerequisites:
 
-1. Make sure you have `react-native-cli`, which is available via `npm install -g react-native-cli`.
+1. Make sure you have `react-native-cli`, or install it using npm:
 
-2. Install all the Javascript dependencies in `package.json`. You can do so via:
+```
+npm install -g react-native-cli
+```
+
+On a Debian-based environment, you can install nodejs and npm via:
+
+```
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt install nodejs
+```
+
+2. Install Android SDK tools that react native depends on.
+
+Currently, the version of react native that we are using requires Android SDK version 28. The instructions on how to install the proprietary binary of Android SDK can be found on react native's website. Since the source code of the tools that we depend on is open source, we recommend using the Android Rebuilds. The following instructions document how to get the non-EULA bounded binaries and use it for react native.
+
+First download the Android SDK rebuilds and extract it. Here we will use `/opt/android`.
+
+```
+wget https://android-rebuilds.beuc.net/dl/android-sdk_user.9.0.0_r21_linux-x86.zip
+unzip android-sdk_user.9.0.0_r21_linux-x86.zip
+cp -r android-sdk_user.9.0.0_r21_linux-x86 /opt/android
+```
+
+Then we set `ANDROID_HOME` env variable so that react-native uses the SDK we downloaded.
+
+```
+export ANDROID_HOME=/opt/android
+```
+
+3. Install all the Javascript dependencies in `package.json`.
 
 ```
 yarn
-```
-
-or
-
-```
-npm install
 ```
 
 #### Build a debug build:
