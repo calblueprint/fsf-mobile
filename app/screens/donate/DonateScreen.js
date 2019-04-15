@@ -108,7 +108,7 @@ class DonateScreen extends BaseScreen {
         'cvv': cvv,
         'amount': amount,
         'email': email,
-        'apikey': apiKey,
+        'apikey': apiKey
       };
       const transResp = await TCSinglePayment(tcInfo);
 
