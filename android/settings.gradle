@@ -2,7 +2,7 @@ rootProject.name = 'FSF'
 include ':react-native-fsf-local-notifications'
 project(':react-native-fsf-local-notifications').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fsf-local-notifications/android')
 include ':react-native-background-fetch'
-project(':react-native-background-fetch').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-background-fetch/android')
+project(':react-native-background-fetch').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-background-fetch/android/')
 include ':react-native-vector-icons'
 project(':react-native-vector-icons').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-vector-icons/android')
 include ':react-native-gesture-handler'
