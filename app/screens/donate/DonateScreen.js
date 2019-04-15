@@ -31,6 +31,7 @@ import {
   getStoredEmail
 } from '../../lib/login';
 
+import anonymousDonationSettings from '../../config/anonymous-donations';
 
 const labels = ['Amount', 'Billing Information', 'Payment Information']
 class DonateScreen extends BaseScreen {
@@ -69,8 +70,32 @@ class DonateScreen extends BaseScreen {
                  amount.substring(dotIndex + 1, dotIndex + 3);
       }
 
+<<<<<<< HEAD
       const email = await getStoredEmail();
       const apiKey = await getStoredApiKey();
+=======
+      /*
+        ANONYMOUS DONATIONS:
+          Current approach is to create an Anonymous_Payment User with:
+            - email: anonymous@payment.com
+            - apiKey: whatever api key CiviCRM returns, simply hardcore this apikey into all anonymous payments
+          
+            I didn't actually go ahead to make this user because I'm not sure if this is the approach we wanna take
+
+            Taking this approach, we the rest of the function call both here
+            and in the backend is unchanged because we simply pass in the email and apikey 
+            of the correspending 'anonymous' user
+      */
+
+     let email = anonymousDonationSettings.ANONYMOUS_EMAIL;
+     let apiKey = anonymousDonationSettings.ANONYMOUS_API_KEY;
+      try {
+        email = await getStoredEmail();
+        apiKey = await getStoredApiKey(); 
+      } catch (error) {
+        console.log('anonymous donation');
+      }
+>>>>>>> 55235f2... add email and api key for anonymous donations
 
       var exp = this.state.exp;
       exp = exp.substring(0, 2) + exp.substring(3);
