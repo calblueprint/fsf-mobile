@@ -17,6 +17,7 @@ import RegisterWebScreen from '../screens/auth/RegisterWebScreen';
 import NewsDetailScreen from '../screens/news/NewsDetailScreen';
 import NewsScreen from '../screens/news/NewsScreen';
 import ActionScreen from '../screens/action/ActionScreen';
+import ActionDetailScreen from '../screens/action/ActionDetailScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 
 import PrivacyPolicyScreen from '../screens/about/PrivacyPolicyScreen';
@@ -101,9 +102,10 @@ const NewsTopTabNav = createMaterialTopTabNavigator(
   }
 );
 
-const ActionNav = createStackNavigator(
-  {ActionHome: ActionScreen}
-)
+const ActionNav = createStackNavigator({
+  ActionHome: ActionScreen,
+  ActionDetail: { screen: ActionDetailScreen }
+});
 
 const DonateNav = createStackNavigator({
   DonateHome: {
