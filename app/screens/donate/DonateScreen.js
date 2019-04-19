@@ -126,6 +126,7 @@ class DonateScreen extends BaseScreen {
             amount: this.state.amount.toString(),
             cardholder: this.state.cardholder,
           });
+        }
       } catch(error) {
         okAlert('Donate failed', 'Try again');
       }

@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View} from 'react-native';
-import { Button, Switch } from 'react-native-paper';
+import { StyleSheet, Text, View} from 'react-native';
+import { Button, Divider, Paragraph, Surface, Switch } from 'react-native-paper';
 
 import { CardView, CreditCardInput } from 'react-native-credit-card-input';
 
 import {
   getSavedLastFour,
   getCardholder,
+  removeCreditCard,
 } from '../../lib/donate';
 
 class PaymentComponent extends React.Component {
@@ -16,24 +17,38 @@ class PaymentComponent extends React.Component {
       hasSavedCard: false,
       lastFour: '',
       cardholder: '',
-    }
+    };
   }
 
   formatNumber() {
-    return "**** **** ****" + this.state.lastFour
+    return "**** **** **** " + this.state.lastFour;
   }
 
-  deleteSavedCreditCard() {
+  deleteSavedCreditCard = () => {
     // Add remove from Active Storage
-    this.setState({
-      hasSavedCard: false,
-      lastFour: '',
-      cardholder: ''
-    })
+    removeCreditCard().then(_ => {
+      this.setState({
+        hasSavedCard: false,
+        lastFour: '',
+        cardholder: ''
+      });
+    }).catch(_ => {
+      okAlert("Deletion Failed");
+    });
   }
 
-  editSavedCreditCard() {
+  editSavedCreditCard = () => {
+    // Add remove from Active Storage
+    removeCreditCard().then(_ => {
+      this.setState({
+        hasSavedCard: false,
+        lastFour: '',
+        cardholder: ''
+      });
 
+    }).catch(_ => {
+      okAlert("Deletion Failed");
+    });
   }
 
   renderDonateButton(repeat) {
@@ -48,7 +63,7 @@ class PaymentComponent extends React.Component {
           Donate ${this.props.amount}
         </Text>
       </Button>
-    )
+    );
   }
 
   render() {
@@ -79,13 +94,13 @@ class PaymentComponent extends React.Component {
                 style={{marginLeft: 10, marginRight: 10}}
                 onPress={this.deleteSavedCreditCard}
               >
-                <Text>Delete</Text>
+              <Text>Delete</Text>
               </Button>
             </View>
           </View>
           {this.renderDonateButton(true)}
         </View>
-      )
+      );
     } else {
       return (
         <View style={ this.props.styles.container } >
@@ -93,18 +108,26 @@ class PaymentComponent extends React.Component {
             onChange={this.props.handleChange}
             requiresName={true}
           />
-          <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 30}}>
-            <Switch
-              value={this.props.remember_card}
-              onValueChange={_=> this.props.handleCheck('remember_card', !this.props.remember_card)}
-            />
-            <Text style={{marginTop: 6, marginLeft: 8}}>
-              Remember My Card
-            </Text>
+          <View style={{marginTop: 30}}>
+            <Surface style={styles.surface}>
+              <View style={{ flexDirection: 'row', flexWrap:'wrap' }}>
+                <Switch
+                  value={this.props.remember_card}
+                  onValueChange={_=> this.props.handleCheck('remember_card', !this.props.remember_card)}
+                />
+                <Text style={{marginTop: 6, marginLeft: 8}}>
+                  Remember My Card
+                </Text>
+              </View>
+              <Divider style={{ color: 'black' }} />
+              <Paragraph style={{ textAlign: 'center' }}>
+                Your credit card info will only be saved locally on this device and will enable quick checkouts for future donations!
+              </Paragraph>
+            </Surface>
           </View>
           {this.renderDonateButton(false)}
         </View>
-      )
+      );
     }
   }
 
@@ -122,7 +145,18 @@ class PaymentComponent extends React.Component {
         });
       }
     });
-    console.log("here")
   }
 }
+
+const styles = StyleSheet.create({
+  surface: {
+    padding: 8,
+    marginLeft: 15,
+    marginRight: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 1,
+  },
+});
+
 export default PaymentComponent;

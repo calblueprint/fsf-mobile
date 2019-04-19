@@ -218,6 +218,17 @@ async function getCardholder() {
   }
 };
 
+async function removeCreditCard() {
+  try {
+    // wrap this in a Promise.all?
+    await AsyncStorage.removeItem('cardholder');
+    await AsyncStorage.removeItem('lastFour');
+    return true;
+  } catch (error) {
+    return Promise.reject(new Error("Remove Failure"));
+  }
+}
+
 /**
 * 11/28 [TABLED] decided not to integrate CiviCRM for FA'18 MVP
 *
@@ -294,4 +305,5 @@ export {
   getSavedBillingID,
   getSavedLastFour,
   getCardholder,
+  removeCreditCard,
 };
