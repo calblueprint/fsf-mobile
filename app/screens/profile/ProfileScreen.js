@@ -77,14 +77,6 @@ class ProfileScreen extends BaseScreen {
                     <Text style={styles.textButton}>Test Notification</Text>
                     </Button>
                   <Button
-                      style={styles.actionButton}
-                      mode='outlined'
-                      compact={true}
-                      onPress={() => testDeepLink("Test Deep Link")}
-                      >
-                      <Text style={styles.textButton}>Test Deep Link</Text>
-                      </Button>
-                  <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
