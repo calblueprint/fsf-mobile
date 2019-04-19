@@ -44,12 +44,6 @@ class SplashScreen extends React.Component {
           }}
           source={require('../assets/fsf_transparent.png')}
         />
-        <Animated.Text style={[styles.text, { opacity: x }]}>
-          Stay Informed
-        </Animated.Text>
-        <Animated.Text style={[styles.text, { opacity: x }]}>
-          Take Action
-        </Animated.Text>
       </View>
     );
   }
