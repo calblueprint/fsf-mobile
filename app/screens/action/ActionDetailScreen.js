@@ -21,6 +21,7 @@ class ActionDetailScreen extends BaseScreen {
     const { params } = this.props.navigation.state;
     const actionParams = params ? params.actionParams : null;
     const actionParamsOb = JSON.parse(actionParams);
+    const actionLink = `<a href="${actionParamsOb.link}">Take Action</a>`;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);
@@ -39,7 +40,7 @@ class ActionDetailScreen extends BaseScreen {
           <View style={styles.action}>
             <Text style={styles.title}>{actionParamsOb.title}</Text>
             <Text style={styles.description}>{actionParamsOb.description}</Text>
-            <HTML html={actionParamsOb.link} {...additionalProps} />
+            <HTML html={actionLink} {...additionalProps} />
           </View>
         </ScrollView>
       </View>
