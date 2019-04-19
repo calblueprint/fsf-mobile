@@ -121,7 +121,10 @@ const DonateNav = createStackNavigator({
 });
 
 const ProfileNav = createStackNavigator({
-  ProfileHome: ProfileScreen,
+  ProfileHome: { 
+    screen: ProfileScreen,
+    path: 'profile', // Deep link
+  },
   Register: RegisterWebScreen,
   Privacy: PrivacyPolicyScreen,
   Version: VersionScreen

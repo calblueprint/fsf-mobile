@@ -36,6 +36,7 @@ function backgroundTask() {
   getRequest(
     '/messages',
     (newMessages) => {
+      pingDebugServer('pinging!') // Debug
       processMessages(newMessages);
     },
     (error) => {
@@ -99,22 +100,22 @@ async function processMessages(newMessages) {
 //       phone successfully wakes up and performs a fetch. Feel free to renable!!
 
 // Sends status update to debug server.
-// function pingDebugServer(numUpdates) {
-//   let uuid = DeviceInfo.getUniqueID();
-//   let req = {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       'uuid': uuid,
-//       'updates': numUpdates
-//     })
-//   };
-//   fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
-//     console.log('Background Fetch Debug Result: ' + response.status)
-//   });
-// }
+function pingDebugServer(numUpdates) {
+  let uuid = DeviceInfo.getUniqueID();
+  let req = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      'uuid': uuid,
+      'updates': numUpdates
+    })
+  };
+  fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
+    console.log('Background Fetch Debug Result: ' + response.status)
+  });
+}
 
 export default initializeBackgroundFetch;

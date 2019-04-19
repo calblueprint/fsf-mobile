@@ -14,7 +14,7 @@ import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts'
-import { testNotify } from '../../lib/notifications'
+import { testNotify, testDeepLink } from '../../lib/notifications'
 import {
   getStoredId,
   guestLogOut,
@@ -77,6 +77,14 @@ class ProfileScreen extends BaseScreen {
                     <Text style={styles.textButton}>Test Notification</Text>
                     </Button>
                   <Button
+                      style={styles.actionButton}
+                      mode='outlined'
+                      compact={true}
+                      onPress={() => testDeepLink("Test Deep Link")}
+                      >
+                      <Text style={styles.textButton}>Test Deep Link</Text>
+                      </Button>
+                  <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
@@ -121,6 +129,14 @@ class ProfileScreen extends BaseScreen {
                     onPress={() => testNotify("Test Notification")}
                     >
                     <Text style={styles.textButton}>Test Notification</Text>
+                  </Button>
+                  <Button
+                      style={styles.actionButton}
+                      mode='outlined'
+                      compact={true}
+                      onPress={() => testDeepLink("Test Deep Link")}
+                      >
+                      <Text style={styles.textButton}>Test Deep Link</Text>
                   </Button>
                   <Button
                     style={styles.actionButton}
