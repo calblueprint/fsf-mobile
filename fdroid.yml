@@ -1,0 +1,42 @@
+Categories:
+  - Connectivity
+License: MIT
+SourceCode: https://gitlab.com/calblueprint/fsf-mobile
+IssueTracker: https://gitlab.com/calblueprint/fsf-mobile/issues
+
+AutoName: Free Software Foundation Mobile
+Description: |-
+  This is a mobile portal for all your Free Software Foundation needs.
+  Stay up to date with news, sign petitions, and donate, all from the ease of your phone
+
+RepoType: git
+Repo: https://gitlab.com/calblueprint/fsf-mobile
+
+Builds:
+  - versionName: '1.0'
+    versionCode: 1
+    commit: production
+    subdir: android/app
+    sudo:
+      - curl -Lo node.tar.xz https://nodejs.org/dist/v10.15.0/node-v10.15.0-linux-x64.tar.xz
+      - echo "4ee8503c1133797777880ebf75dcf6ae3f9b894c66fd2d5da507e407064c13b5 node.tar.xz"
+        | sha256sum -c -
+      - tar xJf node.tar.xz
+      - cp -a node-v10.15.0-linux-x64/. /usr/local/
+      - npm -g install yarn
+      - npm install --save react-native-background-fetch
+    init: npm install
+    gradle:
+      - yes
+    scanignore:
+      - android/build.gradle
+    scandelete:
+      - node_modules
+
+MaintainerNotes: scanignore is used to allow the "node_modules/react-native/android"
+    local Maven repository.
+
+AutoUpdateMode: Version v0.%v
+UpdateCheckMode: Tags
+CurrentVersion: '1.0'
+CurrentVersionCode: 1
