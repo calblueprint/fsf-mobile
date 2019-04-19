@@ -109,14 +109,14 @@ class AmountComponent extends React.Component {
           onChangeText={this.renderErrorText}
         />
         <View style={styles.buttonRow}>
-          {this.renderMoneyButton(10)}
-          {this.renderMoneyButton(100)}
-          {this.renderMoneyButton(250)}
+          {this.renderMoneyButton("10")}
+          {this.renderMoneyButton("100")}
+          {this.renderMoneyButton("250")}
         </View>
         <View style={styles.buttonRow}>
-          {this.renderMoneyButton(500)}
-          {this.renderMoneyButton(1000)}
-          {this.renderMoneyButton(2500)}
+          {this.renderMoneyButton("500")}
+          {this.renderMoneyButton("1000")}
+          {this.renderMoneyButton("2500")}
         </View>
         <Button
           style={this.props.amount.match(/^\$?\d+(\.\d{0,2})?$/) ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
