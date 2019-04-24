@@ -93,7 +93,24 @@ class ProfileScreen extends BaseScreen {
           ) : (
             <View style={styles.buttonContainer}>
               <Text style={styles.textBold}>Sign In or Sign Up to view your profile!</Text>
-              <Button
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    onPress={() => this._toggleNotifications()}
+                    >
+                    <Text style={styles.textButton}>Toggle Notifications</Text>
+                  </Button>
+                  <Button
+                    style={styles.actionButton}
+                    mode='outlined'
+                    compact={true}
+                    // onPress={() => testNotify("Test Notification")}
+                    onPress={() => this._getLatestMessage()}
+                    >
+                    <Text style={styles.textButton}>Test Notification</Text>
+                  </Button>
+                  <Button
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
@@ -125,7 +142,7 @@ class ProfileScreen extends BaseScreen {
                       >
                       <Text style={styles.textButton}>Version </Text>
                   </Button>
-                  <Text>Status: {this.debug}</Text>
+                  <Text>Status: {this.state.debug}</Text>
             </View>
           )}
         </View>
@@ -198,18 +215,16 @@ class ProfileScreen extends BaseScreen {
    
   }
 
-  testFetch() {
-
-  }
-
   _getLatestMessage = async () => {
-    getRequest(
-      "/", 
-      function(res) {
-
+    this.setState({ debug: "calling" });
+    await getRequest(
+      // '/api/v1/petitions', 
+      '/', 
+      res => {
+        this.setState({ debug: "res returned" + JSON.stringify(res) });
       },
-      function(error) {
-
+      error => {
+        this.setState({ debug: "err returned:" + JSON.stringify(error) });
       });
   }
 
