@@ -15,6 +15,7 @@ import {
   okAlert
 } from '../../lib/alerts'
 import { testNotify } from '../../lib/notifications'
+import { getRequest } from '../../lib/requests'
 import {
   getStoredId,
   guestLogOut,
@@ -30,6 +31,7 @@ class ProfileScreen extends BaseScreen {
       componentDidMount: false,
       loggedIn: false,
       result: null,
+      debug: "DEFAULT"
     };
   }
 
@@ -154,6 +156,7 @@ class ProfileScreen extends BaseScreen {
                       >
                       <Text style={styles.textButton}>Version </Text>
                   </Button>
+                  <Text>Status: {this.debug}</Text>
             </View>
           )}
         </View>
@@ -238,6 +241,21 @@ class ProfileScreen extends BaseScreen {
       console.log("error getting user info")  
     }
    
+  }
+
+  testFetch() {
+
+  }
+
+  _getLatestMessage = async () => {
+    getRequest(
+      "/", 
+      function(res) {
+
+      },
+      function(error) {
+
+      });
   }
 
 }
