@@ -63,6 +63,7 @@ function getRequest(route, successFunc, errorFunc, params = null) {
 
 /**
  * Wrapper method for POST request.
+ * JSON.stringify on some object in params
  */
 function postRequest(route, successFunc, errorFunc, params = "{}") {
   return request("POST", route, successFunc, errorFunc, params);

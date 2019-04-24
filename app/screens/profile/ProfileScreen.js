@@ -14,7 +14,8 @@ import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts'
-import { testNotify, testDeepLink } from '../../lib/notifications'
+import { testNotify, testDeepLink, notify, testNotifyFromDb } from '../../lib/notifications'
+import {getRequest} from '../../lib/requests'
 import {
   getStoredId,
   guestLogOut,
@@ -30,6 +31,7 @@ class ProfileScreen extends BaseScreen {
       componentDidMount: false,
       loggedIn: false,
       result: null,
+      debuggingErrors: "default"
     };
   }
 
@@ -72,7 +74,8 @@ class ProfileScreen extends BaseScreen {
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
-                    onPress={() => testNotify("Test Notification")}
+                    // onPress={() => testNotify("Test Notification")}
+                    onPress={() => this.testNotification()}
                     >
                     <Text style={styles.textButton}>Test Notification</Text>
                     </Button>
@@ -118,7 +121,8 @@ class ProfileScreen extends BaseScreen {
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
-                    onPress={() => testNotify("Test Notification")}
+                    // onPress={() => testNotify("Test Notification")}
+                    onPress={() => this.testNotification()}
                     >
                     <Text style={styles.textButton}>Test Notification</Text>
                   </Button>
@@ -162,6 +166,8 @@ class ProfileScreen extends BaseScreen {
                       >
                       <Text style={styles.textButton}>Version </Text>
                   </Button>
+                  <Text>{this.state.debuggingErrors}</Text>
+                  
             </View>
           )}
         </View>
@@ -248,6 +254,116 @@ class ProfileScreen extends BaseScreen {
    
   }
 
+  // _fetchMessage = async () => {
+  //   console.log("fetching message");
+  //   let message;
+  //   try {
+  //     await getRequest(
+  //       '/api/v1/messages',
+  //       res => {
+  //         const actionList = res.data.map(message => ({
+  //           key: message.id.toString(),
+  //           value: message
+  //         }));
+  //       },
+  //       error => console.log(error)
+  //     );
+
+
+  //     // let message = await getStoredUserInfo();
+  //   } catch (error) {
+  //     console.log("error getting user info")  
+  //   }
+   
+  // }
+
+  testNotification = async () => {
+    await this._fetchMessage();
+    
+    // testNotify("Test Notification")
+    // okAlert("debug", message)
+    // notify(message.title, "tony", "fsf://fsf/profile", 34)
+  }
+
+  // expects 1 message for now
+  async _fetchMessage() {
+    this.setState({debuggingErrors: "im calling"})
+    // let host = networkSettings.URL;
+    // this.setState({debuggingErrors: "Sending " + type + " request to host: " + host + " at route: " + route})
+    // console.log(
+    //   "Sending " + type + " request to host: " + host + " at route: " + route
+    // );
+
+    
+    // fetch("https://api.kanye.rest", {
+      fetch("http://localhost:3000", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+    }).then((response) => { 
+      if (response.ok) {
+        return response.json().then(function(object) {
+          // successful request etc
+          this.setState({debuggingErrors: "success" + JSON.stringify(object)})
+        });
+      } else {
+        return response.json().then(function(error) {
+          // successful request but error response
+          this.setState({debuggingErrors: "error response" + JSON.stringify(error)})
+        });
+      }
+    }).catch((error) => { 
+        // failed request. 
+        this.setState({debuggingErrors: "error in request" + JSON.stringify(error)})
+    }); 
+
+    // return fetch(`${host}${route}`, requestData).then(function(response) {
+    //   if (response.ok) {
+    //     return response.json().then(function(object) {
+    //       return successFunc(object);
+    //     });
+    //   } else {
+    //     return response.json().then(function(error) {
+    //       return errorFunc(error);
+    //     });
+    //   }
+    // });
+
+
+    // await getRequest(
+    //   // '/api/v1/latestMessage',
+    //   '/',
+    //   res => {
+    //     console.log(res.data)
+    //     this.setState({debuggingErrors: "works:" + JSON.stringify(res)})
+    //     // const message = res.data.map(action => ({
+    //     //   key: action.id.toString(),
+    //     //   value: action
+    //     // }));
+    //     // notify("hello", "tony", "fsf://fsf/profile", 34)
+    //     // this.setState({ actions: actionList, refreshing: false });
+    //   },
+    //   error => {
+    //     this.setState({debuggingErrors: "error" + JSON.stringify(error) }); 
+    //     console.log(error);
+    //   });
+  }
+
+  // async _fetchArticles(refresh = false) {
+  //   await getRequest(
+  //     '/api/v1/petitions',
+  //     res => {
+  //       const actionList = res.data.map(action => ({
+  //         key: action.id.toString(),
+  //         value: action
+  //       }));
+  //       this.setState({ actions: actionList, refreshing: false });
+  //     },
+  //     error => console.log(error)
+  //   );
+  // }
 }
 
 const styles = StyleSheet.create({

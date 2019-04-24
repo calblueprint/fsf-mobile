@@ -80,7 +80,6 @@ async function processMessages(newMessages) {
       }
     });
 
-
     // Debugging Only
     //  _pingDebugServer(newMessageCount);
 

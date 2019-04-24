@@ -38,7 +38,7 @@ const NewsNav = createStackNavigator(
     },
     NewsDetail: {
       screen: NewsDetailScreen,
-      path: 'news/:id', // Allows for deep linking
+      path: 'news/:id', // Allows for deep linking - not sure if it works
     },
   },
   {initialRouteName: 'NewsHome'}
