@@ -1,4 +1,5 @@
 URL = "http://fsfmobile0p.fsf.org:3000";
+// URL = "http://localhost:3000";
 // TODO: LOGIN_URL is a hack since go backend is on a different port
 LOGIN_URL = "http://fsfmobile0p.fsf.org:8080";
 
