@@ -8,7 +8,6 @@ import {
 } from 'react-navigation';
 import { Platform } from 'react-native';
 
-
 import AuthLoadingScreen from '../screens/auth/AuthLoadingScreen';
 import DonateScreen from '../screens/donate/DonateScreen';
 import DonateSuccessScreen from '../screens/donate/DonateSuccessScreen';
@@ -30,15 +29,14 @@ import SplashScreen from '../screens/SplashScreen';
 import Icon from 'react-native-ionicons'
 
 // This file defines the screens in our app and their relationships
-
-const NewsNav = createStackNavigator(
-  { NewsHome: {
+const NewsNav = createStackNavigator({ 
+  NewsHome: {
       screen: NewsScreen,
-      navigationOptions: { header: null },
+      // navigationOptions: { header: null },
     },
     NewsDetail: {
       screen: NewsDetailScreen,
-      path: 'news/:id', // Allows for deep linking
+      path: 'article/:id', // Allows for deep linking
     },
   },
   {initialRouteName: 'NewsHome'}
@@ -75,9 +73,11 @@ GNUsocialNav.navigationOptions = ({ navigation }) => {
   };
 };
 
-const NewsTopTabNav = createMaterialTopTabNavigator(
-  {
-    FSFnews: { screen: NewsNav },
+const NewsTopTabNav = createMaterialTopTabNavigator({
+    FSFnews: { 
+      screen: NewsNav,
+      path: 'news'
+     },
     GNUsocial: { screen: GNUsocialNav }
   },
   {
@@ -131,7 +131,10 @@ const ProfileNav = createStackNavigator({
 const MainNav = createBottomTabNavigator(
   {
     // Screens on bottom tab bar
-    News: { screen: NewsTopTabNav },
+    News: { 
+      screen: NewsTopTabNav,
+      path: '',
+     },
     Action: { screen: ActionNav },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },

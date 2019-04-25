@@ -21,7 +21,17 @@ class NewsDetailScreen extends BaseScreen {
 
   render() {
     const { params } = this.props.navigation.state;
-    const articleParams = params ? params.articleParams : null;
+    const errorOutput = JSON.stringify({
+      "title": "Error!",
+      "content": "There was an error loading your request",
+      "pub_date": "----------"
+    });
+    // params = {
+    //   "articleParams": JSON.stringify(errorOutput)
+    // }
+    
+    // TODO: error params always returns true, errorOutput is never called
+    const articleParams = params ? params.articleParams : errorOutput;
     const articleParamsOb = JSON.parse(articleParams);
     const additionalProps = {
       onLinkPress: (evt, href) => {
