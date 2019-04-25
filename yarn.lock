@@ -5462,14 +5462,6 @@ react-native-credit-card-input@^0.4.1:
     lodash.pick "^4.4.0"
     lodash.values "^4.3.0"
     prop-types "^15.6.0"
-    react-native-flip-card "^3.4.1"
-
-react-native-flip-card@^3.4.1:
-  version "3.5.4"
-  resolved "https://registry.yarnpkg.com/react-native-flip-card/-/react-native-flip-card-3.5.4.tgz#1e69fa331f12a4eb16d9e8e9793126e89c955e03"
-  integrity sha512-HZRPQebANNg72oMSP1wybyOz+GpWTSaVHVkz7D9yNvqq9BFHDrsE6o8n5gKgYzlSVDTuC8+IhEIbdMZy2FzIsw==
-  dependencies:
-    prop-types "^15.5.10"
 
 react-native-fsf-local-notifications@^1.1.0:
   version "1.1.0"
