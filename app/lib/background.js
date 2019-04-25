@@ -38,37 +38,39 @@ function initializeBackgroundFetch() {
 // In this case, request new messages!
 // Idea: Send server the last message you received so that it
 // can know to only send you what you haven't seen.
-function backgroundTask(latestMessageTime) {
-  getRequest( // TODO: await?
-    '/messages',
-    newMessages => {
-      processMessages(newMessages);
-    },
-    error => {
-      console.log('Request for messages failed');
-      console.log(error);
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
-    },
-    {
-      "last_sent": latestMessageTime
-    });
+// expect: time input AS STRING
+async function backgroundTask(latestMessageTime) {
+  let shouldNotify = await AsyncStorage.getItem('notificationsOn');
+  // if this has never been set before...
+  if (shouldNotify == null) {
+    // ...set it to be on by default
+    shouldNotify = "true";
+    await AsyncStorage.setItem('notificationsOn', true);
+  }  
+  
+  if (JSON.parse(shouldNotify)) {
+    const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
+    await getRequest(
+      route,
+      async res => {
+        await processMessages(res.data); 
+        await AsyncStorage.setItem('latestMessageTime', JSON.stringify(new Date()));
+      },
+      error => {
+        console.log('Request for messages failed');
+        console.log(error);
+        BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
+      });
+    }
 }
 
-// Function defining what to do with new messages
-async function processMessages(newMessages) {
+// expect: input as res.data
+async function processMessages(data) {
   try {
-    let shouldNotify = await AsyncStorage.getItem('notificationsOn');
-     // if this has never been set before...
-     if (shouldNotify == null) {
-      // ...set it to be on by default
-      shouldNotify = true;
-      await AsyncStorage.setItem('notificationsOn', 'true');
-    } else if (shouldNotify) {
-      newMessages.forEach(message => {
-        notify(message.title, message.content, message.link, message.id);
-      })
-    }
-    BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    data.forEach(message => {
+      notify(message.title, message.content, message.link, message.id);
+    });
+    BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA); 
   } catch (error) {
     console.log('Error saving Message Data.\nData:');
     console.log(newMessages);
@@ -76,122 +78,6 @@ async function processMessages(newMessages) {
     console.log(error);
     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
   }
-
 }
-
-// // Function defining what to do with new messages
-// async function processMessages(newMessages) {
-//   try {
-//     // Find current latest
-//     let latestTime = await AsyncStorage.getItem('latestMessageTime');
-//     let latestID = await AsyncStorage.getItem('latestMessageID');
-//     let shouldNotify = await AsyncStorage.getItem('notificationsOn');
-    
-//     // if this has never been set before...
-//     if (shouldNotify == null) {
-//       // ...set it to be on by default
-//       shouldNotify = true;
-//       await AsyncStorage.setItem('notificationsOn', 'true');
-//     }
-
-//     // if first ever fetch...
-//     if (latestID == null) {
-//       // First ever fetch!
-//       shouldNotify = false;
-//       latestID = '0';
-//     }
-//     latestID = JSON.parse(latestID);
-
-//     // let newMessageCount = 0; only used for debugging
-//     let newLatestID = -1;
-//     newMessages.forEach((key) => {
-//       const message = newMessages[key];
-//       newLatestID = newLatestID > message.id ? newLatestID : message.id;
-//       if (message.id > latestID) {
-//         if (shouldNotify) {
-//         //   newMessageCount += 1; only used for debugging
-//           notify(message.title, message.content, message.link, message.id);
-//         }
-//       }
-//     });
-
-//     //   try {
-//     //     // Find current latest
-//     //     let latestTime = await AsyncStorage.getItem('latestMessageTime');
-//     //     let latestID = await AsyncStorage.getItem('latestMessageID');
-//     //     let shouldNotify = await AsyncStorage.getItem('notificationsOn');
-        
-//     //     // if this has never been set before...
-//     //     if (shouldNotify == null) {
-//     //       // ...set it to be on by default
-//     //       shouldNotify = true;
-//     //       await AsyncStorage.setItem('notificationsOn', 'true');
-//     //     }
-
-//     //     // // if first ever fetch...
-//     //     // if (latestID == null) {
-//     //     //   shouldNotify = false;
-//     //     //   latestID = '0';
-//     //     // }
-//     //     // latestID = JSON.parse(latestID);
-
-//     //     // if first ever fetch...
-//     //     if (latestTime == null) {
-//     //       latestTime = JSON.stringify(new Date());
-//     //     }
-//     //     latestTime = JSON.parse(latestTime);
-
-//     //     // let newMessageCount = 0; only used for debugging
-//     //     // let newLatestID = -1;
-//     //     let newLatestTime = latestTime
-//     //     newMessages.forEach((key) => {
-//     //       const message = newMessages[key];
-//     //       // newLatestID = newLatestID > message.id ? newLatestID : message.id;
-//     //       newLatestTime = newLatestID > message.updated_at ? newLatestTime : message.updated_at;
-//     //       if (message.id > latestID) {
-//     //         if (shouldNotify) {
-//     //         //   newMessageCount += 1; only used for debugging
-//     //           notify(message.title, message.content, message.link, message.id);
-//     //         }
-//     //       }
-//     //     });
-
-//     // Debugging Only
-//     //  _pingDebugServer(newMessageCount);
-
-//     // Update Stored Messages
-//     await AsyncStorage.setItem('latestMessageID', JSON.stringify(newLatestID));
-//     await AsyncStorage.setItem('latestMessageTime', JSON.stringify(newLatestID));
-//     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
-//   } catch (error) {
-//     console.log('Error saving Message Data.\nData:');
-//     console.log(newMessages);
-//     console.log('\n\nError:');
-//     console.log(error);
-//     BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
-//   }
-// }
-
-// Note: There exists a notification debug server that gets pinged when a
-//       phone successfully wakes up and performs a fetch. Feel free to renable!!
-
-// Sends status update to debug server.
-// function pingDebugServer(numUpdates) {
-//   let uuid = DeviceInfo.getUniqueID();
-//   let req = {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       'uuid': uuid,
-//       'updates': numUpdates
-//     })
-//   };
-//   fetch('http://fsf-notif-test.herokuapp.com/notifications', req).then(function (response) {
-//     console.log('Background Fetch Debug Result: ' + response.status)
-//   });
-// }
 
 export default initializeBackgroundFetch;

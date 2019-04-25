@@ -296,45 +296,6 @@ class ProfileScreen extends BaseScreen {
       // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED); // TODO: UNCOMMENT
     }
   }
-
-async backgroundTaskEXAMPLE(latestMessageTime) {
-    const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
-    await getRequest( 
-      route,
-      res => {
-        process(res.data);
-      },
-      error => {
-        console.log('Request for messages failed');
-        console.log(error);
-        BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
-      });
-  }
-  
-  // Function defining what to do with new messages
-  async processEXAMPLE(newMessages) {
-    try {
-      let shouldNotify = await AsyncStorage.getItem('notificationsOn');
-       // if this has never been set before...
-       if (shouldNotify == null) {
-        // ...set it to be on by default
-        shouldNotify = true;
-        await AsyncStorage.setItem('notificationsOn', 'true');
-      } else if (shouldNotify) {
-        newMessages.forEach(message => {
-          notify(message.title, message.content, message.link, message.id);
-        })
-      }
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
-    } catch (error) {
-      console.log('Error saving Message Data.\nData:');
-      console.log(newMessages);
-      console.log('\n\nError:');
-      console.log(error);
-      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
-    }
-  }
-
 }
 
 const styles = StyleSheet.create({
