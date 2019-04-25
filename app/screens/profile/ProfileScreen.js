@@ -244,6 +244,7 @@ class ProfileScreen extends BaseScreen {
    
   }
 
+  // ALL CODE BELOW FOR TESTING NOTIFICATIONS ONLY
   _getLatestMessage = async () => {
     var latestMessageTime = await AsyncStorage.getItem('latestMessageTime')
     latestMessageTime = JSON.stringify(new Date("2018-04-23T19:30:51.010Z")); // TODO: change hardcoded values
