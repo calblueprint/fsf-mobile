@@ -70,10 +70,6 @@ class DonateScreen extends BaseScreen {
                  amount.substring(dotIndex + 1, dotIndex + 3);
       }
 
-<<<<<<< HEAD
-      const email = await getStoredEmail();
-      const apiKey = await getStoredApiKey();
-=======
       /*
         ANONYMOUS DONATIONS:
           Current approach is to create an Anonymous_Payment User with:
@@ -95,7 +91,6 @@ class DonateScreen extends BaseScreen {
       } catch (error) {
         console.log('anonymous donation');
       }
->>>>>>> 55235f2... add email and api key for anonymous donations
 
       var exp = this.state.exp;
       exp = exp.substring(0, 2) + exp.substring(3);
