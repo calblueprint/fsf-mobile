@@ -22,10 +22,10 @@ function initializeBackgroundFetch() {
       var latestMessageTime = await AsyncSorage.getItem('latestMessageTime');
       // if first ever fetch...
       if (latestMessageTime == null) {
-        latestMessageTime = JSON.stringify(new Date());
+        latestMessageTime = (new Date()).toString();
       }
       backgroundTask(latestMessageTime);
-      await AsyncStorage.setItem('latestMessageTime', JSON.stringify(new Date()));
+      await AsyncStorage.setItem('latestMessageTime', (new Date()).toString());
     },
     error => {
       console.log('[js] RNBackgroundFetch failed to start');

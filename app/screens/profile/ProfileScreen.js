@@ -210,7 +210,7 @@ class ProfileScreen extends BaseScreen {
   _toggleNotifications = async () => {
     let status = await AsyncStorage.getItem('notificationsOn')
     if (status == null) {
-      status = true
+      status = "true"
     }
     status = !JSON.parse(status) // Flip the value of status
     if(status) {
@@ -245,21 +245,94 @@ class ProfileScreen extends BaseScreen {
   }
 
   _getLatestMessage = async () => {
-    const route = '/api/v1/latestMessages?last_sent=' + (new Date("2018-04-23T19:30:51.010Z")).toString();
-    this.setState({ debug: route });
-    await getRequest(
-      '/messages', 
-      // route,
-      // '/api/v1/latestMessages', 
+    var latestMessageTime = await AsyncStorage.getItem('latestMessageTime')
+    latestMessageTime = JSON.stringify(new Date("2018-04-23T19:30:51.010Z")); // TODO: change hardcoded values
+    await this.backgroundTask(latestMessageTime); // TODO: take note!!!! this.<something>
+  }
+
+  // expect: time input AS STRING
+  async backgroundTask(latestMessageTime) {
+    let shouldNotify = await AsyncStorage.getItem('notificationsOn');
+    // if this has never been set before...
+    if (shouldNotify == null) {
+      // ...set it to be on by default
+      this.setState({ debug: "shouldNotify was null" });  // TODO: ALL THE SET STATE STUFF
+      shouldNotify = "true";
+      await AsyncStorage.setItem('notificationsOn', true);
+    }  
+    
+    if (JSON.parse(shouldNotify)) {
+      this.setState({ debug: "shouldNotify was true" });  // TODO: ALL THE SET STATE STUFF
+      const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
+      await getRequest(
+        route,
+        async res => {
+          await this.processMessages(res.data); // TODO: take note!!!! this.<something>
+          await AsyncStorage.setItem('latestMessageTime', JSON.stringify(new Date()));
+        },
+        error => {
+          console.log('Request for messages failed');
+          console.log(error);
+          // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);   // TODO: UNCOMMENT
+        });
+      }
+      else {
+        this.setState({ debug: "shouldNotify was FALSE" });  // TODO: ALL THE SET STATE STUFF
+      }
+  }
+
+  // expect: input as res.data
+  async processMessages(data) {
+    try {
+      data.forEach(message => {
+        notify(message.title, message.content, message.link, message.id);
+      });
+      // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA); // TODO: UNCOMMENT
+    } catch (error) {
+      console.log('Error saving Message Data.\nData:');
+      console.log(newMessages);
+      console.log('\n\nError:');
+      console.log(error);
+      // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED); // TODO: UNCOMMENT
+    }
+  }
+
+async backgroundTaskEXAMPLE(latestMessageTime) {
+    const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
+    await getRequest( 
+      route,
       res => {
-        res.forEach(message => {
-          notify(message.title, message.content, message.link, message.id);
-        })
-        // this.setState({ debug: "res returned" + JSON.stringify(res[0]) });
+        process(res.data);
       },
       error => {
-        this.setState({ debug: "err returned:" + JSON.stringify(error) });
+        console.log('Request for messages failed');
+        console.log(error);
+        BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
       });
+  }
+  
+  // Function defining what to do with new messages
+  async processEXAMPLE(newMessages) {
+    try {
+      let shouldNotify = await AsyncStorage.getItem('notificationsOn');
+       // if this has never been set before...
+       if (shouldNotify == null) {
+        // ...set it to be on by default
+        shouldNotify = true;
+        await AsyncStorage.setItem('notificationsOn', 'true');
+      } else if (shouldNotify) {
+        newMessages.forEach(message => {
+          notify(message.title, message.content, message.link, message.id);
+        })
+      }
+      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA);
+    } catch (error) {
+      console.log('Error saving Message Data.\nData:');
+      console.log(newMessages);
+      console.log('\n\nError:');
+      console.log(error);
+      BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);
+    }
   }
 
 }
