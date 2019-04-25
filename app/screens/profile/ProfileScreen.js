@@ -14,7 +14,7 @@ import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts'
-import { testNotify } from '../../lib/notifications'
+import { testNotify, notify } from '../../lib/notifications'
 import { getRequest } from '../../lib/requests'
 import {
   getStoredId,
@@ -247,14 +247,22 @@ class ProfileScreen extends BaseScreen {
   _getLatestMessage = async () => {
     this.setState({ debug: "calling" });
     await getRequest(
-      // '/api/v1/petitions', 
-      '/', 
+      '/messages', 
+      // '/api/v1/latestMessages', 
+      // 'api/v1/latestMessages', 
       res => {
-        this.setState({ debug: "res returned" + JSON.stringify(res) });
+        res.forEach(message => {
+          notify(message.title, message.content, message.link, message.id);
+        })
+        this.setState({ debug: "res returned" + JSON.stringify(res[0]) });
       },
       error => {
         this.setState({ debug: "err returned:" + JSON.stringify(error) });
-      });
+      },
+      {
+        "last_sent": "2018-04-23T19:30:51.010Z" // TODO: replace dummy time
+      }
+      );
   }
 
 }
