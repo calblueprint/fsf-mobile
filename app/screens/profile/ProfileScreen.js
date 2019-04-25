@@ -245,24 +245,21 @@ class ProfileScreen extends BaseScreen {
   }
 
   _getLatestMessage = async () => {
-    this.setState({ debug: "calling" });
+    const route = '/api/v1/latestMessages?last_sent=' + (new Date("2018-04-23T19:30:51.010Z")).toString();
+    this.setState({ debug: route });
     await getRequest(
       '/messages', 
+      // route,
       // '/api/v1/latestMessages', 
-      // 'api/v1/latestMessages', 
       res => {
         res.forEach(message => {
           notify(message.title, message.content, message.link, message.id);
         })
-        this.setState({ debug: "res returned" + JSON.stringify(res[0]) });
+        // this.setState({ debug: "res returned" + JSON.stringify(res[0]) });
       },
       error => {
         this.setState({ debug: "err returned:" + JSON.stringify(error) });
-      },
-      {
-        "last_sent": "2018-04-23T19:30:51.010Z" // TODO: replace dummy time
-      }
-      );
+      });
   }
 
 }
