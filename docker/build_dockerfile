@@ -1,0 +1,33 @@
+FROM debian:9.8
+
+# install git, OpenJDK 8
+RUN apt-get update -qq && apt-get install -y git openjdk-8-jre openjdk-8-jdk wget curl unzip
+
+# install js runtime
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
+
+# for yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y yarn
+
+# get react-native-cli
+RUN npm install -g react-native-cli
+
+WORKDIR /root/
+
+# get a free rebuild of Android SDK 28.0.2
+RUN wget https://android-rebuilds.beuc.net/dl/android-sdk_user.9.0.0_r21_linux-x86.zip
+RUN unzip android-sdk_user.9.0.0_r21_linux-x86.zip
+ENV ANDROID_HOME /root/android-sdk_user.9.0.0_r21_linux-x86/
+
+# get fsf-mobile source code
+RUN git clone https://gitlab.com/calblueprint/fsf-mobile.git
+WORKDIR /root/fsf-mobile
+
+# begin install (debug build)
+RUN yarn
+RUN react-native bundle --platform android --dev false --minify false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+WORKDIR /root/fsf-mobile/android
+RUN ./gradlew assembleDebug
