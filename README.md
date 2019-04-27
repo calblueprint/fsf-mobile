@@ -23,7 +23,7 @@ sudo apt install nodejs
 
 Currently, the version of react native that we are using requires Android SDK version 28. The instructions on how to install the proprietary binary of Android SDK can be found on react native's website. Since the source code of the tools that we depend on is open source, we recommend using the Android Rebuilds. The following instructions document how to get the non-EULA bounded binaries and use it for react native.
 
-First download the Android SDK rebuilds and extract it. Here we will use `/opt/android`.
+First download the Android SDK rebuilds and extract it to a certain location. Here we will use `/opt/android`.
 
 ```
 wget https://android-rebuilds.beuc.net/dl/android-sdk_user.9.0.0_r21_linux-x86.zip
@@ -56,7 +56,7 @@ react-native bundle --platform android --dev false --minify false --entry-file i
 You can then build the debug apk and test it on an Android device or an Android emulator:
 
 ```
-react-native run-android
+react-native assembleDebug
 ```
 
 #### Build a release build:
@@ -72,6 +72,10 @@ cd android/
 
 ./gradlew assembleReleae
 ```
+
+#### Use docker environment for building
+
+In `docker/build_dockerfile`, there is a docker image script that allows you to create an image in which all the dependencies have been set up and a debug build APK has already been built. You can modify the script to create the docker environment you need.
 
 ### Folder structure
 
