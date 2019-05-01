@@ -60,7 +60,10 @@ const GNUsocialNav = createStackNavigator({
       initialRouteName: 'GNUsocialHome'
     }
   },
-  GNUsocialDetail: { screen: GNUsocialDetailScreen }
+  GNUsocialDetail: { 
+    screen: GNUsocialDetailScreen,
+    path: 'social/:id'
+  }
 });
 GNUsocialNav.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
@@ -78,7 +81,10 @@ const NewsTopTabNav = createMaterialTopTabNavigator({
       screen: NewsNav,
       path: 'news'
      },
-    GNUsocial: { screen: GNUsocialNav }
+    GNUsocial: { 
+      screen: GNUsocialNav,
+      path: 'gnu'
+    }
   },
   {
     order: ['FSFnews', 'GNUsocial'],

@@ -9,18 +9,33 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class GNUsocialDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
+    const errorOutput = JSON.stringify({
+      "gs_user_name": "Loading",
+      "content_html": "Please wait while we fetch your notice",
+      "published": ""
+    });
     this.state = {};
+    const { params } = this.props.navigation.state;
+    this.state = {
+      refreshing: params.noticeParams === undefined,
+      noticeParams: params.noticeParams ? params.noticeParams : errorOutput
+    };
+    this._fetchNotice = this._fetchNotice.bind(this);
   }
 
+  // .substring(0, 10) for date
   render() {
-    const { params } = this.props.navigation.state;
-    const noticeParams = params ? params.noticeParams : null;
-    const noticeParamsOb = JSON.parse(noticeParams);
+    // const { params } = this.props.navigation.state;
+    // const noticeParams = params ? params.noticeParams : null;
+    // const noticeParamsOb = JSON.parse(noticeParams);
+
+    const noticeParamsOb = this.state.noticeParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);
@@ -39,12 +54,27 @@ class GNUsocialDetailScreen extends BaseScreen {
           <View style={styles.article}>
             <Text style={styles.title}>{noticeParamsOb.gs_user_name}</Text>
             <Text style={styles.date}>
-              {noticeParamsOb.published.substring(0, 10)}
+              {noticeParamsOb.published}
             </Text>
             <HTML html={noticeParamsOb.content_html} {...additionalProps} />
           </View>
         </ScrollView>
       </View>
+    );
+  }
+
+  async _fetchNotice(id) {
+    await getRequest(
+      '/api/v1/notices',
+      res => {
+        const noticeList = res.data.map(notice => ({
+          key: notice.id.toString(),
+          value: notice
+        }));
+        // NOT SAFE - fix later
+        this.setState({ noticeParams: noticeList.filter(function(notice) { return notice.key == id })[0].value, refreshing: false });
+      },
+      error => console.log(error)
     );
   }
 }
