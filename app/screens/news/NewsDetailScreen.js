@@ -9,30 +9,42 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
+    // if (!props.navigation.state.params.articleParams) {
+
+    // }
+
+    const errorOutput = JSON.stringify({
+      "title": "Loading",
+      "content": "Please wait while we fetch your article",
+      "pub_date": ""
+    });
+    const { params } = this.props.navigation.state;
     this.state = {
+      refreshing: params.articleParams === undefined,
+      articleParams: params.articleParams ? params.articleParams : errorOutput
     };
+    this._fetchArticle = this._fetchArticle.bind(this);
+  }
+  
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchArticle(params.id);
+    }
   }
 
-
   render() {
-    const { params } = this.props.navigation.state;
-    const errorOutput = JSON.stringify({
-      "title": "Error!",
-      "content": "There was an error loading your request",
-      "pub_date": "----------"
-    });
-    // params = {
-    //   "articleParams": JSON.stringify(errorOutput)
-    // }
     
-    // TODO: error params always returns true, errorOutput is never called
-    const articleParams = params ? params.articleParams : errorOutput;
-    const articleParamsOb = JSON.parse(articleParams);
+    // const articleParams = params ? params.articleParams : errorOutput;
+    // const articleParamsOb = JSON.parse(this.state.articleParams);
+    // .substring(0, 10)
+    articleParamsOb = this.state.articleParams
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);
@@ -51,12 +63,27 @@ class NewsDetailScreen extends BaseScreen {
           <View style={styles.article}>
             <Text style={styles.title}>{articleParamsOb.title}</Text>
             <Text style={styles.date}>
-              {articleParamsOb.pub_date.substring(0, 10)}
+              {articleParamsOb.pub_date} 
             </Text>
             <HTML html={articleParamsOb.content} {...additionalProps} />
           </View>
         </ScrollView>
       </View>
+    );
+  }
+
+  async _fetchArticle(id) {
+    await getRequest(
+      '/api/v1/articles',
+      res => {
+        const articleList = res.data.map(article => ({
+          key: article.id.toString(),
+          value: article
+        }));
+        // NOT SAFE - fix later
+        this.setState({ articleParams: articleList.filter(function(article) { return article.key == id })[0].value, refreshing: false });
+      },
+      error => console.log(error)
     );
   }
 }

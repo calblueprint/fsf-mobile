@@ -29,7 +29,7 @@
     "react-native": "0.57.5",
     "react-native-background-fetch": "^2.5.1",
     "react-native-credit-card-input": "^0.4.1",
-    "react-native-fsf-local-notifications": "^1.1.0",
+    "react-native-fsf-local-notifications": "^1.2.0",
     "react-native-gesture-handler": "^1.0.9",
     "react-native-ionicons": "^4.4.6",
     "react-native-material-textfield": "^0.12.0",
