@@ -120,8 +120,8 @@ class ProfileScreen extends BaseScreen {
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
-                    onPress={() => testNotify("Test Notification")}
-                    // onPress={() => this._getLatestMessage()}
+                    // onPress={() => testNotify("Test Notification")}
+                    onPress={() => this._getLatestMessage()}
                     >
                     <Text style={styles.textButton}>Test Notification</Text>
                   </Button>

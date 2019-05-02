@@ -15,12 +15,11 @@ import { getRequest } from '../../lib/requests';
 class GNUsocialDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    const errorOutput = JSON.stringify({
+    const errorOutput = {
       "gs_user_name": "Loading",
       "content_html": "Please wait while we fetch your notice",
       "published": ""
-    });
-    this.state = {};
+    };
     const { params } = this.props.navigation.state;
     this.state = {
       refreshing: params.noticeParams === undefined,
@@ -29,13 +28,21 @@ class GNUsocialDetailScreen extends BaseScreen {
     this._fetchNotice = this._fetchNotice.bind(this);
   }
 
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchNotice(params.id);
+    }
+  }
+
+
   // .substring(0, 10) for date
   render() {
     // const { params } = this.props.navigation.state;
     // const noticeParams = params ? params.noticeParams : null;
     // const noticeParamsOb = JSON.parse(noticeParams);
 
-    const noticeParamsOb = this.state.noticeParams;
+    noticeParamsOb = this.state.noticeParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);

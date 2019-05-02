@@ -19,11 +19,11 @@ class NewsDetailScreen extends BaseScreen {
 
     // }
 
-    const errorOutput = JSON.stringify({
+    const errorOutput = {
       "title": "Loading",
       "content": "Please wait while we fetch your article",
       "pub_date": ""
-    });
+    };
     const { params } = this.props.navigation.state;
     this.state = {
       refreshing: params.articleParams === undefined,
