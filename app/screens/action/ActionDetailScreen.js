@@ -25,6 +25,9 @@ class ActionDetailScreen extends BaseScreen {
       refreshing: params.actionParams === undefined,
       actionParams: params.actionParams ? params.actionParams : errorOutput
     };
+    if (this.state.refreshing) {
+      global.disableSplash = true;
+    };
     this._fetchPetition = this._fetchPetition.bind(this);
   }
 

@@ -25,6 +25,9 @@ class GNUsocialDetailScreen extends BaseScreen {
       refreshing: params.noticeParams === undefined,
       noticeParams: params.noticeParams ? params.noticeParams : errorOutput
     };
+    if (this.state.refreshing) {
+      global.disableSplash = true;
+    };
     this._fetchNotice = this._fetchNotice.bind(this);
   }
 

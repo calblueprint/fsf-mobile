@@ -29,6 +29,10 @@ class NewsDetailScreen extends BaseScreen {
       refreshing: params.articleParams === undefined,
       articleParams: params.articleParams ? params.articleParams : errorOutput
     };
+    if (this.state.refreshing) {
+      // AsyncStorage.setItem('disableSplashScreen', true);
+      global.disableSplash = true;
+    };
     this._fetchArticle = this._fetchArticle.bind(this);
   }
   
