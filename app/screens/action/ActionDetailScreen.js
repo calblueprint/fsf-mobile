@@ -9,18 +9,39 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class ActionDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    this.state = {};
+    const errorOutput = {
+      "title": "Loading",
+      "description": "Please wait while we fetch your petition",
+      "link": ""
+    };
+    const { params } = this.props.navigation.state;
+    this.state = {
+      refreshing: params.actionParams === undefined,
+      actionParams: params.actionParams ? params.actionParams : errorOutput
+    };
+    this._fetchPetition = this._fetchPetition.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchPetition(params.id);
+    }
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-    const actionParams = params ? params.actionParams : null;
-    const actionParamsOb = JSON.parse(actionParams);
+    // const { params } = this.props.navigation.state;
+    // const actionParams = params ? params.actionParams : null;
+    // const actionParamsOb = actionParams;
+
+    const actionParamsOb = this.state.actionParams;
+
     const actionLink = `<a href="${actionParamsOb.link}">Take Action</a>`;
     const additionalProps = {
       onLinkPress: (evt, href) => {
@@ -44,6 +65,21 @@ class ActionDetailScreen extends BaseScreen {
           </View>
         </ScrollView>
       </View>
+    );
+  }
+  async _fetchPetition(id) {
+    await getRequest(
+      '/api/v1/petitions',
+      res => {
+        const petitionList = res.data.map(petition => ({
+          key: petition.id.toString(),
+          value: petition
+        }));
+        // NOT SAFE - fix later
+        // this.setState({actionParams: res.data[0]})
+        this.setState({ actionParams: petitionList.filter(function(petition) { return petition.key == id })[0].value, refreshing: false });
+      },
+      error => console.log(error)
     );
   }
 }

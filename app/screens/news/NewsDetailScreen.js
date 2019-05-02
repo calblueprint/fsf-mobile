@@ -44,7 +44,7 @@ class NewsDetailScreen extends BaseScreen {
     // const articleParams = params ? params.articleParams : errorOutput;
     // const articleParamsOb = JSON.parse(this.state.articleParams);
     // .substring(0, 10) for date
-    articleParamsOb = this.state.articleParams
+    articleParamsOb = this.state.articleParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);

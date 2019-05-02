@@ -110,7 +110,10 @@ const NewsTopTabNav = createMaterialTopTabNavigator({
 
 const ActionNav = createStackNavigator({
   ActionHome: ActionScreen,
-  ActionDetail: { screen: ActionDetailScreen }
+  ActionDetail: { 
+    screen: ActionDetailScreen, 
+    path: 'action/:id'
+  }
 });
 
 const DonateNav = createStackNavigator({
@@ -141,7 +144,10 @@ const MainNav = createBottomTabNavigator(
       screen: NewsTopTabNav,
       path: '',
      },
-    Action: { screen: ActionNav },
+    Action: { 
+      screen: ActionNav,
+      path: ''
+    },
     Donate: { screen: DonateNav },
     Profile: { screen: ProfileNav },
   },
