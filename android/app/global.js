@@ -1,1 +1,0 @@
-global.disableSplash = false;
