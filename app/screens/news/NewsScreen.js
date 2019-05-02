@@ -45,7 +45,7 @@ class NewsScreen extends BaseScreen {
             <NewsCard
               onPressNav={() =>
                 this.props.navigation.navigate('NewsDetail', {
-                  articleParams: JSON.stringify(info.item.value)
+                  articleParams: info.item.value
                 })
               }
               articleParams={info.item.value}
