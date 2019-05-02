@@ -265,6 +265,7 @@ class ProfileScreen extends BaseScreen {
     if (JSON.parse(shouldNotify)) {
       this.setState({ debug: "shouldNotify was true" });  // TODO: ALL THE SET STATE STUFF
       const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
+      // await getLatestMessage(latestMessageTime);
       await getRequest(
         route,
         async res => {

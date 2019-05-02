@@ -82,12 +82,6 @@ class NewsDetailScreen extends BaseScreen {
       URL,
       res => {
         this.setState({ articleParams: res.data})
-        // const articleList = res.data.map(article => ({
-        //   key: article.id.toString(),
-        //   value: article
-        // }));
-        // // NOT SAFE - fix later
-        // this.setState({ articleParams: articleList.filter(function(article) { return article.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );

@@ -32,7 +32,7 @@ import Icon from 'react-native-ionicons'
 const NewsNav = createStackNavigator({ 
   NewsHome: {
       screen: NewsScreen,
-      // navigationOptions: { header: null },
+      navigationOptions: { header: null },
     },
     NewsDetail: {
       screen: NewsDetailScreen,
