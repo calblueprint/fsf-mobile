@@ -74,15 +74,17 @@ class GNUsocialDetailScreen extends BaseScreen {
   }
 
   async _fetchNotice(id) {
+    const URL = '/api/v1/notices/' + id;
     await getRequest(
-      '/api/v1/notices',
+      URL,
       res => {
-        const noticeList = res.data.map(notice => ({
-          key: notice.id.toString(),
-          value: notice
-        }));
-        // NOT SAFE - fix later
-        this.setState({ noticeParams: noticeList.filter(function(notice) { return notice.key == id })[0].value, refreshing: false });
+        this.setState({ noticeParams: res.data})
+        // const noticeList = res.data.map(notice => ({
+        //   key: notice.id.toString(),
+        //   value: notice
+        // }));
+        // // NOT SAFE - fix later
+        // this.setState({ noticeParams: noticeList.filter(function(notice) { return notice.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );

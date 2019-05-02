@@ -71,16 +71,18 @@ class ActionDetailScreen extends BaseScreen {
     );
   }
   async _fetchPetition(id) {
+    const URL = '/api/v1/petitions/' + id;
     await getRequest(
-      '/api/v1/petitions',
+      URL,
       res => {
-        const petitionList = res.data.map(petition => ({
-          key: petition.id.toString(),
-          value: petition
-        }));
-        // NOT SAFE - fix later
-        // this.setState({actionParams: res.data[0]})
-        this.setState({ actionParams: petitionList.filter(function(petition) { return petition.key == id })[0].value, refreshing: false });
+        this.setState({ actionParams: res.data})
+        // const petitionList = res.data.map(petition => ({
+        //   key: petition.id.toString(),
+        //   value: petition
+        // }));
+        // // NOT SAFE - fix later
+        // // this.setState({actionParams: res.data[0]})
+        // this.setState({ actionParams: petitionList.filter(function(petition) { return petition.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );
