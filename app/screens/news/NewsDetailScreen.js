@@ -15,10 +15,6 @@ import { getRequest } from '../../lib/requests';
 class NewsDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    // if (!props.navigation.state.params.articleParams) {
-
-    // }
-
     const errorOutput = {
       "title": "Loading",
       "content": "Please wait while we fetch your article",
@@ -30,7 +26,6 @@ class NewsDetailScreen extends BaseScreen {
       articleParams: params.articleParams ? params.articleParams : errorOutput
     };
     if (this.state.refreshing) {
-      // AsyncStorage.setItem('disableSplashScreen', true);
       global.disableSplash = true;
     };
     this._fetchArticle = this._fetchArticle.bind(this);
@@ -44,10 +39,7 @@ class NewsDetailScreen extends BaseScreen {
   }
 
   render() {
-    
-    // const articleParams = params ? params.articleParams : errorOutput;
-    // const articleParamsOb = JSON.parse(this.state.articleParams);
-    // .substring(0, 10) for date
+    // Originally .substring(0, 10) for date, removed because of error
     articleParamsOb = this.state.articleParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
@@ -82,12 +74,6 @@ class NewsDetailScreen extends BaseScreen {
       URL,
       res => {
         this.setState({ articleParams: res.data})
-        // const articleList = res.data.map(article => ({
-        //   key: article.id.toString(),
-        //   value: article
-        // }));
-        // // NOT SAFE - fix later
-        // this.setState({ articleParams: articleList.filter(function(article) { return article.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );

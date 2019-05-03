@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Animated, Image, Easing } from 'react-native';
-import '../../android/app/global.js';
+import '../global';
 
 class SplashScreen extends React.Component {
   state = {

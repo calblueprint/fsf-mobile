@@ -76,13 +76,6 @@ class ActionDetailScreen extends BaseScreen {
       URL,
       res => {
         this.setState({ actionParams: res.data})
-        // const petitionList = res.data.map(petition => ({
-        //   key: petition.id.toString(),
-        //   value: petition
-        // }));
-        // // NOT SAFE - fix later
-        // // this.setState({actionParams: res.data[0]})
-        // this.setState({ actionParams: petitionList.filter(function(petition) { return petition.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );

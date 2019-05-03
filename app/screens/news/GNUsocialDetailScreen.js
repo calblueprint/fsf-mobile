@@ -79,12 +79,6 @@ class GNUsocialDetailScreen extends BaseScreen {
       URL,
       res => {
         this.setState({ noticeParams: res.data})
-        // const noticeList = res.data.map(notice => ({
-        //   key: notice.id.toString(),
-        //   value: notice
-        // }));
-        // // NOT SAFE - fix later
-        // this.setState({ noticeParams: noticeList.filter(function(notice) { return notice.key == id })[0].value, refreshing: false });
       },
       error => console.log(error)
     );
