@@ -53,7 +53,7 @@ class AmountComponent extends React.Component {
           style={styles.moneyButton}
           mode='outlined'
           compact={true}
-          onPress={_ => this.props.handleChange('amount', val)}
+          onPress={_ => renderErrorText(val)}
         >
           <Text>{renderVal}</Text>
         </Button>
