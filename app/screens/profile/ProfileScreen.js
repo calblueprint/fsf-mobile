@@ -247,8 +247,8 @@ class ProfileScreen extends BaseScreen {
   // ALL CODE BELOW FOR TESTING NOTIFICATIONS ONLY
   _getLatestMessage = async () => {
     var latestMessageTime = await AsyncStorage.getItem('latestMessageTime')
-    latestMessageTime = JSON.stringify(new Date("2018-04-23T19:30:51.010Z")); // TODO: change hardcoded values
-    await this.backgroundTask(latestMessageTime); // TODO: take note!!!! this.<something>
+    latestMessageTime = JSON.stringify(new Date("2018-04-23T19:30:51.010Z")); 
+    await this.backgroundTask(latestMessageTime); 
   }
 
   // expect: time input AS STRING
@@ -257,29 +257,29 @@ class ProfileScreen extends BaseScreen {
     // if this has never been set before...
     if (shouldNotify == null) {
       // ...set it to be on by default
-      this.setState({ debug: "shouldNotify was null" });  // TODO: ALL THE SET STATE STUFF
+      this.setState({ debug: "shouldNotify was null" });  
       shouldNotify = "true";
       await AsyncStorage.setItem('notificationsOn', true);
     }  
     
     if (JSON.parse(shouldNotify)) {
-      this.setState({ debug: "shouldNotify was true" });  // TODO: ALL THE SET STATE STUFF
+      this.setState({ debug: "shouldNotify was true" }); 
       const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
       // await getLatestMessage(latestMessageTime);
       await getRequest(
         route,
         async res => {
-          await this.processMessages(res.data); // TODO: take note!!!! this.<something>
+          await this.processMessages(res.data); 
           await AsyncStorage.setItem('latestMessageTime', JSON.stringify(new Date()));
         },
         error => {
           console.log('Request for messages failed');
           console.log(error);
-          // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);   // TODO: UNCOMMENT
+          // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);   
         });
       }
       else {
-        this.setState({ debug: "shouldNotify was FALSE" });  // TODO: ALL THE SET STATE STUFF
+        this.setState({ debug: "shouldNotify was FALSE" }); 
       }
   }
 
@@ -289,13 +289,11 @@ class ProfileScreen extends BaseScreen {
       data.forEach(message => {
         notify(message.title, message.content, message.link, message.id);
       });
-      // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_NEW_DATA); // TODO: UNCOMMENT
     } catch (error) {
       console.log('Error saving Message Data.\nData:');
       console.log(newMessages);
       console.log('\n\nError:');
       console.log(error);
-      // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED); // TODO: UNCOMMENT
     }
   }
 }
