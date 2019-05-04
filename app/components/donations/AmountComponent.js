@@ -45,31 +45,6 @@ class AmountComponent extends React.Component {
   //   });
   // }
 
-  renderMoneyButton(val) {
-    const renderVal = '$' + val;
-    return (
-      <View style={{ flex: 1}}>
-        <Button
-          style={styles.moneyButton}
-          mode='outlined'
-          compact={true}
-          onPress={_ => renderErrorText(val)}
-        >
-          <Text>{renderVal}</Text>
-        </Button>
-      </View>
-    )
-  }
-
-  // invariant that this.props.amount is always a numeric value
-  renderMoneyValue() {
-    if (this.props.amount == '') {
-      return;
-    } else {
-      return '$' + this.props.amount;
-    }
-  }
-
   renderErrorText = (val) => {
     if (!val.match(/^\$?\d+(\.\d{0,2})?$/)) {
       if (this.state.errorText == '') {
@@ -88,6 +63,31 @@ class AmountComponent extends React.Component {
       this.props.handleChange('amount', val.substr(1))
     } else {
       this.props.handleChange('amount', val)
+    }
+  }
+
+  renderMoneyButton(val) {
+    const renderVal = '$' + val;
+    return (
+      <View style={{ flex: 1}}>
+        <Button
+          style={styles.moneyButton}
+          mode='outlined'
+          compact={true}
+          onPress={_ => this.renderErrorText(val)}
+        >
+          <Text>{renderVal}</Text>
+        </Button>
+      </View>
+    )
+  }
+
+  // invariant that this.props.amount is always a numeric value
+  renderMoneyValue() {
+    if (this.props.amount == '') {
+      return;
+    } else {
+      return '$' + this.props.amount;
     }
   }
 
@@ -122,7 +122,7 @@ class AmountComponent extends React.Component {
           style={this.props.amount.match(/^\$?\d+(\.\d{0,2})?$/) ? this.props.styles.donationButton : this.props.styles.disabledDonationButton}
           contentStyle={this.props.styles.donationButtonContent}
           onPress={_ => this.props.changePage(1)}
-          disabled={this.props.amount == ''}
+          disabled={!this.props.amount.match(/^\$?\d+(\.\d{0,2})?$/)}
         >
           <Text style={this.props.styles.donationButtonText}>
             Continue

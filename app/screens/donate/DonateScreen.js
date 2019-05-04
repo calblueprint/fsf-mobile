@@ -193,7 +193,7 @@ class DonateScreen extends BaseScreen {
         <View style={{flex: 1}}>
           <KeyboardAvoidingView
             style={{ flex: 1, marginTop: 10 }}
-            behavior='padding'
+            behavior={(Platform.OS === 'ios')? "padding" : null}
           >
             <StepIndicator
               currentPosition={this.state.currentPosition}
@@ -201,7 +201,7 @@ class DonateScreen extends BaseScreen {
               stepCount={3}
               onPress={this.onPageChange}
             />
-              {this.renderStepComponent()}
+            {this.renderStepComponent()}
           </KeyboardAvoidingView>
         </View>
       </TouchableWithoutFeedback>
@@ -212,17 +212,11 @@ class DonateScreen extends BaseScreen {
 
 const styles = StyleSheet.create({
   donationButton: {
-    position: 'absolute',
-    bottom: 5,
-    left: 0,
-    right: 0,
+    marginTop: 20,
     backgroundColor: '#27ae60',
   },
   disabledDonationButton: {
-    position: 'absolute',
-    bottom: 5,
-    left: 0,
-    right: 0,
+    marginTop: 20,
     backgroundColor: '#27ae60',
     opacity: .25
   },
