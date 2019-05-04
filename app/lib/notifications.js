@@ -9,7 +9,7 @@ function notify(title, content, link, id) {
 }
 
 function testNotify(content) {
-  FSFLocalNotifications.publishNotification('Donate Now!', content, 'fsf://fsf/donate', -1);
+  FSFLocalNotifications.publishNotification('Donate Now!', content, 'fsf://fsf/news/article/1', -1);
 }
 
 export { initializeNotifications, notify, testNotify };

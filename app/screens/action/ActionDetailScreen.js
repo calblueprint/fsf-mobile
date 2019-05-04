@@ -9,18 +9,42 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class ActionDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    this.state = {};
+    const errorOutput = {
+      "title": "Loading",
+      "description": "Please wait while we fetch your petition",
+      "link": ""
+    };
+    const { params } = this.props.navigation.state;
+    this.state = {
+      refreshing: params.actionParams === undefined,
+      actionParams: params.actionParams ? params.actionParams : errorOutput
+    };
+    if (this.state.refreshing) {
+      global.disableSplash = true;
+    };
+    this._fetchPetition = this._fetchPetition.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchPetition(params.id);
+    }
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-    const actionParams = params ? params.actionParams : null;
-    const actionParamsOb = JSON.parse(actionParams);
+    // const { params } = this.props.navigation.state;
+    // const actionParams = params ? params.actionParams : null;
+    // const actionParamsOb = actionParams;
+
+    const actionParamsOb = this.state.actionParams;
+
     const actionLink = `<a href="${actionParamsOb.link}">Take Action</a>`;
     const additionalProps = {
       onLinkPress: (evt, href) => {
@@ -44,6 +68,16 @@ class ActionDetailScreen extends BaseScreen {
           </View>
         </ScrollView>
       </View>
+    );
+  }
+  async _fetchPetition(id) {
+    const URL = '/api/v1/petitions/' + id;
+    await getRequest(
+      URL,
+      res => {
+        this.setState({ actionParams: res.data})
+      },
+      error => console.log(error)
     );
   }
 }

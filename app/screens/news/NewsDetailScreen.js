@@ -9,20 +9,38 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class NewsDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    this.state = {
+    const errorOutput = {
+      "title": "Loading",
+      "content": "Please wait while we fetch your article",
+      "pub_date": ""
     };
+    const { params } = this.props.navigation.state;
+    this.state = {
+      refreshing: params.articleParams === undefined,
+      articleParams: params.articleParams ? params.articleParams : errorOutput
+    };
+    if (this.state.refreshing) {
+      global.disableSplash = true;
+    };
+    this._fetchArticle = this._fetchArticle.bind(this);
+  }
+  
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchArticle(params.id);
+    }
   }
 
-
   render() {
-    const { params } = this.props.navigation.state;
-    const articleParams = params ? params.articleParams : null;
-    const articleParamsOb = JSON.parse(articleParams);
+    // Originally .substring(0, 10) for date, removed because of error
+    articleParamsOb = this.state.articleParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);
@@ -41,12 +59,23 @@ class NewsDetailScreen extends BaseScreen {
           <View style={styles.article}>
             <Text style={styles.title}>{articleParamsOb.title}</Text>
             <Text style={styles.date}>
-              {articleParamsOb.pub_date.substring(0, 10)}
+              {articleParamsOb.pub_date} 
             </Text>
             <HTML html={articleParamsOb.content} {...additionalProps} />
           </View>
         </ScrollView>
       </View>
+    );
+  }
+
+  async _fetchArticle(id) {
+    const URL = '/api/v1/articles/' + id;
+    await getRequest(
+      URL,
+      res => {
+        this.setState({ articleParams: res.data})
+      },
+      error => console.log(error)
     );
   }
 }

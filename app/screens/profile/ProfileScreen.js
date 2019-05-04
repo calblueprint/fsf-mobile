@@ -14,7 +14,8 @@ import BaseScreen from '../BaseScreen'
 import {
   okAlert
 } from '../../lib/alerts'
-import { testNotify } from '../../lib/notifications'
+import { testNotify, notify } from '../../lib/notifications'
+import { getRequest } from '../../lib/requests'
 import {
   getStoredId,
   guestLogOut,
@@ -30,6 +31,7 @@ class ProfileScreen extends BaseScreen {
       componentDidMount: false,
       loggedIn: false,
       result: null,
+      debug: "DEFAULT"
     };
   }
 
@@ -118,7 +120,8 @@ class ProfileScreen extends BaseScreen {
                     style={styles.actionButton}
                     mode='outlined'
                     compact={true}
-                    onPress={() => testNotify("Test Notification")}
+                    // onPress={() => testNotify("Test Notification")}
+                    onPress={() => this._getLatestMessage()}
                     >
                     <Text style={styles.textButton}>Test Notification</Text>
                   </Button>
@@ -154,6 +157,7 @@ class ProfileScreen extends BaseScreen {
                       >
                       <Text style={styles.textButton}>Version </Text>
                   </Button>
+                  <Text>Status: {this.state.debug}</Text>
             </View>
           )}
         </View>
@@ -206,7 +210,7 @@ class ProfileScreen extends BaseScreen {
   _toggleNotifications = async () => {
     let status = await AsyncStorage.getItem('notificationsOn')
     if (status == null) {
-      status = true
+      status = "true"
     }
     status = !JSON.parse(status) // Flip the value of status
     if(status) {
@@ -240,6 +244,58 @@ class ProfileScreen extends BaseScreen {
    
   }
 
+  // ALL CODE BELOW FOR TESTING NOTIFICATIONS ONLY
+  _getLatestMessage = async () => {
+    var latestMessageTime = await AsyncStorage.getItem('latestMessageTime')
+    latestMessageTime = JSON.stringify(new Date("2018-04-23T19:30:51.010Z")); 
+    await this.backgroundTask(latestMessageTime); 
+  }
+
+  // expect: time input AS STRING
+  async backgroundTask(latestMessageTime) {
+    let shouldNotify = await AsyncStorage.getItem('notificationsOn');
+    // if this has never been set before...
+    if (shouldNotify == null) {
+      // ...set it to be on by default
+      this.setState({ debug: "shouldNotify was null" });  
+      shouldNotify = "true";
+      await AsyncStorage.setItem('notificationsOn', true);
+    }  
+    
+    if (JSON.parse(shouldNotify)) {
+      this.setState({ debug: "shouldNotify was true" }); 
+      const route = '/api/v1/latestMessages?last_sent=' + latestMessageTime;
+      // await getLatestMessage(latestMessageTime);
+      await getRequest(
+        route,
+        async res => {
+          await this.processMessages(res.data); 
+          await AsyncStorage.setItem('latestMessageTime', JSON.stringify(new Date()));
+        },
+        error => {
+          console.log('Request for messages failed');
+          console.log(error);
+          // BackgroundFetch.finish(BackgroundFetch.FETCH_RESULT_FAILED);   
+        });
+      }
+      else {
+        this.setState({ debug: "shouldNotify was FALSE" }); 
+      }
+  }
+
+  // expect: input as res.data
+  async processMessages(data) {
+    try {
+      data.forEach(message => {
+        notify(message.title, message.content, message.link, message.id);
+      });
+    } catch (error) {
+      console.log('Error saving Message Data.\nData:');
+      console.log(newMessages);
+      console.log('\n\nError:');
+      console.log(error);
+    }
+  }
 }
 
 const styles = StyleSheet.create({

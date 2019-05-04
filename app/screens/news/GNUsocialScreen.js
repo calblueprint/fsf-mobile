@@ -43,7 +43,7 @@ class GNUsocialScreen extends BaseScreen {
             <NoticeCard
               onPressNav={() =>
                 this.props.navigation.navigate('GNUsocialDetail', {
-                  noticeParams: JSON.stringify(info.item.value)
+                  noticeParams: info.item.value
                 })
               }
               noticeParams={info.item.value}

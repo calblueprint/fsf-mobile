@@ -9,18 +9,43 @@ import {
 } from 'react-native';
 import BaseScreen from '../BaseScreen';
 import HTML from 'react-native-render-html';
+import { getRequest } from '../../lib/requests';
 
 // Make sure to add your new screen to /config/navigation.js
 class GNUsocialDetailScreen extends BaseScreen {
   constructor(props) {
     super(props);
-    this.state = {};
+    const errorOutput = {
+      "gs_user_name": "Loading",
+      "content_html": "Please wait while we fetch your notice",
+      "published": ""
+    };
+    const { params } = this.props.navigation.state;
+    this.state = {
+      refreshing: params.noticeParams === undefined,
+      noticeParams: params.noticeParams ? params.noticeParams : errorOutput
+    };
+    if (this.state.refreshing) {
+      global.disableSplash = true;
+    };
+    this._fetchNotice = this._fetchNotice.bind(this);
   }
 
+  componentDidMount() {
+    if (this.state.refreshing) {
+      const { params } = this.props.navigation.state;
+      this._fetchNotice(params.id);
+    }
+  }
+
+
+  // .substring(0, 10) for date
   render() {
-    const { params } = this.props.navigation.state;
-    const noticeParams = params ? params.noticeParams : null;
-    const noticeParamsOb = JSON.parse(noticeParams);
+    // const { params } = this.props.navigation.state;
+    // const noticeParams = params ? params.noticeParams : null;
+    // const noticeParamsOb = JSON.parse(noticeParams);
+
+    noticeParamsOb = this.state.noticeParams;
     const additionalProps = {
       onLinkPress: (evt, href) => {
         Linking.openURL(href);
@@ -39,12 +64,23 @@ class GNUsocialDetailScreen extends BaseScreen {
           <View style={styles.article}>
             <Text style={styles.title}>{noticeParamsOb.gs_user_name}</Text>
             <Text style={styles.date}>
-              {noticeParamsOb.published.substring(0, 10)}
+              {noticeParamsOb.published}
             </Text>
             <HTML html={noticeParamsOb.content_html} {...additionalProps} />
           </View>
         </ScrollView>
       </View>
+    );
+  }
+
+  async _fetchNotice(id) {
+    const URL = '/api/v1/notices/' + id;
+    await getRequest(
+      URL,
+      res => {
+        this.setState({ noticeParams: res.data})
+      },
+      error => console.log(error)
     );
   }
 }

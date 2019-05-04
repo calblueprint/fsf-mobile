@@ -43,7 +43,7 @@ class ActionScreen extends BaseScreen {
             <ActionCard
               onPressNav={() =>
                 this.props.navigation.navigate('ActionDetail', {
-                  actionParams: JSON.stringify(info.item.value)
+                  actionParams: info.item.value
                 })
               }
               actionParams={info.item.value}

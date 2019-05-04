@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Animated, Image, Easing } from 'react-native';
+import '../global';
 
 class SplashScreen extends React.Component {
   state = {
@@ -9,14 +10,17 @@ class SplashScreen extends React.Component {
     return new Promise(resolve =>
       setTimeout(() => {
         resolve('result');
-      }, 4000)
+      }, 5000)
     );
   };
 
   async componentDidMount() {
     this.bounce();
+    // const disableSplashScreen = await AsyncStorage.getItem('disableSplashScreen');
     const result = await this.timeToWait();
-    if (result !== null) {
+    // if (!disableSplashScreen && result !== null) {
+    if (!global.disableSplash && result !== null) {
+    // if (result !== null) {
       this.props.navigation.navigate('AuthLoading');
     }
   }
