@@ -67,7 +67,7 @@ class LoginScreen extends BaseScreen {
           <View style={{flex: 1}}>
             <KeyboardAvoidingView
               style={styles.container}
-              behavior='padding'
+              behavior={(Platform.OS === 'ios')? "padding" : null}
             >
               <View style={styles.logoContainer}>
                 <Image
