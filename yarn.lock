@@ -5454,10 +5454,10 @@ react-native-flip-card@^3.4.1:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-fsf-local-notifications@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-fsf-local-notifications/-/react-native-fsf-local-notifications-1.1.0.tgz#f7a84c403aa8b4ae5d4f2c3342c5d421040c77b0"
-  integrity sha512-FywSGBQpMA69eP1DKqVwu68A0Pzrw6HEN9Xo6v+z4bYQYyj0nByGuiryYpP1mwMJgjNB1fMgMvVcnmj42ymT+w==
+react-native-fsf-local-notifications@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-fsf-local-notifications/-/react-native-fsf-local-notifications-1.2.0.tgz#b8af18e18a8d5c18662210c4a498d31cfded179c"
+  integrity sha512-GsQwZh5YFN58IPIN4jsg2vgxndiRScWnru9r6YKqeWEgxTnd3ElqZeZ0SorlwP+TvWiQFHr4AVRl05boGhVTjw==
 
 react-native-gesture-handler@^1.0.9:
   version "1.1.0"
